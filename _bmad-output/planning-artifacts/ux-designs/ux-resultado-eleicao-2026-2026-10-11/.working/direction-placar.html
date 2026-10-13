@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Direção B · Placar</title>
+<style>
+/* Direção B — PLACAR (painel noturno, dígitos split-flap)
+   #07080A fundo da página
+   #0E1013 tela do app
+   #181B21 ladrilho de dígito
+   #232730 divisória do ladrilho
+   #F2F2F2 dígitos e texto principal
+   #8A93A0 texto secundário
+   #3DDC84 status OK (só status)
+   #FF5A4E status divergência (só status)
+   #C9CED6 status aguardando (neutro) */
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#07080A;color:#F2F2F2;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;padding:32px 16px}
+.wrap{max-width:1100px;margin:0 auto;display:flex;flex-wrap:wrap;gap:40px;justify-content:center;align-items:flex-start}
+.why{max-width:300px;font-size:14px;line-height:1.6;color:#8A93A0}
+.why h1{color:#F2F2F2;font-size:26px;font-weight:800;letter-spacing:-.01em;margin-bottom:10px}
+.why p{margin-bottom:10px}
+.cap{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#8A93A0;margin-bottom:8px;text-align:center}
+.phone{width:360px;height:640px;border-radius:36px;background:#000;padding:10px;border:1px solid #232730}
+.screen{width:100%;height:100%;border-radius:28px;background:#0E1013;overflow:hidden;padding:16px 16px 0;display:flex;flex-direction:column}
+.top{font-size:11px;color:#8A93A0;letter-spacing:.1em;text-transform:uppercase}
+.loc{font-size:20px;font-weight:800;margin:4px 0 2px;letter-spacing:-.01em}
+.sub{font-size:12px;color:#8A93A0}
+.status{margin:12px 0;padding:12px;border-radius:14px;border:2px solid #3DDC84;color:#3DDC84}
+.status b{display:block;font-size:24px;font-weight:900;letter-spacing:-.02em;line-height:1.05}
+.status span{font-size:13px;color:#F2F2F2}
+.status.wait{border-color:#C9CED6;border-style:dashed;color:#C9CED6}
+.heads{display:grid;grid-template-columns:62px 1fr 1fr 16px;gap:6px;font-size:10px;color:#8A93A0;letter-spacing:.08em;text-transform:uppercase;padding:0 2px 4px}
+.heads div:nth-child(2),.heads div:nth-child(3){text-align:center}
+.row{display:grid;grid-template-columns:62px 1fr 1fr 16px;gap:6px;align-items:center;margin-bottom:4px}
+.lbl{font-size:13px;font-weight:700;font-variant-numeric:tabular-nums}
+.lbl.w{font-size:11px;font-weight:600;color:#8A93A0}
+.flap{display:flex;justify-content:center;gap:2px}
+.flap i{font-style:normal;width:19px;height:24px;background:linear-gradient(#181B21 49%,#232730 49% 51%,#181B21 51%);border-radius:3px;
+  font:700 17px/24px ui-monospace,"SF Mono",Menlo,monospace;text-align:center;color:#F2F2F2}
+.flap i.e{color:#3a3f48}
+.ok{color:#3DDC84;font-size:12px;text-align:center}
+.pend{color:#C9CED6;font-size:12px;text-align:center}
+.row.tot .lbl{font-size:12px}
+.row.tot .flap i{background:linear-gradient(#232730 49%,#2c313b 49% 51%,#232730 51%)}
+.meta{font-size:10.5px;color:#8A93A0;display:flex;justify-content:space-between;margin:6px 2px 0}
+.btns{margin-top:auto;display:flex;gap:8px;padding:12px 0 16px}
+.btn{flex:1;text-align:center;font-weight:800;font-size:13px;padding:13px 6px;border-radius:12px;background:#F2F2F2;color:#0E1013}
+.btn.g{background:transparent;color:#F2F2F2;border:1px solid #232730}
+</style></head><body>
+<div class="wrap">
+<div class="why">
+<h1>B · Placar</h1>
+<p>Noite de eleição é placar. Fundo escuro, dígitos em ladrilhos split-flap: porta e TSE viram número a número até baterem. Todos os candidatos no mesmo ladrilho cinza — o único brilho da tela é o status.</p>
+<p>Densidade média, peso pesado (800–900), registro esportivo/transmissão. Movimento implícito: flaps girando ao chegar o BU do TSE; borda do status "acende" ao final.</p>
+<p>Print viral: parece placar de TV, lê-se de longe em story.</p>
+</div>
+
+<div>
+<div class="cap">Herói · Minha seção — idêntico</div>
+<div class="phone"><div class="screen">
+<div class="top">Minha seção · Presidente</div>
+<div class="loc">Senador Cortes/MG</div>
+<div class="sub">Zona 170 · Seção 37 · 1º turno 04/10/2026</div>
+<div class="status"><b>✅ Idêntico</b><span>Nada mudou no caminho.</span></div>
+<div class="heads"><div>Nº</div><div>BU da porta</div><div>BU do TSE</div><div></div></div>
+<div class="row"><div class="lbl">13</div><div class="flap"><i>1</i><i>0</i><i>9</i></div><div class="flap"><i>1</i><i>0</i><i>9</i></div><div class="ok">✓</div></div>
+<div class="row"><div class="lbl">14</div><div class="flap"><i class="e">0</i><i class="e">0</i><i>1</i></div><div class="flap"><i class="e">0</i><i class="e">0</i><i>1</i></div><div class="ok">✓</div></div>
+<div class="row"><div class="lbl">22</div><div class="flap"><i class="e">0</i><i>6</i><i>3</i></div><div class="flap"><i class="e">0</i><i>6</i><i>3</i></div><div class="ok">✓</div></div>
+<div class="row"><div class="lbl">30</div><div class="flap"><i class="e">0</i><i class="e">0</i><i>1</i></div><div class="flap"><i class="e">0</i><i class="e">0</i><i>1</i></div><div class="ok">✓</div></div>
+<div class="row"><div class="lbl">55</div><div class="flap"><i class="e">0</i><i class="e">0</i><i>8</i></div><div class="flap"><i class="e">0</i><i class="e">0</i><i>8</i></div><div class="ok">✓</div></div>
+<div class="row"><div class="lbl">70</div><div class="flap"><i class="e">0</i><i class="e">0</i><i>6</i></div><div class="flap"><i class="e">0</i><i class="e">0</i><i>6</i></div><div class="ok">✓</div></div>
+<div class="row"><div class="lbl">80</div><div class="flap"><i class="e">0</i><i class="e">0</i><i>1</i></div><div class="flap"><i class="e">0</i><i class="e">0</i><i>1</i></div><div class="ok">✓</div></div>
+<div class="row"><div class="lbl w">Brancos</div><div class="flap"><i class="e">0</i><i class="e">0</i><i>2</i></div><div class="flap"><i class="e">0</i><i class="e">0</i><i>2</i></div><div class="ok">✓</div></div>
+<div class="row"><div class="lbl w">Nulos</div><div class="flap"><i class="e">0</i><i class="e">0</i><i>4</i></div><div class="flap"><i class="e">0</i><i class="e">0</i><i>4</i></div><div class="ok">✓</div></div>
+<div class="row tot"><div class="lbl">Total</div><div class="flap"><i>1</i><i>9</i><i>5</i></div><div class="flap"><i>1</i><i>9</i><i>5</i></div><div class="ok">✓</div></div>
+<div class="meta"><span>Porta 17:06 · assinatura válida</span><span>TSE 18:47</span></div>
+<div class="btns"><div class="btn">Compartilhar prova</div><div class="btn g">Ver no registro público</div></div>
+</div></div>
+</div>
+
+<div>
+<div class="cap">Estado · Aguardando o TSE</div>
+<div class="phone"><div class="screen">
+<div class="top">Minha seção · Presidente</div>
+<div class="loc">Senador Cortes/MG</div>
+<div class="sub">Zona 170 · Seção 37 · 1º turno 04/10/2026</div>
+<div class="status wait"><b>⏳ Aguardando o TSE</b><span>Seu BU já está guardado. Avisamos quando o oficial sair.</span></div>
+<div class="heads"><div>Nº</div><div>BU da porta</div><div>BU do TSE</div><div></div></div>
+<div class="row"><div class="lbl">13</div><div class="flap"><i>1</i><i>0</i><i>9</i></div><div class="flap"><i class="e">–</i><i class="e">–</i><i class="e">–</i></div><div class="pend">·</div></div>
+<div class="row"><div class="lbl">14</div><div class="flap"><i class="e">0</i><i class="e">0</i><i>1</i></div><div class="flap"><i class="e">–</i><i class="e">–</i><i class="e">–</i></div><div class="pend">·</div></div>
+<div class="row"><div class="lbl">22</div><div class="flap"><i class="e">0</i><i>6</i><i>3</i></div><div class="flap"><i class="e">–</i><i class="e">–</i><i class="e">–</i></div><div class="pend">·</div></div>
+<div class="row"><div class="lbl">30</div><div class="flap"><i class="e">0</i><i class="e">0</i><i>1</i></div><div class="flap"><i class="e">–</i><i class="e">–</i><i class="e">–</i></div><div class="pend">·</div></div>
+<div class="row"><div class="lbl">55</div><div class="flap"><i class="e">0</i><i class="e">0</i><i>8</i></div><div class="flap"><i class="e">–</i><i class="e">–</i><i class="e">–</i></div><div class="pend">·</div></div>
+<div class="row"><div class="lbl">70</div><div class="flap"><i class="e">0</i><i class="e">0</i><i>6</i></div><div class="flap"><i class="e">–</i><i class="e">–</i><i class="e">–</i></div><div class="pend">·</div></div>
+<div class="row"><div class="lbl">80</div><div class="flap"><i class="e">0</i><i class="e">0</i><i>1</i></div><div class="flap"><i class="e">–</i><i class="e">–</i><i class="e">–</i></div><div class="pend">·</div></div>
+<div class="row"><div class="lbl w">Brancos</div><div class="flap"><i class="e">0</i><i class="e">0</i><i>2</i></div><div class="flap"><i class="e">–</i><i class="e">–</i><i class="e">–</i></div><div class="pend">·</div></div>
+<div class="row"><div class="lbl w">Nulos</div><div class="flap"><i class="e">0</i><i class="e">0</i><i>4</i></div><div class="flap"><i class="e">–</i><i class="e">–</i><i class="e">–</i></div><div class="pend">·</div></div>
+<div class="row tot"><div class="lbl">Total</div><div class="flap"><i>1</i><i>9</i><i>5</i></div><div class="flap"><i class="e">–</i><i class="e">–</i><i class="e">–</i></div><div class="pend">·</div></div>
+<div class="meta"><span>Porta 17:06 · assinatura válida</span><span>TSE: ainda não publicou</span></div>
+<div class="btns"><div class="btn">Compartilhar BU da porta</div><div class="btn g">Ver no registro público</div></div>
+</div></div>
+</div>
+</div>
+</body></html>

@@ -1,0 +1,72 @@
+- id: "1"
+  title: Validador de BU (biblioteca + testes)
+  description: >-
+    CAP-2: parser QRBU/QRCE 1.5 e 6.0, cadeia SHA-512 e assinatura E-521/P-521 conforme tse-formatos.md.
+    Testes com os 5 BUs de 2022 (hash) e casos adulterados; BU 2026 real quando chegar.
+  spec_checkpoint: true
+  done_checkpoint: true
+  invoke_dev_with: >-
+    Código de exemplo do manual 2026 (p. 21-23, ecpy). Repo AGPL-3.0. Mesma lib roda no navegador e no servidor
+    ou tem implementação espelho testada com os mesmos vetores.
+- id: "2"
+  title: Espelho TSE por seção
+  description: >-
+    CAP-4 (coleta): coletor em IP brasileiro baixa cs.json, aux.json e bu.dat/vota.vsc de cada seção uma única vez,
+    com cache imutável por hash. Pleitos 3220 e 3221.
+  invoke_dev_with: >-
+    Respeitar o TSE: concorrência baixa e backoff. Decodificador de bu.dat parte de prototipo/ler_bu_dat.py
+    e migra para a especificação ASN.1 oficial.
+- id: "3"
+  title: Comparador BU da porta × BU TSE
+  description: >-
+    CAP-4: normaliza os dois lados e define o status ✅/🚨/⏳ com o campo divergente.
+    Caso de aceite: seção 37 de Senador Cortes/MG, pleito 3220.
+- id: "4"
+  title: Registro público append-only
+  description: >-
+    CAP-3: cada captura aceita vira uma entrada com hash e carimbo de tempo, e um terceiro consegue
+    verificar inclusão e consistência só com dados públicos.
+- id: "5"
+  title: PWA de captura offline
+  description: >-
+    CAP-1: leitura de todos os QRs no navegador, indicação dos QRs que faltam, fila offline e envio;
+    upload de foto como alternativa. Remove EXIF e nunca envia GPS.
+  invoke_dev_with: >-
+    Testar em Android de entrada em modo avião. Incluir orientação de segurança a quem fotografa.
+- id: "6"
+  title: Ingestão e anti-abuso
+  description: >-
+    CAP-6: recebe envios sem conta, com PoW/Turnstile, rate limit, deduplicação, consistência IDUE→certificado
+    e alerta para ORIG RED/SA.
+  spec_checkpoint: true
+- id: "7"
+  title: Páginas públicas estáticas
+  description: >-
+    CAP-5: página por seção (BU da porta × TSE, provas, status), página "Divergências encontradas" e cobertura %.
+    Nenhum vencedor nem projeção.
+- id: "8"
+  title: Lançamento do piloto 1º turno
+  description: >-
+    CAP-7: publicar para eleitores com BU de 04/10 conferirem a própria seção. Meta: 100 seções até 22/10.
+  done_checkpoint: true
+  invoke_dev_with: >-
+    Bloqueado até a revisão jurídica dos textos públicos (open question).
+- id: "9"
+  title: Teste de carga 10× o pico
+  description: >-
+    CAP-6: simular cerca de 5 milhões de envios em 4h e muitas leituras; a leitura pública não pode cair.
+  done_checkpoint: true
+- id: "10"
+  title: Bot de WhatsApp
+  description: >-
+    CAP-8: recebe fotos como documento, decodifica os QRs no servidor, pede os que faltam e responde com o link da seção.
+  invoke_dev_with: >-
+    Pedir a aprovação da Cloud API da Meta no dia 1; o bot é Should e não pode bloquear o lançamento.
+- id: "11"
+  title: Zerésima
+  description: >-
+    CAP-9: captura de foto da zerésima com IDUE e hora, cruzada com o BU final e o log.jez; gera alerta de troca de urna.
+- id: "12"
+  title: Auditores voluntários
+  description: >-
+    CAP-10: fila para BUs sem QR legível, distribuídos por sorteio, com consenso de 3 de 5 e calibração por gabaritos ocultos.

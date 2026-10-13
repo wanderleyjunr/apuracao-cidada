@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Direção D · Lupa</title>
+<style>
+/* Direção D — LUPA (forense, diff linha a linha, provas à mostra)
+   #E9ECEF fundo da página
+   #F6F8FA fundo da tela
+   #FFFFFF cartão
+   #D0D7DE borda
+   #1F2328 texto principal
+   #59636E texto secundário
+   #3D4450 grafite (botão primário, neutro)
+   #1A7F37 status OK texto · #DAFBE1 fundo OK (só status)
+   #CF222E status divergência texto · #FFEBE9 fundo removido */
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#E9ECEF;color:#1F2328;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;padding:32px 16px}
+.wrap{max-width:1100px;margin:0 auto;display:flex;flex-wrap:wrap;gap:40px;justify-content:center;align-items:flex-start}
+.why{max-width:300px;font-size:14px;line-height:1.6}
+.why h1{font:700 22px/1.2 ui-monospace,"SF Mono",Menlo,monospace;margin-bottom:10px}
+.why p{margin-bottom:10px;color:#59636E}
+.cap{font:11px/1 ui-monospace,Menlo,monospace;letter-spacing:.08em;text-transform:uppercase;color:#59636E;margin-bottom:8px;text-align:center}
+.phone{width:360px;height:640px;border-radius:36px;background:#1F2328;padding:10px}
+.screen{width:100%;height:100%;border-radius:28px;background:#F6F8FA;overflow:hidden;padding:14px 12px 0;display:flex;flex-direction:column;gap:8px}
+.path{font:11px/1.3 ui-monospace,Menlo,monospace;color:#59636E}
+.path b{color:#1F2328}
+.st{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:8px;background:#DAFBE1;color:#1A7F37;font-weight:700;font-size:15px;border:1px solid #1A7F37}
+.st small{font-weight:400;color:#1F2328;font-size:12px;display:block}
+.st.bad{background:#FFEBE9;color:#CF222E;border-color:#CF222E}
+.card{background:#fff;border:1px solid #D0D7DE;border-radius:8px;overflow:hidden}
+.ch{display:flex;justify-content:space-between;font:11px/1 ui-monospace,Menlo,monospace;color:#59636E;padding:7px 10px;border-bottom:1px solid #D0D7DE;background:#F6F8FA}
+.proofs{font:10.5px/1.6 ui-monospace,Menlo,monospace;padding:6px 10px;color:#1F2328}
+.proofs span{color:#1A7F37}
+.proofs em{font-style:normal;color:#59636E}
+.diff{font:12px/1 ui-monospace,"SF Mono",Menlo,monospace;font-variant-numeric:tabular-nums}
+.l{display:grid;grid-template-columns:18px 70px 1fr 1fr;padding:5px 10px;border-bottom:1px solid #F0F2F4}
+.l:last-child{border-bottom:0}
+.l .g{color:#59636E}
+.l .v{text-align:right}
+.l.h{font-size:10px;color:#59636E;text-transform:uppercase;letter-spacing:.06em}
+.l.tot{font-weight:700}
+.l.rm{background:#FFEBE9}.l.rm .g{color:#CF222E}
+.btns{margin-top:auto;display:flex;gap:6px;padding:4px 0 14px}
+.btn{flex:1;text-align:center;font-weight:600;font-size:13px;padding:11px 6px;border-radius:8px;background:#3D4450;color:#fff;border:1px solid #3D4450}
+.btn.g{background:#fff;color:#1F2328;border-color:#D0D7DE}
+</style></head><body>
+<div class="wrap">
+<div class="why">
+<h1>D · Lupa</h1>
+<p>Feito para quem desconfia: a tela mostra as provas, não só o veredito. Cadeia de hash, assinatura e entrada no registro aparecem antes da tabela, e a divergência vira um diff linha a linha, como em código.</p>
+<p>Densidade máxima, mono para dados e sans para veredito, registro técnico/forense. Movimento implícito: checklist de provas marcando um a um, diff expandindo só nas linhas alteradas.</p>
+<p>Print viral: o "diff" com hash é a prova que jornalistas e auditores repostam.</p>
+</div>
+
+<div>
+<div class="cap">Herói · Minha seção — idêntico</div>
+<div class="phone"><div class="screen">
+<div class="path">MG / Senador Cortes / <b>zona 170 / seção 37</b><br>1º turno · 04/10/2026 · Presidente</div>
+<div class="st">✅<div>Idêntico<small>Nada mudou no caminho. 10 de 10 campos iguais.</small></div></div>
+<div class="card">
+<div class="ch"><span>provas</span><span>registro nº 004.218</span></div>
+<div class="proofs">
+<span>✓</span> BU da porta · enviado 17:06<br>
+<span>✓</span> assinatura da urna válida <em>(QRCE · P-521)</em><br>
+<span>✓</span> cadeia sha512 completa <em>9f3a…c21e</em><br>
+<span>✓</span> BU do TSE · recebido 18:47 <em>bu.dat</em>
+</div></div>
+<div class="card diff">
+<div class="l h"><span></span><span>campo</span><span class="v">porta</span><span class="v">tse</span></div>
+<div class="l"><span class="g">=</span><span>13</span><span class="v">109</span><span class="v">109</span></div>
+<div class="l"><span class="g">=</span><span>14</span><span class="v">1</span><span class="v">1</span></div>
+<div class="l"><span class="g">=</span><span>22</span><span class="v">63</span><span class="v">63</span></div>
+<div class="l"><span class="g">=</span><span>30</span><span class="v">1</span><span class="v">1</span></div>
+<div class="l"><span class="g">=</span><span>55</span><span class="v">8</span><span class="v">8</span></div>
+<div class="l"><span class="g">=</span><span>70</span><span class="v">6</span><span class="v">6</span></div>
+<div class="l"><span class="g">=</span><span>80</span><span class="v">1</span><span class="v">1</span></div>
+<div class="l"><span class="g">=</span><span>brancos</span><span class="v">2</span><span class="v">2</span></div>
+<div class="l"><span class="g">=</span><span>nulos</span><span class="v">4</span><span class="v">4</span></div>
+<div class="l tot"><span class="g">=</span><span>total</span><span class="v">195</span><span class="v">195</span></div>
+</div>
+<div class="btns"><div class="btn">Compartilhar prova</div><div class="btn g">Ver no registro público</div></div>
+</div></div>
+</div>
+
+<div>
+<div class="cap">Estado · Divergência encontrada</div>
+<div class="phone"><div class="screen">
+<div class="path">MG / Senador Cortes / <b>zona 170 / seção 37</b><br>1º turno · 04/10/2026 · Presidente</div>
+<div class="st bad">🚨<div>Divergência encontrada<small>2 de 10 campos diferem entre porta e TSE.</small></div></div>
+<div class="card">
+<div class="ch"><span>provas</span><span>registro nº 004.218</span></div>
+<div class="proofs">
+<span>✓</span> BU da porta · assinatura da urna válida<br>
+<span>✓</span> registrado às 17:06, antes do TSE (18:47)<br>
+<em>Só o BU do TSE difere. A prova da porta continua íntegra.</em>
+</div></div>
+<div class="card diff">
+<div class="ch"><span>diff porta → tse</span><span>2 alterados · 8 iguais</span></div>
+<div class="l h"><span></span><span>campo</span><span class="v">porta</span><span class="v">tse</span></div>
+<div class="l"><span class="g">=</span><span>14</span><span class="v">1</span><span class="v">1</span></div>
+<div class="l rm"><span class="g">≠</span><span>22</span><span class="v">63</span><span class="v">60</span></div>
+<div class="l"><span class="g">=</span><span>30</span><span class="v">1</span><span class="v">1</span></div>
+<div style="display:block;color:#59636E;font:11px/1 ui-monospace,Menlo,monospace;padding:6px 10px;border-bottom:1px solid #F0F2F4">⋯ 6 campos iguais</div>
+<div class="l rm tot"><span class="g">≠</span><span>total</span><span class="v">195</span><span class="v">192</span></div>
+</div>
+<div class="btns"><div class="btn">Compartilhar prova</div><div class="btn g">Ver no registro público</div></div>
+</div></div>
+</div>
+</div>
+</body></html>

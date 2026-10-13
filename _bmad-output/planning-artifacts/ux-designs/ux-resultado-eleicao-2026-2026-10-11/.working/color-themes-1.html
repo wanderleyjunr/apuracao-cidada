@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Paletas · 2º turno</title>
+<style>
+/* Regra de neutralidade: a cor da marca NUNCA é vermelho (associado ao PT) nem verde-amarelo/azul (associados ao PL e à campanha de Flávio).
+   Verde e vermelho aparecem só no status (idêntico/diverge), sempre com ícone e texto, nunca só a cor.
+   T1 Aurora:   primária #6C2BD9 · secundária #FF7A1A · fundo #F7F3FF · tinta #1C1033 · superfície #FFFFFF
+   T2 Oceano:   primária #0B7A8A · secundária #FF6F61 · fundo #EEF8F8 · tinta #08323A · superfície #FFFFFF
+   T3 Tropical: primária #D61F84 · secundária #00A6A6 · destaque #FFC23D · fundo #FFF4FA · tinta #2A0A1E
+   T4 Noite elétrica (escuro): primária #7CFFB2 · secundária #4CC9FF · fundo #0E1426 · superfície #18213A · tinta #F2F5FF
+   T5 Ipê roxo: primária #8E3BB8 · secundária #18B39B · destaque #FFB4D9 · fundo #FBF5FF · tinta #24112E
+   Status (todas): ok #12A150 · diverge #E5383B · pendente #F4A100 */
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:#E9EBEE;color:#1B1F24;padding:24px}
+h1{font-size:20px}.sub{font-size:14px;color:#5B6470;margin:4px 0 20px;max-width:980px}
+.row{display:flex;gap:24px;flex-wrap:wrap}
+.col{width:320px}.col h2{font-size:15px}.col p{font-size:12px;color:#5B6470;margin:2px 0 8px;min-height:32px}
+.chips{display:flex;gap:4px;margin-bottom:10px}.chips i{width:28px;height:28px;border-radius:8px;border:1px solid #0002}
+.phone{width:320px;height:660px;border-radius:34px;border:9px solid #111;overflow:hidden;background:var(--bg);color:var(--ink);display:flex;flex-direction:column;position:relative}
+.hd{background:var(--p);color:var(--on);padding:14px 14px 18px;border-radius:0 0 22px 22px}
+.hd .b{display:flex;justify-content:space-between;align-items:center;font-weight:900;font-size:16px}
+.hd .b small{display:block;font-size:10px;font-weight:600;opacity:.85}
+.tg{display:flex;background:#fff3;border-radius:8px;font-size:11px;font-weight:800}.tg span{padding:4px 9px}.tg .on{background:var(--on);color:var(--p);border-radius:8px}
+.loc{margin-top:10px;background:#fff2;border-radius:10px;padding:8px 10px;font-size:12px;font-weight:800;display:flex;justify-content:space-between}
+.loc small{display:block;font-weight:500;opacity:.85}
+.stk{margin:-10px 16px 0;background:var(--s);color:var(--son);border-radius:16px;padding:12px 14px;transform:rotate(-2deg);box-shadow:0 5px 0 #0003;position:relative}
+.stk b{font-size:28px;line-height:1;letter-spacing:-1px;display:block}.stk small{font-size:11px}
+.stk .st{position:absolute;right:10px;top:10px;background:#12A150;color:#fff;border-radius:20px;padding:3px 8px;font-size:10px;font-weight:900}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:16px 12px 0}
+.c{background:var(--sf);border-radius:14px;padding:10px;border:2px solid var(--a);text-align:center}
+.ph{width:64px;height:64px;border-radius:50%;margin:0 auto;background:linear-gradient(160deg,#cfd5dc,#9aa3ad);border:3px solid var(--a);display:grid;place-items:center;font-size:9px;color:#fff;font-weight:800}
+.c .pt{font-size:10px;font-weight:800;opacity:.7;margin-top:6px}.c .nm{font-size:13px;font-weight:900}
+.c .vv{display:flex;justify-content:space-around;margin-top:8px;font-size:9px;opacity:.75;font-weight:700}
+.c .vv b{display:block;font-size:20px;opacity:1}
+.c .ok{margin-top:6px;font-size:11px;font-weight:900;color:#12A150}
+.mini{margin:10px 12px;background:var(--sf);border-radius:12px;padding:10px;font-size:11px;display:flex;justify-content:space-between}
+.mini b{font-size:14px}
+.btn{margin:4px 12px;background:var(--ink);color:var(--bg);border-radius:12px;text-align:center;padding:11px;font-weight:900;font-size:13px}
+.nav{position:absolute;bottom:0;left:0;right:0;height:56px;background:var(--sf);display:flex;justify-content:space-around;align-items:center;font-size:9px;font-weight:700}
+.nav .on{color:var(--p)}
+.fab{position:absolute;bottom:30px;left:50%;transform:translateX(-50%);width:56px;height:56px;border-radius:50%;background:var(--s);color:var(--son);display:grid;place-items:center;font-size:22px;font-weight:900;border:4px solid var(--bg)}
+.t1{--p:#6C2BD9;--on:#fff;--s:#FF7A1A;--son:#1C1033;--bg:#F7F3FF;--ink:#1C1033;--sf:#fff;--a:#6C2BD9}
+.t2{--p:#0B7A8A;--on:#fff;--s:#FF6F61;--son:#fff;--bg:#EEF8F8;--ink:#08323A;--sf:#fff;--a:#0B7A8A}
+.t3{--p:#D61F84;--on:#fff;--s:#FFC23D;--son:#2A0A1E;--bg:#FFF4FA;--ink:#2A0A1E;--sf:#fff;--a:#00A6A6}
+.t4{--p:#18213A;--on:#F2F5FF;--s:#7CFFB2;--son:#0E1426;--bg:#0E1426;--ink:#F2F5FF;--sf:#18213A;--a:#4CC9FF}
+.t5{--p:#8E3BB8;--on:#fff;--s:#18B39B;--son:#fff;--bg:#FBF5FF;--ink:#24112E;--sf:#fff;--a:#FFB4D9}
+</style></head><body>
+<h1>Paletas: mais cor, mantendo a neutralidade</h1>
+<div class="sub">Mesma tela do 2º turno (25/10) em 5 paletas. A cor da marca evita o vermelho (PT) e o verde-amarelo/azul (PL); vermelho e verde só aparecem no status, sempre com texto. Os círculos cinza são onde entram as <b>fotos oficiais do TSE</b>, do mesmo tamanho para os dois candidatos. Os números são ilustrativos.</div>
+<div class="row">
+<!-- template repetido por tema -->
+<div class="col t1"><h2>T1 · Aurora</h2><p>Roxo e laranja: energia de festa cívica, jovem e otimista.</p><div class="chips"><i style="background:#6C2BD9"></i><i style="background:#FF7A1A"></i><i style="background:#F7F3FF"></i><i style="background:#1C1033"></i><i style="background:#12A150"></i><i style="background:#E5383B"></i></div>
+<div class="phone"><div class="hd"><div class="b"><div>Confere BU<small>conferência cidadã · código aberto</small></div><div class="tg"><span>1º</span><span class="on">2º</span></div></div><div class="loc"><div>Senador Cortes, MG<small>Zona 170 · Seção 37</small></div>▾</div></div>
+<div class="stk"><span class="st">✓ IDÊNTICO</span><b>BATEU.</b><small>Porta 17:06 = TSE 18:47 · assinatura da urna ✓</small></div>
+<div class="two"><div class="c"><div class="ph">FOTO</div><div class="pt">PL – 22</div><div class="nm">FLÁVIO BOLSONARO</div><div class="vv"><span>PORTA<b>98</b></span><span>TSE<b>98</b></span></div><div class="ok">✓ confere</div></div><div class="c"><div class="ph">FOTO</div><div class="pt">PT – 13</div><div class="nm">LULA</div><div class="vv"><span>PORTA<b>112</b></span><span>TSE<b>112</b></span></div><div class="ok">✓ confere</div></div></div>
+<div class="mini"><span>Brancos <b>3</b> · Nulos <b>5</b></span><span><b>3</b> pessoas enviaram</span></div><div class="btn">Compartilhar a prova ↗</div>
+<div class="fab">⌗</div><div class="nav"><span class="on">Minha seção</span><span>Cobertura</span><span style="width:56px"></span><span>Divergências</span><span>Como funciona</span></div></div></div>
+
+<div class="col t2"><h2>T2 · Oceano</h2><p>Azul-petróleo e coral: confiança calma, com um toque quente.</p><div class="chips"><i style="background:#0B7A8A"></i><i style="background:#FF6F61"></i><i style="background:#EEF8F8"></i><i style="background:#08323A"></i><i style="background:#12A150"></i><i style="background:#E5383B"></i></div>
+<div class="phone"><div class="hd"><div class="b"><div>Confere BU<small>conferência cidadã · código aberto</small></div><div class="tg"><span>1º</span><span class="on">2º</span></div></div><div class="loc"><div>Senador Cortes, MG<small>Zona 170 · Seção 37</small></div>▾</div></div>
+<div class="stk"><span class="st">✓ IDÊNTICO</span><b>BATEU.</b><small>Porta 17:06 = TSE 18:47 · assinatura da urna ✓</small></div>
+<div class="two"><div class="c"><div class="ph">FOTO</div><div class="pt">PL – 22</div><div class="nm">FLÁVIO BOLSONARO</div><div class="vv"><span>PORTA<b>98</b></span><span>TSE<b>98</b></span></div><div class="ok">✓ confere</div></div><div class="c"><div class="ph">FOTO</div><div class="pt">PT – 13</div><div class="nm">LULA</div><div class="vv"><span>PORTA<b>112</b></span><span>TSE<b>112</b></span></div><div class="ok">✓ confere</div></div></div>
+<div class="mini"><span>Brancos <b>3</b> · Nulos <b>5</b></span><span><b>3</b> pessoas enviaram</span></div><div class="btn">Compartilhar a prova ↗</div>
+<div class="fab">⌗</div><div class="nav"><span class="on">Minha seção</span><span>Cobertura</span><span style="width:56px"></span><span>Divergências</span><span>Como funciona</span></div></div></div>
+
+<div class="col t3"><h2>T3 · Tropical</h2><p>Magenta, turquesa e amarelo: a mais pop e "story-friendly".</p><div class="chips"><i style="background:#D61F84"></i><i style="background:#00A6A6"></i><i style="background:#FFC23D"></i><i style="background:#2A0A1E"></i><i style="background:#12A150"></i><i style="background:#E5383B"></i></div>
+<div class="phone"><div class="hd"><div class="b"><div>Confere BU<small>conferência cidadã · código aberto</small></div><div class="tg"><span>1º</span><span class="on">2º</span></div></div><div class="loc"><div>Senador Cortes, MG<small>Zona 170 · Seção 37</small></div>▾</div></div>
+<div class="stk"><span class="st">✓ IDÊNTICO</span><b>BATEU.</b><small>Porta 17:06 = TSE 18:47 · assinatura da urna ✓</small></div>
+<div class="two"><div class="c"><div class="ph">FOTO</div><div class="pt">PL – 22</div><div class="nm">FLÁVIO BOLSONARO</div><div class="vv"><span>PORTA<b>98</b></span><span>TSE<b>98</b></span></div><div class="ok">✓ confere</div></div><div class="c"><div class="ph">FOTO</div><div class="pt">PT – 13</div><div class="nm">LULA</div><div class="vv"><span>PORTA<b>112</b></span><span>TSE<b>112</b></span></div><div class="ok">✓ confere</div></div></div>
+<div class="mini"><span>Brancos <b>3</b> · Nulos <b>5</b></span><span><b>3</b> pessoas enviaram</span></div><div class="btn">Compartilhar a prova ↗</div>
+<div class="fab">⌗</div><div class="nav"><span class="on">Minha seção</span><span>Cobertura</span><span style="width:56px"></span><span>Divergências</span><span>Como funciona</span></div></div></div>
+
+<div class="col t4"><h2>T4 · Noite elétrica (escuro)</h2><p>Para a noite da apuração: fundo escuro, verde-neon e ciano.</p><div class="chips"><i style="background:#0E1426"></i><i style="background:#7CFFB2"></i><i style="background:#4CC9FF"></i><i style="background:#F2F5FF"></i><i style="background:#12A150"></i><i style="background:#E5383B"></i></div>
+<div class="phone"><div class="hd"><div class="b"><div>Confere BU<small>conferência cidadã · código aberto</small></div><div class="tg"><span>1º</span><span class="on">2º</span></div></div><div class="loc"><div>Senador Cortes, MG<small>Zona 170 · Seção 37</small></div>▾</div></div>
+<div class="stk"><span class="st">✓ IDÊNTICO</span><b>BATEU.</b><small>Porta 17:06 = TSE 18:47 · assinatura da urna ✓</small></div>
+<div class="two"><div class="c"><div class="ph">FOTO</div><div class="pt">PL – 22</div><div class="nm">FLÁVIO BOLSONARO</div><div class="vv"><span>PORTA<b>98</b></span><span>TSE<b>98</b></span></div><div class="ok">✓ confere</div></div><div class="c"><div class="ph">FOTO</div><div class="pt">PT – 13</div><div class="nm">LULA</div><div class="vv"><span>PORTA<b>112</b></span><span>TSE<b>112</b></span></div><div class="ok">✓ confere</div></div></div>
+<div class="mini"><span>Brancos <b>3</b> · Nulos <b>5</b></span><span><b>3</b> pessoas enviaram</span></div><div class="btn">Compartilhar a prova ↗</div>
+<div class="fab">⌗</div><div class="nav"><span class="on">Minha seção</span><span>Cobertura</span><span style="width:56px"></span><span>Divergências</span><span>Como funciona</span></div></div></div>
+
+<div class="col t5"><h2>T5 · Ipê roxo</h2><p>Roxo de ipê, verde-água e rosa: brasileira sem ser bandeira.</p><div class="chips"><i style="background:#8E3BB8"></i><i style="background:#18B39B"></i><i style="background:#FFB4D9"></i><i style="background:#24112E"></i><i style="background:#12A150"></i><i style="background:#E5383B"></i></div>
+<div class="phone"><div class="hd"><div class="b"><div>Confere BU<small>conferência cidadã · código aberto</small></div><div class="tg"><span>1º</span><span class="on">2º</span></div></div><div class="loc"><div>Senador Cortes, MG<small>Zona 170 · Seção 37</small></div>▾</div></div>
+<div class="stk"><span class="st">✓ IDÊNTICO</span><b>BATEU.</b><small>Porta 17:06 = TSE 18:47 · assinatura da urna ✓</small></div>
+<div class="two"><div class="c"><div class="ph">FOTO</div><div class="pt">PL – 22</div><div class="nm">FLÁVIO BOLSONARO</div><div class="vv"><span>PORTA<b>98</b></span><span>TSE<b>98</b></span></div><div class="ok">✓ confere</div></div><div class="c"><div class="ph">FOTO</div><div class="pt">PT – 13</div><div class="nm">LULA</div><div class="vv"><span>PORTA<b>112</b></span><span>TSE<b>112</b></span></div><div class="ok">✓ confere</div></div></div>
+<div class="mini"><span>Brancos <b>3</b> · Nulos <b>5</b></span><span><b>3</b> pessoas enviaram</span></div><div class="btn">Compartilhar a prova ↗</div>
+<div class="fab">⌗</div><div class="nav"><span class="on">Minha seção</span><span>Cobertura</span><span style="width:56px"></span><span>Divergências</span><span>Como funciona</span></div></div></div>
+</div></body></html>

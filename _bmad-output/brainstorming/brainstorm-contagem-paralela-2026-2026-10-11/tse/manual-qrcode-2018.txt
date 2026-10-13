@@ -1,0 +1,2500 @@
+QR CODE NO
+BOLETIM DE URNA
+Manual para criação de aplicativos de leitura
+
+
+
+
+                 Brasília – 2018
+QR CODE NO
+BOLETIM DE URNA
+Manual para criação de aplicativos de leitura
+
+
+
+
+                 Brasília – 2018
+© 2018 Tribunal Superior Eleitoral
+
+É proibida a reprodução total ou parcial desta obra sem a autorização expressa dos autores.
+
+Secretaria de Gestão da Informação (SGI)
+SAFS, Quadra 7, Lotes 1/2, 1º andar
+70070-600 – Brasília/DF
+Telefone: (61) 3030-9225
+
+Secretário-Geral da Presidência
+Estêvão Waterloo
+
+Diretor-Geral
+Rodrigo Curado Fleury
+
+Secretária de Gestão da Informação
+Janeth Aparecida Dias de Melo
+
+Coordenadora de Editoração e Publicações
+Renata Leite Motta Paes Medeiros
+
+Unidade responsável pelo conteúdo
+Seção de Voto Informatizado (Sevin/Csele/STI)
+
+Produção editorial e diagramação
+Seção de Editoração e Programação Visual (Seprov/Cedip/SGI)
+
+Capa e projeto gráfico
+Daniel Paiva Alves Gomes
+
+Revisão e normatização
+Seção de Preparação e Revisão de Conteúdos (Seprev/Cedip/SGI)
+Preparação e revisão: Patrícia Jacob e Manuela Marla
+
+
+
+                           Dados Internacionais de Catalogação na Publicação (CIP)
+                 (Tribunal Superior Eleitoral – Biblioteca Professor Alysson Darowish Mitraud)
+
+
+       Brasil. Tribunal Superior Eleitoral.
+          QR Code no boletim de urna [recurso eletrônico] : manual para criação de aplicativos de leitura.
+       – Brasília : Tribunal Superior Eleitoral, 2018.
+          54 p.
+
+          Unidade responsável pelo conteúdo: Seção de Voto Informatizado, Coordenadoria de Sistemas
+       Eleitorais, Secretaria de Tecnologia da Informação.
+
+           1. Eleições (2018) – Brasil. 2. Boletim de urna – Aplicação de computador – Manual – Brasil.
+       3. Assinatura digital – Brasil. I. Título.
+
+             						                                                           CDD 324.981
+             						                                                           CDU 324(81)
+TRIBUNAL SUPERIOR ELEITORAL
+
+              Presidente
+          Ministra Rosa Weber
+
+
+            Vice-Presidente
+     Ministro Luís Roberto Barroso
+
+
+               Ministros
+         Ministro Edson Fachin
+         Ministro Jorge Mussi
+         Ministro Og Fernandes
+       Ministro Admar Gonzaga
+Ministro Tarcisio Vieira de Carvalho Neto
+
+
+      Procuradora-Geral Eleitoral
+             Raquel Dodge
+SUMÁRIO
+
+Histórico de modificações............................................................................................... 5
+
+Apresentação.................................................................................................................... 6
+
+O boletim de urna. ............................................................................................................ 8
+
+A escolha do QR Code e como ele foi implantado...................................................... 17
+
+Representação do boletim de urna. ............................................................................. 19
+
+Assinatura digital........................................................................................................... 26
+
+Complemento dos dados – Nomes dos candidatos, cargos e eleições................... 30
+
+Glossário........................................................................................................................ 49
+         QR CODE NO BOLETIM DE URNA | MANUAL PARA CRIAÇÃO DE APLICATIVOS DE LEITURA
+
+
+
+
+HISTÓRICO DE MODIFICAÇÕES
+
+  Data             Responsável                             Comentários
+
+                  Seção de Voto
+Nov./2015                                            Versão inicial do manual.
+                  Informatizado
+
+                                        Inclusão de informações específicas do Sistema de
+                  Seção de Voto         Apuração (SA) e modelos dos cabeçalhos e rodapés
+Jan./2016
+                  Informatizado            dos boletins de urna impressos por ele e pelo
+                                                   Recuperador de Dados (RED).
+
+                  Seção de Voto          Atualizações dos boletins de urnas impressos pelo
+Jun./2016
+                  Informatizado           Software de Votação (Vota), pelo SA e pelo RED.
+
+                                             Inclusão de novos atributos no QR Code e
+                  Seção de Voto
+Jul./2016                                atualizações dos boletins de urnas impressos pelo
+                  Informatizado
+                                                     Vota, pelo SA e pelo RED.
+
+                                        Inclusão de novos atributos no QR Code para inserção
+                  Seção de Voto
+Ago./2017                                   da versão da chave de assinatura e do tipo do
+                  Informatizado
+                                                         processo eleitoral.
+
+                  Seção de Voto            Atualização do documento para contemplar as
+Set./2018
+                  Informatizado            alterações necessárias para as Eleições 2018.
+
+
+
+
+                                             5
+         QR CODE NO BOLETIM DE URNA | MANUAL PARA CRIAÇÃO DE APLICATIVOS DE LEITURA
+
+
+
+
+ APRESENTAÇÃO
+
+A Justiça Eleitoral está em constante movimento para adotar o que há de mais moderno
+no que se refere a eleições, tudo com o objetivo de promover um processo transparente,
+seguro e eficiente. Desde a implantação da urna eletrônica, há quase 22 anos, esta Justiça
+Especializada aperfeiçoa seus sistemas e equipamentos todos os anos, adicionando
+novos mecanismos que promovam a fiscalização cidadã e garantam a segurança do
+sistema eleitoral brasileiro.
+
+
+Uma das formas mais antigas de fiscalização é a impressão e publicação do Boletim de
+Urna (BU). Encerrada a votação, a urna apura os votos e emite relatório com o resultado
+oficial da seção eleitoral. Esse relatório é documento público, cuja cópia é afixada no
+local de votação para que qualquer cidadão possa conferir.
+
+
+Além disso, cópias do boletim são garantidas aos fiscais partidários, podendo, ainda,
+ser entregues aos interessados presentes no momento do fechamento da urna. Desde
+o instante em que recebem o BU, os partidos políticos já iniciam totalização própria,
+para conferência com aquela realizada pela Justiça Eleitoral. Nos dias que se seguem,
+o boletim impresso pode ser conferido na internet com o resultado processado pelos
+sistemas eleitorais.
+
+
+Esse é um mecanismo de acompanhamento simples, presente nos sistemas há alguns
+anos. Com a impressão, publicação e conferência do boletim na internet, os órgãos
+eleitorais mitigam quaisquer suspeitas que possam existir sobre o transporte e a
+totalização dos resultados das seções.
+
+
+Entretanto, devido ao crescente interesse do cidadão no acompanhamento do processo
+eleitoral, faz-se necessário o aprimoramento dos meios de fiscalização já disponibilizados.
+Tendo isso em vista, a partir das Eleições 2016, o boletim de urna passou a contar com
+o Quick Response Code (QR Code – código de resposta rápida), que permite a rápida
+digitalização do resultado apurado em uma seção. Dessa forma, um número muito maior
+
+
+
+
+                                             6
+         QR CODE NO BOLETIM DE URNA | MANUAL PARA CRIAÇÃO DE APLICATIVOS DE LEITURA
+
+
+
+de pessoas poderá obter cópias dos resultados apurados pelas urnas, mais seções terão
+os seus resultados validados e a conferência da totalização será mais rápida e fácil.
+
+
+Diante disso, a Justiça Eleitoral desenvolveu um aplicativo para dispositivos móveis que
+permite a digitalização e conferência do boletim de urna. Para que esse instrumento
+seja uma forma ainda mais eficaz de fiscalização cidadã, esta Justiça está fornecendo
+todas as instruções necessárias para que qualquer interessado desenvolva um aplicativo
+próprio de leitura do boletim, provendo também os meios necessários para a validação
+da integridade e autenticidade do BU.
+
+
+Este Manual apresenta a terminologia utilizada pela Justiça Eleitoral, bem como descreve
+a tecnologia adotada, o formato de representação digital do boletim de urna no QR Code,
+os mecanismos de assinatura digital e o modo de obtenção dos dados complementares
+para a correta reconstrução do boletim impresso.
+
+
+Dúvidas, críticas ou sugestões podem ser encaminhadas ao endereço qrcodenobu@tse.jus.br.
+
+
+Democracia se faz com colaboração. Participe.
+
+
+
+
+                                             7
+        QR CODE NO BOLETIM DE URNA | MANUAL PARA CRIAÇÃO DE APLICATIVOS DE LEITURA
+
+
+
+
+O BOLETIM DE URNA
+
+A seguir, é apresentado o detalhamento do boletim de urna impresso pelo Software de
+Votação (Vota), com seções e todos os dados presentes.
+
+
+
+
+                                            8
+QR CODE NO BOLETIM DE URNA | MANUAL PARA CRIAÇÃO DE APLICATIVOS DE LEITURA
+
+
+
+
+                                    9
+QR CODE NO BOLETIM DE URNA | MANUAL PARA CRIAÇÃO DE APLICATIVOS DE LEITURA
+
+
+
+
+                                   10
+        QR CODE NO BOLETIM DE URNA | MANUAL PARA CRIAÇÃO DE APLICATIVOS DE LEITURA
+
+
+
+A seguir, é apresentado detalhamento do cabeçalho do boletim de urna impresso pelo
+Recuperador de Dados (RED) e o QR Code desse BU. O corpo do boletim foi omitido
+devido à sua semelhança com o boletim do Vota.
+
+
+
+
+                                           11
+QR CODE NO BOLETIM DE URNA | MANUAL PARA CRIAÇÃO DE APLICATIVOS DE LEITURA
+
+
+
+
+                                   12
+        QR CODE NO BOLETIM DE URNA | MANUAL PARA CRIAÇÃO DE APLICATIVOS DE LEITURA
+
+
+
+A seguir, é apresentado o detalhamento do cabeçalho e do rodapé do boletim de urna
+impresso pelo Sistema de Apuração (SA) e o QR Code desse BU. O corpo do boletim foi
+omitido devido à sua semelhança com o boletim do Vota.
+
+
+
+
+                                           13
+QR CODE NO BOLETIM DE URNA | MANUAL PARA CRIAÇÃO DE APLICATIVOS DE LEITURA
+
+
+
+
+                                   14
+        QR CODE NO BOLETIM DE URNA | MANUAL PARA CRIAÇÃO DE APLICATIVOS DE LEITURA
+
+
+
+A seguir, é apresentado o detalhamento do cabeçalho do boletim de urna impresso pelo
+SA quando há realização de duas eleições no mesmo pleito, bem como o QR Code desse
+BU. O corpo do boletim foi omitido devido à sua semelhança com o boletim do Vota.
+
+
+
+
+                                           15
+QR CODE NO BOLETIM DE URNA | MANUAL PARA CRIAÇÃO DE APLICATIVOS DE LEITURA
+
+
+
+
+                                   16
+             QR CODE NO BOLETIM DE URNA | MANUAL PARA CRIAÇÃO DE APLICATIVOS DE LEITURA
+
+
+
+
+    A ESCOLHA DO QR CODE E COMO ELE FOI IMPLANTADO
+
+O Quick Response Code (QR Code – código de resposta rápida) é um tipo de código
+de barras em duas dimensões capaz de armazenar muito mais informação que um
+código de barras comum1. Recentemente, essa tecnologia tornou-se presente nas mais
+variadas mídias e é facilmente utilizada nos mais variados dispositivos, sobretudo nos
+smartphones. A grande capacidade de representação de dados, aliada ao forte suporte
+nos dispositivos móveis, faz do QR Code uma escolha natural para a digitalização rápida
+do boletim de urna.
+
+
+Nas Eleições 2016, a Justiça Eleitoral expandiu a utilização desse código para o boletim de
+urna, atendendo à demanda crescente da sociedade por mais transparência e facilidade
+na fiscalização cidadã das eleições. Com essa realidade já testada em eleições e com
+a grande disponibilidade de smartphones e tablets por toda a parte, este é o momento
+adequado para a utilização desse moderno código.
+
+
+Devido às limitações da impressora da urna (impressora térmica capaz de imprimir
+imagens monocromáticas de baixa resolução), o QR Code impresso está limitado
+à representação de até 1.100 caracteres no modo de entrada alfanumérico2. Dessa
+forma, é possível trabalhar com uma taxa de compressão adequada ao mesmo tempo
+em que se utiliza formato de representação legível por pessoas que usam aplicativos
+de leitura genéricos. Essa característica é importante para o fácil desenvolvimento de
+aplicativos específicos de leitura do boletim de urna por pessoas com pouco ou nenhum
+conhecimento do processo eleitoral brasileiro.
+
+
+A utilização do modo de entrada alfanumérico restringe a utilização de nomes no
+conteúdo codificado no QR Code, uma vez que a língua portuguesa é rica em nomes
+com caracteres acentuados. O armazenamento de nomes no QR Code (nomes de
+candidatos, cargos e eleições) também implicaria a utilização de mais códigos de barra
+
+
+
+
+1
+    Disponível em <https://en.wikipedia.org/wiki/QR_code>.
+2
+    Disponível em <https://en.wikipedia.org/wiki/QR_code#Storage>.
+
+
+
+
+                                                      17
+             QR CODE NO BOLETIM DE URNA | MANUAL PARA CRIAÇÃO DE APLICATIVOS DE LEITURA
+
+
+
+para representar todo o boletim, visto que demandaria o modo de entrada binário. Por
+isso, todos os nomes foram suprimidos.
+
+
+Ainda assim, os boletins de urna podem ser muito extensos, chegando a apresentar até
+mesmo quatro QR Codes, devido ao grande número de candidatos.
+
+
+O Vota utiliza a biblioteca libqrencode3 para a geração de QR Codes.
+
+
+
+
+3
+    Disponível em <https://github.com/fukuchi/libqrencode>.
+
+
+
+
+                                                       18
+         QR CODE NO BOLETIM DE URNA | MANUAL PARA CRIAÇÃO DE APLICATIVOS DE LEITURA
+
+
+
+
+REPRESENTAÇÃO DO BOLETIM DE URNA
+
+O boletim de urna é codificado no QR Code utilizando somente os caracteres previstos
+no modo de entrada alfanumérico (letras, números, alguns sinais de pontuação e espaço
+em branco). A partir daí foi criada uma estrutura simples do tipo chave e valor. Todos
+os registros estão na mesma linha, com a chave separada do valor pelo caractere de
+dois pontos, e os registros separados por espaço em branco. Todo QR Code possui três
+seções: cabeçalho, conteúdo do boletim e segurança.
+
+
+Como mencionado, cada QR Code está limitado a 1.100 caracteres, incluindo todas as
+três seções. A seção de conteúdo pode ser dividida para que o limite máximo de cada
+QR Code não seja ultrapassado. Isso é feito no último espaço em branco antes da posição
+de quebra, de modo que um registro fique dividido entre dois QR Codes, retirando-se
+esse espaço em branco. Ao remontar integralmente a seção de conteúdo do boletim, é
+necessário adicionar novamente esse espaço em branco, para fins de cálculo de hash e
+assinatura digital.
+
+
+Cabeçalho
+
+                                            Marca de início dos dados.
+
+   QRBU:n:x                    n = índice do QR Code em uma sequência de QR Codes.
+
+                                         x = quantidade total de QR Codes.
+
+                         Número da versão do formato da representação do boletim de urna.
+
+   VRQR:n.y                  n = número de ciclos eleitorais desde sua implementação.
+
+                               y = número de revisões do formato dentro de um ciclo.
+
+ VRCH:nnnn...         Número da versão da chave utilizada para assinar o conteúdo do QR Code.
+
+
+
+
+                                                19
+       QR CODE NO BOLETIM DE URNA | MANUAL PARA CRIAÇÃO DE APLICATIVOS DE LEITURA
+
+
+
+Conteúdo
+
+                             Cabeçalho do boletim de urna
+
+    ORIG:xxxx                     Origem do boletim de urna (Vota, RED ou SA).
+
+                        Origem da configuração do processo eleitoral (LEG – eleição legal
+     ORLC:xxx
+                                      oficial; COM – eleição comunitária).
+
+   PROC:nnnnn                            Número do processo eleitoral.
+
+ DTPL:aaaammdd                                     Data do pleito.
+
+    PLEI:nnnnn                                   Número do pleito.
+
+      TURN:n                Número do turno (1 – primeiro turno; 2 – segundo turno).
+
+      FASE:x               Fase dos dados (O – oficial; S – simulado; T – treinamento).
+
+     UNFE:xx               Sigla da UF. No caso de eleição no exterior, a sigla será ZZ.
+
+   MUNI:nnnnn                                   Número do município.
+
+    ZONA:nnnn                               Número da zona eleitoral.
+
+    SECA:nnnn                              Número da seção eleitoral.
+
+ AGRE:nnnn.nnnn...            Número das seções agregadas separadas por ponto.
+
+   IDUE:nnnn...                             Número de série da urna.
+
+   IDCA:nnnn...                   Código de identificação da carga (24 dígitos).
+
+                      Texto de tamanho variável com a versão do software da urna (somente
+   VERS:xxxx...
+                                              números e pontos).
+
+
+
+
+                                           20
+             QR CODE NO BOLETIM DE URNA | MANUAL PARA CRIAÇÃO DE APLICATIVOS DE LEITURA
+
+
+
+                                                                                       (continuação)
+
+                 Cabeçalho do boletim de urna – campos exclusivos do Vota e do RED
+
+         LOCA:nnnn                                   Número do local de votação.
+
+         APTO:nnnn                                  Quantidade de eleitores aptos.
+
+         COMP:nnnn                    Quantidade de eleitores que compareceram para votar.
+
+          FALT:nnnn                                Quantidade de eleitores faltosos.
+
+                                 Quantidade de eleitores habilitados por ano de nascimento. Esse
+                               cálculo leva em conta todos os eleitores que foram identificados na
+                                urna por essa modalidade, inclusive aqueles que não concluíram a
+                              votação para pelo menos um dos cargos em disputa (e, por isso, não
+        HBMA:nnnn4            tiveram presença registrada pela urna). Esse valor pode ser diferente
+                               do impresso pela urna no cabeçalho do BU na linha “Habilitados por
+                              ano nascimento”, pois o impresso considera somente os eleitores que
+                             votaram para pelo menos um dos cargos (ou seja, somente os eleitores
+                                                que tiveram presença registrada).
+
+      DTAB:aaaammdd                                   Data da abertura da urna.
+
+       HRAB:hhmmss                                    Hora da abertura da urna.
+
+      DTFC:aaaammdd                                  Data do fechamento da urna.
+
+       HRFC:hhmmss                                  Hora do fechamento da urna.
+
+
+                       Cabeçalho do boletim de urna – campos exclusivos do SA
+
+         JUNT:nnnn                                   Número da junta apuradora.
+
+         TURM:nnnn                                   Número da turma apuradora.
+
+
+                   Cabeçalho do boletim de urna – campos exclusivos do SA e do RED
+
+      DTEM:aaaammdd                            Data de emissão do boletim de urna.
+
+       HREM:hhmmss                             Hora de emissão do boletim de urna.
+
+
+                            Cabeçalho da eleição – incluído para cada eleição
+
+         IDEL:nnnnn                                        Código da eleição.
+
+         MAJO:nnnn             Número de votos nos cargos majoritários – campo exclusivo do SA.
+
+         PROP:nnnn            Número de votos nos cargos proporcionais – campo exclusivo do SA.
+
+
+4
+    Campo incluído apenas em seções biométricas.
+
+
+
+
+                                                      21
+              QR CODE NO BOLETIM DE URNA | MANUAL PARA CRIAÇÃO DE APLICATIVOS DE LEITURA
+
+
+
+                                                                                                 (continuação)
+                      Cabeçalho do cargo – incluído para cada cargo sendo apurado5
+
+           CARG:nn                                            Código do cargo.
+
+            TIPO:n                        Tipo: 0 – Majoritário; 1 – Proporcional; 2 – Consulta.
+
+            VERC:n                        Versão do pacote de dados de candidatos/consulta.
+
+
+              Cabeçalho do partido – incluído para cada partido com votação para o cargo6
+
+            PART:nn                                          Número do partido.
+
+          LEGP:nnnn                          Quantidade de votos de legenda para o partido.
+
+          TOTP:nnnn                              Total de votos apurados para o partido.
+
+
+
+         Votação do candidato ou da resposta – incluído para cada candidato ou resposta que
+     recebeu votos, agrupados pelo cargo (majoritário ou consulta) ou pelo partido (proporcional)
+
+                                  Número do candidato ou resposta, seguido da quantidade de votos
+          ccccc:nnnn
+                                                           que recebeu.
+
+
+                            Resumo do cargo – incluído para cada cargo apurado
+
+          APTA:nnnn                        Quantidade de eleitores aptos para votar no cargo.
+
+          NOMI:nnnn                            Quantidade de votos nominais para o cargo.
+
+                                             Quantidade de votos de legenda para o cargo.
+          LEGC:nnnn
+                                            Opcional – só incluído para cargos proporcionais.
+
+          BRAN:nnnn                           Quantidade de votos em branco para o cargo.
+
+          NULO:nnnn                              Quantidade de votos nulos para o cargo.
+
+          TOTC:nnnn                               Total de votos apurados para o cargo.
+
+
+
+
+5
+    Com base nele, é possível remontar a abertura e o fechamento dos votos para o cargo.
+6
+    Com base nele, é possível remontar a abertura e o fechamento dos votos para o partido. Opcional – só incluído
+    para cargos proporcionais.
+
+
+
+
+                                                        22
+         QR CODE NO BOLETIM DE URNA | MANUAL PARA CRIAÇÃO DE APLICATIVOS DE LEITURA
+
+
+
+Segurança
+
+                           Hash da seção de conteúdo do boletim. Ao final de cada QR Code, virá
+                           um hash cumulativo aos dados de todos os anteriores, o que permite
+   HASH:xxxxxx...
+                           a verificação da leitura em sequência. O cálculo é feito com SHA-512,
+                                                 codificado em hexadecimal.
+
+                           Assinatura digital Ed25519 a partir do último hash (incluído somente
+    ASSI:xxxxxx...         no último QR Code). Codificado em hexadecimal e também impresso
+                                                   no boletim em papel.
+
+
+
+
+Código dos cargos
+Para fins de identificação dos cargos, com base nos códigos encontrados no QR Code
+do boletim de urna, segue lista de cargos e respectivos códigos.
+
+
+                            Cargo                        Código do cargo
+
+                         Presidente                              1
+
+                         Governador                              3
+
+                           Senador                               5
+
+                      Deputado federal                           6
+
+                     Deputado estadual                           7
+
+                      Deputado distrital                         8
+
+                     Conselheiro distrital                       9
+
+                           Prefeito                             11
+
+                          Vereador                              13
+
+
+
+
+                                                23
+        QR CODE NO BOLETIM DE URNA | MANUAL PARA CRIAÇÃO DE APLICATIVOS DE LEITURA
+
+
+
+Exemplos
+Boletim de urna “pequeno”: cargos para deputado federal, deputado estadual, senador
+(com duas vagas), governador e presidente. Todos os cargos com diversos candidatos e
+comparecimento de um eleitor.
+
+
+
+
+                                           24
+        QR CODE NO BOLETIM DE URNA | MANUAL PARA CRIAÇÃO DE APLICATIVOS DE LEITURA
+
+
+
+Boletim de urna “grande”: cargos para deputado federal, deputado estadual, senador
+(com duas vagas), governador e presidente. Todos os cargos com diversos candidatos e
+comparecimento de 30 eleitores.
+
+
+
+
+                                           25
+           QR CODE NO BOLETIM DE URNA | MANUAL PARA CRIAÇÃO DE APLICATIVOS DE LEITURA
+
+
+
+
+    ASSINATURA DIGITAL
+
+Para a assinatura do conteúdo do boletim de urna codificado no QR Code, foi escolhido o
+algoritmo de chave pública Ed255197 e sua configuração para assinatura digital EdDSA.
+O Ed25519 é algoritmo de curvas elípticas, moderno, de alto desempenho, elevado nível de
+segurança e possui implementações resistentes a ataques do tipo side-channel. Embora
+ainda esteja em processo de padronização8, o Ed25519 é cada vez mais adotado pela
+comunidade9, já presente em diversas ferramentas de segurança e com implementações
+de código aberto para as mais variadas linguagens de programação e plataformas.
+
+
+O software da urna utiliza a biblioteca libsodium10 para a geração de assinaturas e pares
+de chaves. Devido às limitações de espaço do QR Code e à sua aplicação em dispositivos
+móveis, um benefício importante do Ed25519 é o tamanho de chave (256 bits) e de
+assinatura reduzidos (512 bits).
+
+
+Depois da Cerimônia de Lacração e Assinatura Digital dos Sistemas Eleitorais, as chaves
+públicas Ed25519 utilizadas pelo software da urna serão publicadas na internet. Será
+gerado um par de chaves por UF. Os aplicativos móveis precisarão dessas chaves para a
+validação da assinatura do conteúdo do boletim nos QR Codes.
+
+
+É importante destacar que o algoritmo de assinatura digital utilizado para os QR Codes
+é de domínio público e, por isso, foi escolhido para essa aplicação. A assinatura digital
+empregada na validação dos arquivos de resultado da urna eletrônica pelo sistema de
+totalização da Justiça Eleitoral utiliza um algoritmo de Estado, conforme estabelecido
+em norma específica11.
+
+
+
+
+7
+  Disponível em <http://ed25519.cr.yp.to/>.
+8
+  Disponível em <https://tools.ietf.org/html/draft-josefsson-eddsa-ed25519-02>.
+9
+  Disponível em <http://ianix.com/pub/ed25519-deployment.html>.
+10
+   Disponível em <https://github.com/jedisct1/libsodium>.
+11
+   Disponível em <http://dsic.planalto.gov.br/documentos/nc_09_revisao_02.pdf>.
+
+
+
+
+                                                    26
+         QR CODE NO BOLETIM DE URNA | MANUAL PARA CRIAÇÃO DE APLICATIVOS DE LEITURA
+
+
+
+Formação da assinatura
+
+A assinatura é realizada a partir do hash do último QR Code impresso. Esse último hash,
+porém, é calculado com base nos hashes dos demais QR Codes acumulativamente.
+
+
+Por exemplo:
+
+QRBU:1:N VRQR:1.5 VRCH:nnnnnnnn [dados1] HASH:hash([dados1]),
+
+QRBU:2:N VRQR:1.5 VRCH: nnnnnnnn [dados2] HASH:hash([conteúdo1] + [dados2]),
+       sendo conteúdo1 = [dados1] HASH:hash1
+
+QRBU:3:N VRQR:1.5 VRCH: nnnnnnnn [dados3] HASH:hash([conteúdo2] + [dados3]),
+       sendo conteúdo2 = [dados1] HASH:hash1 [dados2] HASH:hash2
+...
+
+QRBU:N:N VRQR:1.5 VRCH: nnnnnnnn [dadosN] HASH:hash([conteúdo(N-1)] +
+[dadosN]),
+         sendo conteúdo(N-1) = [dados1] HASH:hash1 [dados2] HASH:hash2 …
+[dados(N-1)] HASH:hash(N-1)
+
+ASSI:assinatura(hashN),
+       sendo hashN = hash([conteúdo(N-1)] + [dadosN])
+
+
+
+Neste Manual, os exemplos apresentados que possuem assinatura válida podem ser
+verificados com a chave pública específica, do tipo Ed25519 (algoritmo EdDSA), de
+256 bits e em hexadecimal:
+
+
+  CF3AF898467A5B7A52D33D53BC037E2642A8DA996903FC252217E9C033E2F291
+
+
+
+
+Instruções para verificação de assinatura digital e exemplos de código
+
+Verificação de assinatura do QR Code
+
+Anteriormente, foi feita breve explicação sobre o método de assinatura digital EdDSA
+empregado no QR Code. Além disso, houve a descrição do algoritmo de composição da
+mensagem assinada e exemplos válidos para verificação. A seguir, são apresentados
+dados mais detalhados sobre o acesso às chaves públicas e um exemplo de
+código-fonte C++ para verificação de assinatura.
+
+
+
+
+                                            27
+               QR CODE NO BOLETIM DE URNA | MANUAL PARA CRIAÇÃO DE APLICATIVOS DE LEITURA
+
+
+
+As chaves públicas estarão disponíveis no seguinte formato de endereço:
+
+                 <URL_base /[versao_chave]/[legal|comunitaria]/[o|s][sigla_uf]qrcode.pub>
+     Em que:
+
+     URL_base = http://qrcodenobu.tse.jus.br/tse.qrcodebu.
+
+     versao_chave = versão das chaves encontrada no QR Code.
+
+     “[]” = indica um conjunto fixo de valores.
+
+     “|” = indica uma opção dentro de um conjunto de possibilidades.
+
+     sigla_uf = sigla da unidade federativa, em minúsculo. No caso das eleições realizadas no exterior, a
+     sigla da uf será “zz”.
+
+As eleições do tipo legal são as eleições ordinárias, que elegem deputados, vereadores,
+senadores e presidentes. As eleições do tipo comunitária, por sua vez, são eleições de
+entidades, tais como OAB, Confea, etc.
+
+Haverá nova versão das chaves para as eleições de 2018. Para os BUs utilizados como
+exemplo neste Manual, a versão das chaves utilizadas foi 20180618.
+
+
+Exemplo
+
+Para validação das assinaturas dos boletins de urna utilizados como exemplo neste
+documento, foi utilizada a seguinte chave:
+
+        <http://qrcodenobu.tse.jus.br/tse.qrcodebu/20180618/LEGAL/sacqrcode.pub>
+
+Dessa forma, com base nas informações encontradas no QR Code do BU, é possível
+carregar a chave pública correta. Os arquivos são binários e contêm unicamente os bytes
+da chave pública.
+
+Encontra-se, a seguir, exemplo de código C++ que utiliza a libsodium12 para validar a
+assinatura digital de um QR Code. A função TesteValidaAssinatura() faz a validação da
+assinatura digital.
+
+#include <fstream>
+#include <cctype>
+#include <algorithm>
+#include <sodium.h>
+
+//==============================================================================
+
+int hexValue(int c) {
+
+
+12
+     Disponível em <https://github.com/jedisct1/libsodium>.
+
+
+
+
+                                                       28
+        QR CODE NO BOLETIM DE URNA | MANUAL PARA CRIAÇÃO DE APLICATIVOS DE LEITURA
+
+
+    if (c >= ‘0’ && c <= ‘9’) return c - ‘0’;
+    if (c >= ‘A’ && c <= ‘F’) return c - ‘A’ + 10;
+    if (c >= ‘a’ && c <= ‘f’) return c - ‘a’ + 10;
+    return -1;
+}
+
+//=================================================================================
+
+std::vector<unsigned char> HexToBytes(const std::string & value) {
+    if (value.empty() || not std::all_of(value.begin(), value.end(), ::isxdigit)) {
+        throw std::logic_error(“Erro”);
+    }
+
+    std::vector<unsigned char> bytes;
+    for (int i=0, n = value.size(); i< n-1; i+=2) {
+        int x1 = hexValue(value[i]);
+        int x2 = hexValue(value[i+1]);
+
+        if (x1 >= 0 && x2 >= 0) {
+            bytes.push_back(x1*16 + x2);
+        }
+    }
+    return bytes;
+}
+
+//=================================================================================
+
+std::vector<unsigned char> RecuperaConteudoDaChave(const std::string & chavePublica)
+{
+    std::ifstream ifs(chavePublica.c_str(), std::ios::binary| std::ios::ate);
+    std::ifstream::pos_type pos = ifs.tellg();
+
+    std::vector<char> resultado(pos);
+
+    ifs.seekg(0, std::ios::beg);
+    ifs.read(&resultado[0], pos);
+
+    return std::vector<unsigned char>(resultado.begin(), resultado.end());
+}
+
+//=================================================================================
+
+const std::vector<unsigned char> ConverteStringHexadecimalEmBytes(const std::string
+& hexString) {
+    return HexToBytes(hexString);
+}
+
+//=================================================================================
+
+const std::vector<unsigned char> RecuperaConteudoDaChavePublica() {
+    const std::string chavePublica = “sacqrcode.pub”;
+    return RecuperaConteudoDaChave(chavePublica);
+}
+
+//=================================================================================
+
+int VerificaAssinatura(std::vector<unsigned char> & assinatura, std::vector<unsigned
+char> & dadoASerValidado, std::vector<unsigned char> & conteudoDaChavePublica) {
+          std::vector<unsigned char> assinaturaComDadoAssinado(assinatura.begin(),
+assinatura.end());
+          assinaturaComDadoAssinado.insert(assinaturaComDadoAssinado.end(),
+dadoASerValidado.begin(), dadoASerValidado.end());
+
+    unsigned long long tamanhoDaMensagem = dadoASerValidado.size();
+
+
+
+
+                                           29
+         QR CODE NO BOLETIM DE URNA | MANUAL PARA CRIAÇÃO DE APLICATIVOS DE LEITURA
+
+
+    return crypto_sign_open(dadoASerValidado.data(), &tamanhoDaMensagem,assinatur
+aComDadoAssinado.data(),assinaturaComDadoAssinado.size(), conteudoDaChavePublica.
+data());
+}
+
+//=================================================================================
+
+void TesteValidaAssinatura() {
+  const std::string conteudoASerValidado = “ORIG:VOTA ORLC:LEG PROC:15000 DTPL:20181007
+PLEI:15100 TURN:1 FASE:S UNFE:AC MUNI:1392 ZONA:9 SECA:16 AGRE:17.18.19.100
+IDUE:1760649 IDCA:570456574823123094241262 VERS:6.28.0.0 LOCA:4 APTO:51 COMP:1
+FALT:50 HBMA:0 DTAB:20181007 HRAB:171629 DTFC:20181007 HRFC:172157 IDEL:15103 CARG:6
+TIPO:1 VERC:201806081310 PART:91 9101:1 LEGP:0 TOTP:1 NOMI:1 LEGC:0 BRAN:0 NULO:0
+TOTC:1 CARG:7 TIPO:1 VERC:201806081310 PART:91 91001:1 LEGP:0 TOTP:1 NOMI:1 LEGC:0
+BRAN:0 NULO:0 TOTC:1 CARG:5 TIPO:0 VERC:201806081310 911:1 921:1 NOMI:2 BRAN:0 NULO:0
+TOTC:2 CARG:3 TIPO:0 VERC:201806081310 91:1 NOMI:1 BRAN:0 NULO:0 TOTC:1 IDEL:15101
+CARG:1 TIPO:0 VERC:201806081310 91:1 NOMI:1 BRAN:0 NULO:0 TOTC:1”;
+
+    const std::string hashConteudoASerValidado =
+
+“3DE87905B357B6D0A3E72381BA2DA396EF08D8D163FAC2FD7E1F8AC5B50ECF7C9ED94D23F74292B64B
+5B8A31297D0ECA315276A567862610E A1FFA039DA5C4F7”;
+
+    std::vector<unsigned char> conteudoDaChavePublica = RecuperaConteudoDaChavePublica();
+    std::vector<unsigned char> assinatura =
+ConverteStringHexadecimalEmBytes(“CF3AF898467A5B7A52D33D53BC037E2642A8DA996903FC252
+217E9C033E2F291”);
+    std::vector<unsigned char> dadoASerValidado = ConverteStringHexadecimalEmBytes(
+hashConteudoASerValidado);
+      int resultadoDaVerificacao = VerificaAssinatura(assinatura, dadoASerValidado,
+conteudoDaChavePublica);
+
+    if (resultadoDaVerificacao == 0) {
+        printf(“Assinatura OK.\n”);
+    } else {
+        printf(“Erro na assinatura.\n”);
+    }
+
+
+}
+
+
+
+
+                                            30
+         QR CODE NO BOLETIM DE URNA | MANUAL PARA CRIAÇÃO DE APLICATIVOS DE LEITURA
+
+
+
+
+ COMPLEMENTO DOS DADOS – NOMES DOS
+ CANDIDATOS, CARGOS E ELEIÇÕES
+
+O relatório conta com uma série de nomes, conforme consta na descrição do boletim
+de urna impresso: processo eleitoral, pleito, eleições, municípios, cargos, partidos e
+candidatos. Como mencionado anteriormente, a inclusão desses nomes no QR Code
+tornaria necessária a utilização de um número muito maior de códigos de barras. Dessa
+forma, os nomes foram omitidos e, em seu lugar, foram usados códigos para referência.
+
+
+Depois de concluída a preparação das urnas, às vésperas da realização do pleito,
+a Justiça Eleitoral publicará na internet um conjunto de arquivos com os nomes do
+processo eleitoral, do pleito, das eleições, dos municípios, dos cargos, dos partidos e dos
+candidatos. Esses nomes serão obtidos conforme os códigos presentes no QR Code.
+
+
+Esse arquivo de complemento dos dados tem o formato JSON. Um exemplo desse
+arquivo é apresentado a seguir. Ele inclui a assinatura digital, que também utiliza EdDSA
+(o mesmo algoritmo utilizado no QR Code, mas com chaves diferentes).
+
+
+Os arquivos serão disponibilizados na internet e poderão ser baixados no seguinte
+endereço, cujas informações estão especificadas na sequência:
+
+
+  <http://qrcodenobu.tse.jus.br/json-bu/fase/idProcesso/fpppppufmmmmm-qbu.js>
+
+  fase = fase dos dados por extenso, em minúsculo (oficial; simulado; treinamento).
+
+  idProcesso = número do processo eleitoral.
+
+  f = fase dos dados (o – oficial; s – simulado; t – treinamento).
+
+  ppppp = número do pleito, com zeros à esquerda.
+
+  uf = sigla da unidade federativa, em minúsculo.
+
+  mmmmm = número do município, com zeros à esquerda.
+
+
+
+
+                                            31
+             QR CODE NO BOLETIM DE URNA | MANUAL PARA CRIAÇÃO DE APLICATIVOS DE LEITURA
+
+
+
+Schema JSON
+
+/**
+ * Contrato para os dados de complemento do QR Code do boletim de urna.
+ */
+{
+   “$schema”: “http://json-schema.org/draft-04/schema#”,
+   “title”: “QRCode-BU”,
+   “description”: “Contrato para os dados de complemento do QRCode
+ do boletim de urna.”,
+   “type”: “object”,
+   “properties”: {
+      “processoEleitoral”: {
+         “$ref”: “#/definitions/processoEleitoral”
+      },
+      “assinatura”: {
+         “description”: “A assinatura do arquivo.”,
+         “type”: “string”
+      }
+   },
+   “required”: [“processoEleitoral”, “assinatura”],
+
+  “definitions”: {
+    /**
+     * Objeto com os dados do processo.
+     */
+    “processoEleitoral”: {
+       “description”: “Objeto com os dados do processo.”,
+       “type”: “object”,
+       “properties”: {
+          “codigo”: {
+             “description”: “O código do processo.”,
+             “type”: “integer”,
+             “minimum”: 0,
+             “maximum”: 99999
+          },
+          “nome”: {
+             “description”: “O nome do processo.”,
+             “type”: “string”
+          },
+          “pleito”: {
+             “$ref”: “#/definitions/pleito”
+          },
+          “municipio”: {
+             “$ref”: “#/definitions/municipio”
+          },
+          “eleicoes”: {
+             “description”: “Lista de eleições do boletim de urna.”,
+             “type”: “array”,
+             “items”: {
+                “$ref”: “#/definitions/eleicao”
+             }
+          },
+          “consultasPopulares”: {
+             “description”: “Lista de consultas populares do boletim de urna.”,
+             “type”: “array”,
+             “items”: {
+                “$ref”: “#/definitions/consultaPopular”
+             }
+          }
+       },
+       “required”: [“codigo”, “nome”, “pleito”, “municipio”]
+
+
+
+
+                                                                   32
+          QR CODE NO BOLETIM DE URNA | MANUAL PARA CRIAÇÃO DE APLICATIVOS DE LEITURA
+
+
+},
+
+/**
+ * O pleito das eleições.
+ */
+“pleito”: {
+   “description”: “O pleito das eleições.”,
+   “type”: “object”,
+   “properties”: {
+      “codigo”: {
+         “description”: “O código do pleito.”,
+         “type”: “integer”,
+         “minimum”: 0,
+         “maximum”: 99999
+      },
+      “nome”: {
+         “description”: “O nome do pleito.”,
+         “type”: “string”
+      },
+      “data”: {
+         “description”: “A data do pleito.”,
+         “type”: “string”
+      }
+   },
+   “required”: [“codigo”, “nome”, “data”]
+},
+
+/**
+ * Os dados do município do boletim de urna.
+ */
+“municipio”: {
+   “description”: “Os dados do município do boletim de urna.”,
+   “type”: “object”,
+   “properties”: {
+      “numero”: {
+         “description”: “O número do município.”,
+         “type”: “integer”,
+         “minimum”: 0,
+         “maximum”: 99999
+      },
+      “nome”: {
+         “description”: “O nome do município.”,
+         “type”: “string”
+      }
+   },
+   “required”: [“numero”, “nome”]
+},
+
+/**
+ * Objeto com os dados de um partido.
+ */
+“partido”: {
+   “description”: “Objeto com os dados de um partido.”,
+   “type”: “object”,
+   “properties”: {
+      “numero”: {
+         “description”: “O número do partido.”,
+         “type”: “integer”,
+         “minimum”: 0,
+         “maximum”: 99
+      },
+      “sigla”: {
+         “description”: “A sigla do partido.”,
+         “type”: “string”
+      },
+
+
+
+
+                                                             33
+            QR CODE NO BOLETIM DE URNA | MANUAL PARA CRIAÇÃO DE APLICATIVOS DE LEITURA
+
+
+       “nome”: {
+         “description”: “O nome do partido.”,
+         “type”: “string”
+       }
+     },
+     “required”: [“numero”, “sigla”, “nome”]
+},
+
+/**
+ * Objeto com os dados do cargo.
+ */
+“cargo”: {
+   “description”: “Objeto com os dados do cargo.”,
+   “type”: “object”,
+   “properties”: {
+      “codigo”: {
+         “description”: “O código do cargo.”,
+         “type”: “integer”,
+         “minimum”: 0,
+         “maximum”: 99
+      },
+      “versao”: {
+         “description”: “A versão do arquivo do ‘Candidaturas’ utilizado na geração.”,
+         “type”: “string”
+      },
+      “nomeNeutro”: {
+         “description”: “O nome neutro do cargo.”,
+         “type”: “string”
+      },
+      “nomeMasculino”: {
+         “description”: “O nome masculino do cargo.”,
+         “type”: “string”
+      },
+      “nomeFeminino”: {
+         “description”: “O nome feminino do cargo.”,
+         “type”: “string”
+      },
+      “nomeAbreviado”: {
+         “description”: “O nome abreviado do cargo.”,
+         “type”: “string”
+      }
+   },
+   “required”: [“codigo”, “versao”, “nomeNeutro”, “nomeMasculino”, “nomeFeminino”, “nomeAbreviado”];
+},
+
+/**
+ * Objeto com os dados do candidato.
+ */
+“candidato”: {
+   “description”: “Objeto com os dados do candidato.”,
+   “type”: “object”,
+   “properties”: {
+      “codigo”: {
+         “description”: “O código do candidato.”,
+         “type”: “integer”
+      },
+      “nome”: {
+         “description”: “O nome do candidato.”,
+         “type”: “string”
+      }
+   },
+   “required”: [“codigo”, “nome”]
+},
+
+/**
+
+
+
+
+                                                           34
+         QR CODE NO BOLETIM DE URNA | MANUAL PARA CRIAÇÃO DE APLICATIVOS DE LEITURA
+
+
+ * Objeto com os dados da candidatura.
+ */
+“candidatura”: {
+   “description”: “Objeto com os dados da candidatura.”,
+   “type”: “object”,
+   “properties”: {
+      “numero”: {
+         “description”: “O número da candidatura.”,
+         “type”: “integer”,
+         “minimum”: 0,
+         “maximum”: 99999
+      },
+      “titular”: {
+         “$ref”: “#/definitions/candidato”
+      },
+      “suplentes”: {
+         “description”: “Lista de vices e suplentes.”,
+         “type”: “array”,
+         “items”: {
+            “$ref”: “#/definitions/candidato”
+         }
+      }
+   },
+   “required”: [“numero”, “titular”]
+},
+
+/**
+ * Lista de candidaturas de um partido.
+ */
+“candidaturasPorPartido”: {
+   “description”: “Lista de candidaturas de um partido.”,
+   “type”: “object”,
+   “properties”: {
+      “partido”: {
+         “$ref”: “#/definitions/partido”
+      },
+      “candidaturas”: {
+         “description”: “Lista de candidaturas do partido.”,
+         “type”: “array”,
+         “items”: {
+            “$ref”: “#/definitions/candidatura”
+         }
+      }
+   },
+   “required”: [“partido”, “candidaturas”]
+},
+
+/**
+ * Lista de partidos de um cargo.
+ */
+“partidosPorCargo”: {
+   “description”: “Lista de partidos de um cargo.”,
+   “type”: “object”,
+   “properties”: {
+      “cargo”: {
+         “$ref”: “#/definitions/cargo”
+      },
+      “candidaturasPorPartidos”: {
+         “description”: “Lista de candidaturas e partidos.”,
+         “type”: “array”,
+         “items”: {
+            “$ref”: “#/definitions/candidaturasPorPartido”
+         }
+      }
+   },
+
+
+
+
+                                                               35
+           QR CODE NO BOLETIM DE URNA | MANUAL PARA CRIAÇÃO DE APLICATIVOS DE LEITURA
+
+
+     “required”: [“cargo”, “candidaturasPorPartidos”]
+},
+
+/**
+ * Objeto com os dados de uma eleição.
+ */
+“eleicao”: {
+   “description”: “Objeto com os dados de uma eleição.”,
+   “type”: “object”,
+   “properties”: {
+      “codigo”: {
+         “description”: “O código da eleição.”,
+         “type”: “integer”,
+         “minimum”: 0,
+         “maximum”: 99999
+      },
+      “nome”: {
+         “description”: “O nome da eleição.”,
+         “type”: “string”
+      },
+      “partidosPorCargos”: {
+         “description”: “A data do pleito.”,
+         “type”: “array”,
+         “items”: {
+            “$ref”: “#/definitions/partidosPorCargo”
+         }
+      }
+   },
+   “required”: [“codigo”, “nome”, “partidosPorCargos”]
+},
+
+/**
+ * Objeto com os dados de uma resposta.
+ */
+“resposta”: {
+   “description”: “Objeto com os dados de uma resposta.”,
+   “type”: “object”,
+   “properties”: {
+      “numero”: {
+         “description”: “O número da resposta.”,
+         “type”: “integer”,
+         “minimum”: 0,
+         “maximum”: 99
+      },
+      “descricao”: {
+         “description”: “A descrição da resposta.”,
+         “type”: “string”
+      }
+   },
+   “required”: [“numero”, “descricao”]
+},
+
+/**
+ * Objeto com os dados de uma pergunta.
+ */
+“pergunta”: {
+   “description”: “Objeto com os dados de uma pergunta.”,
+   “type”: “object”,
+   “properties”: {
+      “codigo”: {
+         “description”: “O código da pergunta.”,
+         “type”: “integer”,
+         “minimum”: 0,
+         “maximum”: 99
+      },
+
+
+
+
+                                                            36
+                      QR CODE NO BOLETIM DE URNA | MANUAL PARA CRIAÇÃO DE APLICATIVOS DE LEITURA
+
+
+               “descricao”: {
+                  “description”: “A descrição da pergunta.”,
+                  “type”: “string”
+               },
+               “versao”: {
+                  “description”: “A versão do arquivo do Configurador de Eleições utilizado.”,
+                  “type”: “string”
+               },
+              “respostas”: {
+                  “description”: “Lista de respostas da pergunta.”,
+                  “type”: “array”,
+                  “items”: {
+                     “$ref”: “#/definitions/resposta”
+                  }
+               }
+             },
+             “required”: [“codigo”, “descricao”, “versao”, “respostas”]
+        },
+
+
+        /**
+         * Objeto com as perguntas de uma consulta popular.
+         */
+        “consultaPopular”: {
+           “description”: “Objeto com as perguntas de uma consulta popular.”,
+           “type”: “object”,
+           “properties”: {
+              “codigo”: {
+                 “description”: “O código da consulta popular.”,
+                 “type”: “integer”,
+                 “minimum”: 0,
+                 “maximum”: 99999
+              },
+              “nome”: {
+                 “description”: “O nome da consulta popular.”,
+                 “type”: “string”
+              },
+              “perguntas”: {
+                 “description”: “Lista de perguntas da consulta.”,
+                 “type”: “array”,
+                    “items”: {
+                       “$ref”: “#/definitions/pergunta”
+                    }
+                }
+             },
+             “required”: [“codigo”, “nome”, “perguntas”]
+        }
+    }
+}
+
+
+Exemplo
+{
+ “assinatura”: “7fa018741fc5838c0b74235a02fc639a5994e79272d99775e7681c69992c8898e3516ce1991f30d8260cf789763076c
+db18d3575ea7ab39eeb8002e921366505”,“7fa018741fc583
+ “processoEleitoral”: {
+   “codigo”: 15000,
+   “eleicoes”: [
+     {
+      “codigo”: 15103,
+      “partidosPorCargos”: [
+              {
+                  “candidaturasPorPartidos”: [
+
+
+
+
+                                                                          37
+        QR CODE NO BOLETIM DE URNA | MANUAL PARA CRIAÇÃO DE APLICATIVOS DE LEITURA
+
+
+{
+  “partido”: {
+    “sigla”: “PEsp”,
+    “numero”: 91,
+    “nome”: “Partido dos Esportes”
+  },
+  “candidaturas”: [{
+    “numero”: 91,
+    “suplentes”: [{
+      “codigo”: “47”,
+      “nome”: “Tênis”
+    }],
+    “titular”: {
+      “codigo”: “46”,
+      “nome”: “Volei”
+    }
+  }]
+},
+{
+  “partido”: {
+    “sigla”: “PPartido Ritmos Musicais”,
+    “numero”: 92,
+    “nome”: “Partido dos Ritmos Musicais”
+  },
+  “candidaturas”: [{
+    “numero”: 92,
+    “suplentes”: [{
+      “codigo”: “49”,
+      “nome”: “Pagode”
+    }],
+    “titular”: {
+      “codigo”: “48”,
+      “nome”: “Forró”
+    }
+  }]
+},
+{
+  “partido”: {
+    “sigla”: “PProf”,
+    “numero”: 93,
+    “nome”: “Partido das Profissoes”
+  },
+  “candidaturas”: [{
+    “numero”: 93,
+    “suplentes”: [{
+      “codigo”: “51”,
+      “nome”: “Bibliotecária”
+    }],
+    “titular”: {
+      “codigo”: “50”,
+     “nome”: “Médica”
+    }
+  }]
+},
+{
+  “partido”: {
+    “sigla”: “PFest”,
+    “numero”: 94,
+    “nome”: “Partido das Festas Populares”
+  },
+    “candidaturas”: [{
+
+
+
+
+                                             38
+        QR CODE NO BOLETIM DE URNA | MANUAL PARA CRIAÇÃO DE APLICATIVOS DE LEITURA
+
+
+      “numero”: 94,
+      “suplentes”: [{
+        “codigo”: “53”,
+        “nome”: “Natal”
+      }],
+      “titular”: {
+        “codigo”: “52”,
+        “nome”: “Dia da Independência do Brasil”
+      }
+    }]
+  },
+  {
+    “partido”: {
+      “sigla”: “PFolc”,
+      “numero”: 95,
+      “nome”: “Partido do Folclore”
+    },
+    “candidaturas”: [{
+      “numero”: 95,
+      “suplentes”: [{
+        “codigo”: “55”,
+        “nome”: “Boitatá”
+      }],
+      “titular”: {
+        “codigo”: “54”,
+        “nome”: “Boto Cor-de-Rosa”
+      }
+    }]
+  }
+ ],
+ “cargo”: {
+    “codigo”: 3,
+    “nomeMasculino”: “Governador”,
+    “nomeFeminino”: “Governadora”,
+    “nomeNeutro”: “Governador”,
+    “nomeAbreviado”: “Gov.”,
+    “versao”: “201806121104”
+ }
+},
+{
+  “candidaturasPorPartidos”: [
+   {
+     “partido”: {
+       “sigla”: “PEsp”,
+       “numero”: 91,
+       “nome”: “Partido dos Esportes”
+     },
+     “candidaturas”: [{
+       “numero”: 911,
+       “suplentes”: [
+          {
+            “codigo”: “57”,
+            “nome”: “Esgrima”
+          },
+          {
+            “codigo”: “58”,
+            “nome”: “Rúgbi”
+          }
+       ],
+       “titular”: {
+     “codigo”: “56”,
+
+
+
+
+                                                   39
+     QR CODE NO BOLETIM DE URNA | MANUAL PARA CRIAÇÃO DE APLICATIVOS DE LEITURA
+
+
+       “nome”: “Natação”
+    }
+  }]
+},
+{
+  “partido”: {
+    “sigla”: “PPartido Ritmos Musicais”,
+    “numero”: 92,
+    “nome”: “Partido dos Ritmos Musicais”
+  },
+  “candidaturas”: [{
+    “numero”: 921,
+    “suplentes”: [
+       {
+         “codigo”: “60”,
+         “nome”: “Tango”
+       },
+       {
+         “codigo”: “61”,
+         “nome”: “Música Disco”
+       }
+    ],
+    “titular”: {
+       “codigo”: “59”,
+       “nome”: “Samba”
+    }
+  }]
+},
+{
+  “partido”: {
+    “sigla”: “PProf”,
+    “numero”: 93,
+    “nome”: “Partido das Profissoes”
+  },
+  “candidaturas”: [{
+    “numero”: 931,
+    “suplentes”: [
+       {
+     “codigo”: “63”,
+     “nome”: “Aeromoça”
+   },
+   {
+     “codigo”: “64”,
+     “nome”: “Detetive”
+   }
+    ],
+    “titular”: {
+       “codigo”: “62”,
+       “nome”: “Enfermeira”
+    }
+  }]
+},
+{
+  “partido”: {
+    “sigla”: “PFest”,
+    “numero”: 94,
+    “nome”: “Partido das Festas Populares”
+  },
+  “candidaturas”: [{
+    “numero”: 941,
+  “suplentes”: [
+
+
+
+
+                                             40
+          QR CODE NO BOLETIM DE URNA | MANUAL PARA CRIAÇÃO DE APLICATIVOS DE LEITURA
+
+
+      {
+        “codigo”: “66”,
+        “nome”: “Lavagem do Bonfim”
+      },
+      {
+        “codigo”: “67”,
+        “nome”: “Dia das Bruxas”
+      }
+    ],
+    “titular”: {
+      “codigo”: “65”,
+      “nome”: “Festa Junina”
+      }
+    }]
+  },
+  {
+    “partido”: {
+      “sigla”: “PFolc”,
+      “numero”: 95,
+      “nome”: “Partido do Folclore”
+    },
+    “candidaturas”: [{
+      “numero”: 951,
+      “suplentes”: [
+         {
+           “codigo”: “69”,
+           “nome”: “Caipora”
+         },
+         {
+           “codigo”: “70”,
+           “nome”: “Mãe do Ouro”
+         }
+      ],
+      “titular”: {
+         “codigo”: “68”,
+         “nome”: “Saci-Pererê”
+      }
+    }]
+  }
+  ],
+  “cargo”: {
+     “codigo”: 5,
+     “nomeMasculino”: “Senador”,
+     “nomeFeminino”: “Senadora”,
+     “nomeNeutro”: “Senador”,
+     “nomeAbreviado”: “Sen.”,
+     “versao”: “201806121104”
+  }
+},
+{
+  “candidaturasPorPartidos”: [
+     {
+       “partido”: {
+         “sigla”: “PEsp”,
+         “numero”: 91,
+         “nome”: “Partido dos Esportes”
+       },
+       “candidaturas”: [
+         {
+           “numero”: 9101,
+           “suplentes”: [],
+
+
+
+
+                                             41
+     QR CODE NO BOLETIM DE URNA | MANUAL PARA CRIAÇÃO DE APLICATIVOS DE LEITURA
+
+
+    “titular”: {
+      “codigo”: “71”,
+      “nome”: “Atletismo”
+    }
+  },
+  {
+    “numero”: 9102,
+    “suplentes”: [],
+    “titular”: {
+      “codigo”: “72”,
+      “nome”: “Ginástica Artística”
+    }
+  },
+  {
+    “numero”: 9103,
+    “suplentes”: [],
+    “titular”: {
+      “codigo”: “73”,
+      “nome”: “Boxe”
+    }
+  },
+  {
+    “numero”: 9104,
+    “suplentes”: [],
+    “titular”: {
+      “codigo”: “74”,
+      “nome”: “Halterofilismo”
+    }
+  },
+  {
+    “numero”: 9105,
+    “suplentes”: [],
+    “titular”: {
+      “codigo”: “75”,
+      “nome”: “Golfe”
+    }
+  }
+  ]
+},
+{
+  “partido”: {
+    “sigla”: “PPartido Ritmos Musicais”,
+    “numero”: 92,
+    “nome”: “Partido dos Ritmos Musicais”
+  },
+  “candidaturas”: [
+    {
+      “numero”: 9201,
+      “suplentes”: [],
+      “titular”: {
+        “codigo”: “76”,
+        “nome”: “Sertanejo”
+      }
+    },
+    {
+      “numero”: 9202,
+      “suplentes”: [],
+      “titular”: {
+        “codigo”: “77”,
+        “nome”: “Reggae”
+      }
+
+
+
+
+                                            42
+     QR CODE NO BOLETIM DE URNA | MANUAL PARA CRIAÇÃO DE APLICATIVOS DE LEITURA
+
+
+  },
+  {
+    “numero”: 9203,
+    “suplentes”: [],
+    “titular”: {
+      “codigo”: “78”,
+      “nome”: “Música Clássica”
+    }
+  },
+  {
+    “numero”: 9204,
+    “suplentes”: [],
+    “titular”: {
+      “codigo”: “79”,
+      “nome”: “Ópera”
+    }
+  },
+  {
+    “numero”: 9205,
+    “suplentes”: [],
+    “titular”: {
+      “codigo”: “80”,
+      “nome”: “Mariachi”
+    }
+  }
+  ]
+},
+{
+  “partido”: {
+    “sigla”: “PProf”,
+    “numero”: 93,
+    “nome”: “Partido das Profissoes”
+  },
+  “candidaturas”: [
+    {
+      “numero”: 9301,
+      “suplentes”: [],
+      “titular”: {
+        “codigo”: “81”,
+        “nome”: “Artista”
+      }
+    },
+    {
+      “numero”: 9302,
+      “suplentes”: [],
+      “titular”: {
+        “codigo”: “82”,
+        “nome”: “Operário”
+      }
+    },
+    {
+      “numero”: 9303,
+      “suplentes”: [],
+      “titular”: {
+        “codigo”: “83”,
+        “nome”: “Astronauta”
+      }
+    },
+    {
+      “numero”: 9304,
+      “suplentes”: [],
+
+
+
+
+                                        43
+        QR CODE NO BOLETIM DE URNA | MANUAL PARA CRIAÇÃO DE APLICATIVOS DE LEITURA
+
+
+    “titular”: {
+      “codigo”: “84”,
+      “nome”: “Cozinheira”
+    }
+  },
+  {
+    “numero”: 9305,
+    “suplentes”: [],
+    “titular”: {
+      “codigo”: “85”,
+       “nome”: “Fotógrafo”
+   }
+    }
+  ]
+},
+{
+  “partido”: {
+    “sigla”: “PFest”,
+    “numero”: 94,
+    “nome”: “Partido das Festas Populares”
+  },
+  “candidaturas”: [
+    {
+      “numero”: 9401,
+      “suplentes”: [],
+      “titular”: {
+        “codigo”: “86”,
+        “nome”: “Boi-bumbá”
+      }
+    },
+    {
+      “numero”: 9402,
+      “suplentes”: [],
+      “titular”: {
+        “codigo”: “87”,
+        “nome”: “Peão de Boiadeiro”
+      }
+    },
+    {
+      “numero”: 9403,
+      “suplentes”: [],
+      “titular”: {
+        “codigo”: “88”,
+        “nome”: “Oktoberfest”
+      }
+    },
+    {
+      “numero”: 9404,
+      “suplentes”: [],
+      “titular”: {
+        “codigo”: “89”,
+        “nome”: “Semana Farroupilha”
+      }
+  },
+  {
+    “numero”: 9405,
+    “suplentes”: [],
+    “titular”: {
+      “codigo”: “90”,
+      “nome”: “Cavalhadas”
+    }
+
+
+
+
+                                             44
+        QR CODE NO BOLETIM DE URNA | MANUAL PARA CRIAÇÃO DE APLICATIVOS DE LEITURA
+
+
+      }
+    ]
+  },
+  {
+    “partido”: {
+      “sigla”: “PFolc”,
+      “numero”: 95,
+      “nome”: “Partido do Folclore”
+    },
+    “candidaturas”: [
+      {
+        “numero”: 9501,
+        “suplentes”: [],
+        “titular”: {
+          “codigo”: “91”,
+          “nome”: “Lobisomem”
+        }
+      },
+      {
+        “numero”: 9502,
+        “suplentes”: [],
+        “titular”: {
+          “codigo”: “92”,
+          “nome”: “Cuca”
+        }
+      },
+      {
+        “numero”: 9503,
+        “suplentes”: [],
+        “titular”: {
+          “codigo”: “93”,
+          “nome”: “Negrinho do Pastoreio”
+        }
+      },
+      {
+        “numero”: 9504,
+        “suplentes”: [],
+        “titular”: {
+          “codigo”: “94”,
+          “nome”: “Mapinguari”
+        }
+      }
+    ]
+  }
+  ],
+  “cargo”: {
+     “codigo”: 6,
+     “nomeMasculino”: “Deputado Federal”,
+     “nomeFeminino”: “Deputada Federal”,
+     “nomeNeutro”: “Deputado Federal”,
+     “nomeAbreviado”: “D. Fed.”,
+     “versao”: “201806121104”
+  }
+},
+{
+  “candidaturasPorPartidos”: [
+     {
+       “partido”: {
+        “sigla”: “PEsp”,
+        “numero”: 91,
+        “nome”: “Partido dos Esportes”
+
+
+
+
+                                            45
+      QR CODE NO BOLETIM DE URNA | MANUAL PARA CRIAÇÃO DE APLICATIVOS DE LEITURA
+
+
+
+ },
+ “candidaturas”: [
+   {
+     “numero”: 91001,
+     “suplentes”: [],
+     “titular”: {
+       “codigo”: “96”,
+       “nome”: “Basquete”
+     }
+   },
+  {
+    “numero”: 91002,
+    “suplentes”: [],
+    “titular”: {
+      “codigo”: “95”,
+      “nome”: “Hipismo”
+    }
+  },
+  {
+    “numero”: 91003,
+    “suplentes”: [],
+    “titular”: {
+      “codigo”: “98”,
+      “nome”: “Patinação”
+    }
+  }
+  ]
+},
+{
+  “partido”: {
+    “sigla”: “PPartido Ritmos Musicais”,
+    “numero”: 92,
+    “nome”: “Partido dos Ritmos Musicais”
+  },
+  “candidaturas”: [
+    {
+      “numero”: 92001,
+      “suplentes”: [],
+      “titular”: {
+        “codigo”: “101”,
+        “nome”: “Frevo”
+      }
+    },
+    {
+      “numero”: 92002,
+      “suplentes”: [],
+      “titular”: {
+        “codigo”: “102”,
+        “nome”: “Jazz”
+      }
+    },
+    {
+      “numero”: 92003,
+      “suplentes”: [],
+      “titular”: {
+        “codigo”: “103”,
+        “nome”: “Música Eletrônica”
+      }
+    }
+  ]
+},
+
+
+
+
+                                            46
+     QR CODE NO BOLETIM DE URNA | MANUAL PARA CRIAÇÃO DE APLICATIVOS DE LEITURA
+
+
+{
+  “partido”: {
+    “sigla”: “PProf”,
+    “numero”: 93,
+    “nome”: “Partido das Profissoes”
+  },
+  “candidaturas”: [
+    {
+      “numero”: 93001,
+      “suplentes”: [],
+      “titular”: {
+        “codigo”: “106”,
+        “nome”: “Garçom”
+      }
+    },
+    {
+      “numero”: 93002,
+      “suplentes”: [],
+      “titular”: {
+        “codigo”: “107”,
+        “nome”: “Motorista”
+      }
+    },
+    {
+      “numero”: 93003,
+      “suplentes”: [],
+      “titular”: {
+        “codigo”: “108”,
+        “nome”: “Bombeira”
+      }
+    }
+  ]
+},
+{
+  “partido”: {
+    “sigla”: “PFest”,
+    “numero”: 94,
+    “nome”: “Partido das Festas Populares”
+  },
+  “candidaturas”: [
+    {
+      “numero”: 94001,
+      “suplentes”: [],
+      “titular”: {
+        “codigo”: “111”,
+        “nome”: “Páscoa”
+      }
+    },
+    {
+      “numero”: 94002,
+      “suplentes”: [],
+      “titular”: {
+        “codigo”: “112”,
+        “nome”: “Réveillon”
+      }
+    },
+    {
+      “numero”: 94003,
+      “suplentes”: [],
+      “titular”: {
+        “codigo”: “113”,
+        “nome”: “Festa da Uva”
+      }
+    }
+
+
+
+
+                                             47
+                   QR CODE NO BOLETIM DE URNA | MANUAL PARA CRIAÇÃO DE APLICATIVOS DE LEITURA
+
+
+               ]
+             },
+             {
+               “partido”: {
+                 “sigla”: “PFolc”,
+                 “numero”: 95,
+                 “nome”: “Partido do Folclore”
+               },
+               “candidaturas”: []
+             }
+            ],
+            “cargo”: {
+               “codigo”: 7,
+               “nomeMasculino”: “Deputado Estadual”,
+               “nomeFeminino”: “Deputada Estadual”,
+               “nomeNeutro”: “Deputado Estadual”,
+               “nomeAbreviado”: “D. Est.”,
+               “versao”: “201806121104”
+            }
+              }
+           ],
+           “nome”: “Ele 2018-1º T Deputados e Senadores”
+         },
+         {
+           “codigo”: 15101,
+           “partidosPorCargos”: [],
+           “nome”: “Eleições 2018 - 1º Turno Presidente”
+         }
+        ],
+        “consultasPopulares”: [],
+        “municipio”: {
+           “numero”: 1392,
+           “nome”: “RIO BRANCO”
+        },
+        “nome”: “Cenário 15000 - Eleições Gerais 2018”,
+        “pleito”: {
+           “codigo”: 15100,
+           “data”: “07/10/2018”,
+           “nome”: “1º Turno”
+        }
+    }
+}
+
+
+
+Verificação de assinatura do arquivo de complemento dos dados
+
+Os arquivos de formato JSON mencionados também possuem assinatura digital EdDSA,
+como citado anteriormente. A seguir, são apresentados dados mais detalhados sobre o
+acesso às chaves públicas e um exemplo de código-fonte Java para verificação de assinatura.
+
+
+A chave pública está disponível no endereço:
+
+
+
+    <http://qrcodenobu.tse.jus.br/json-bu/s99999br-av.js> para processos eleitorais em qualquer fase.
+
+
+
+
+                                                           48
+              QR CODE NO BOLETIM DE URNA | MANUAL PARA CRIAÇÃO DE APLICATIVOS DE LEITURA
+
+
+
+Esses arquivos contêm um único campo com a chave pública em hexadecimal.
+
+
+Encontra-se, a seguir, um exemplo de código Java utilizando a ed25519-java13 para a
+validação da assinatura digital de um arquivo de complemento. Para manipulação do
+arquivo de complemento e do arquivo de chave foi utilizada a biblioteca JSON-java14.
+
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidKeyException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.security.SignatureException;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.X509EncodedKeySpec;
+import net.i2p.crypto.eddsa.EdDSAEngine;
+import net.i2p.crypto.eddsa.EdDSAPublicKey;
+import net.i2p.crypto.eddsa.Utils;
+import org.json.JSONObject;
+
+public class ExemploAutenticacaoJson {
+
+  public boolean autenticar(JSONObject complementoJson, String chavePublica)
+throws SignatureException, InvalidKeyException, NoSuchAlgorithmException,
+InvalidKeySpecException, UnsupportedEncodingException {
+
+               // Obtem a assinatura e a remove do objeto.
+               String assinatura = complementoJson.getString(“assinatura”);
+               complementoJson.remove(“assinatura”);
+
+              // Carrega a chave publica e prepara o algoritmo.
+              EdDSAEngine engine = new EdDSAEngine(MessageDigest.
+              getInstance(“SHA-512”));
+              X509EncodedKeySpec keySpec = new X509EncodedKeySpec(Utils.
+              hexToBytes(chavePublica));
+              EdDSAPublicKey publicKey = new EdDSAPublicKey(keySpec);
+              engine.initVerify(publicKey);
+
+               // Converte o objeto em string e obtem os bytes.
+               byte[] bytesJson = complementoJson.toString(2).getBytes(“UTF-8”);
+
+               // Verifica a assinatura.
+            return engine.verifyOneShot(bytesJson, Utils.hexToBytes(assinatura));
+        }
+
+}
+
+
+
+
+13
+     Disponível em <https://github.com/str4d/ed25519-java>.
+14
+     Disponível em < https://github.com/stleary/JSON-java>.
+
+
+
+
+                                                       49
+         QR CODE NO BOLETIM DE URNA | MANUAL PARA CRIAÇÃO DE APLICATIVOS DE LEITURA
+
+
+
+
+ GLOSSÁRIO
+
+Abertura da urna
+Momento em que a urna passa a aceitar a coleta de votos.
+
+
+Apuração
+Contabilização do resultado de uma seção eleitoral.
+
+
+Boletim de urna
+Relatório impresso pela urna com o resultado apurado da seção eleitoral, apresentando
+os totais de votos nominais (somente para os candidatos votados), o total de votos por
+partido (no caso de cargos proporcionais), os votos brancos e os nulos para cada cargo.
+Comumente chamado de BU.
+
+
+Cargo
+Ocupação política que está em votação para o preenchimento de uma ou mais vagas, ou
+questionamento que está sendo submetido a consulta popular. São exemplos de cargos:
+prefeito, vereador, presidente, governador, senador, deputado federal, deputado estadual,
+deputado distrital; pode abranger ainda plebiscito para criação de novo município ou
+estado e referendo para aprovação de uma lei.
+
+
+Cargo de consulta
+Cargo correspondente a um plebiscito ou referendo, no qual o resultado corresponde à
+resposta mais votada.
+
+
+Cargo majoritário
+Cargo para o qual o resultado é atribuído aos candidatos que receberam o maior número
+de votos. Prefeito, presidente, governador e senador são cargos majoritários.
+
+
+Cargo proporcional
+Cargo para o qual o resultado é atribuído de acordo com uma fórmula que equaciona o
+total de vagas em disputa e o total de votos que os candidatos do partido ou da coligação
+
+
+
+                                            50
+          QR CODE NO BOLETIM DE URNA | MANUAL PARA CRIAÇÃO DE APLICATIVOS DE LEITURA
+
+
+
+receberam. Vereador, deputado federal, deputado estadual e deputado distrital são
+cargos proporcionais. A urna somente contabiliza os votos para cada candidato e partido
+nesse caso, pois a fórmula só pode ser aplicada na totalização.
+
+
+Cerimônia de Lacração e Assinatura Digital
+Cerimônia pública, com a presença de partidos políticos e coligações, Ordem dos
+Advogados do Brasil e Ministério Público, na qual são apresentados e compilados os
+códigos-fonte dos sistemas eleitorais. São gerados os hashes de cada arquivo produzido,
+os quais são publicados na internet para posterior verificação. Os sistemas também
+são assinados digitalmente para posterior validação. Somente os sistemas produzidos
+durante a cerimônia podem ser utilizados nas eleições.
+
+
+Código de identificação da carga
+Número único que identifica uma urna preparada para a votação. O código de identificação
+da carga associado à identificação da urna (município, zona, seção e número de série do
+hardware) é chamado de correspondência.
+
+
+Comparecimento
+Eleitores que foram habilitados na urna e confirmaram o seu voto para pelo menos um
+cargo.
+
+
+Eleição
+Conjunto de cargos que possuem alguma associação e são disputados no mesmo
+conjunto de localidades. Os cargos de prefeito e vereador fazem parte da mesma eleição
+municipal; plebiscito faz parte de outra eleição.
+
+
+Eleitores aptos
+Eleitores inscritos numa seção eleitoral que podem votar.
+
+
+Eleitores faltosos
+Eleitores que não foram habilitados na urna.
+
+
+Eleitores habilitados por ano de nascimento
+Em seções biométricas, corresponde àqueles eleitores que foram liberados para votar
+pelo presidente da seção eleitoral quando não foi possível o reconhecimento biométrico.
+
+
+                                             51
+         QR CODE NO BOLETIM DE URNA | MANUAL PARA CRIAÇÃO DE APLICATIVOS DE LEITURA
+
+
+
+Eleitores com transferência temporária
+Os eleitores que não estiverem em seu domicílio eleitoral no primeiro, no segundo ou em
+ambos os turnos poderão votar em trânsito nas capitais e nos municípios com mais de
+100 mil eleitores. A configuração do processo eleitoral com várias eleições diferentes
+permite que eleitores que estão temporariamente transferidos possam votar. Se o
+eleitor estiver em trânsito no mesmo estado de seu domicílio eleitoral, poderá votar para
+todos os cargos. Se estiver fora do seu estado, poderá votar apenas para presidente da
+República.
+
+
+Fase da eleição
+Distinção entre os conjuntos de dados do processo eleitoral, com a finalidade de separar
+a operação dos sistemas eleitorais entre os ambientes de produção e homologação.
+A Justiça Eleitoral utiliza três fases: oficial, ambiente de produção, com dados reais de
+eleitores e candidatos; simulado, homologação e desenvolvimento, com dados fictícios
+de eleitores e candidatos; e treinamento, com dados fictícios de eleitores e candidatos,
+criados especificamente para que eleitores, mesários e escrutinadores aprendam a
+operar a urna eletrônica.
+
+
+Fechamento da urna
+Momento em que a urna não mais aceita a coleta de votos.
+
+
+Local de votação
+Local escolhido pelo eleitor para votar, tal como colégio ou faculdade, onde são
+distribuídas urnas eletrônicas para cada seção eleitoral.
+
+
+Origem do boletim de urna
+O boletim de urna normalmente é gerado pelo Software de Votação (Vota), porém em
+casos de contingência pode também ser gerado pelo Recuperador de Dados (RED) ou
+pelo Sistema de Apuração (SA).
+
+
+Pleito
+Todo o conjunto de dados e processos relacionados a um dos dias de votação, tais como
+o primeiro e o segundo turnos. Um pleito sempre está associado a um processo eleitoral.
+O resultado da votação na urna é sempre associado a um pleito.
+
+
+
+
+                                            52
+         QR CODE NO BOLETIM DE URNA | MANUAL PARA CRIAÇÃO DE APLICATIVOS DE LEITURA
+
+
+
+Processo eleitoral
+Todo o conjunto de dados e processos relacionados a um período eleitoral, contemplando
+a definição do eleitorado, o registro de candidatos, a preparação das urnas e a totalização
+dos resultados. Uma vez definido o eleitorado, por exemplo, ele passa a ser válido para
+todo o processo eleitoral.
+
+
+Recuperador de Dados (RED)
+Aplicativo da urna eletrônica utilizado na junta eleitoral, sob autorização de um juiz
+eleitoral, para proceder à recuperação de dados de uma urna eletrônica que não foi
+encerrada corretamente.
+
+
+Seção biométrica
+Seção eleitoral de uma localidade que já passou pelo recadastramento do eleitorado com
+a coleta de dados biométricos.
+
+
+Seção eleitoral
+Ambiente no qual o eleitor deve votar. Uma seção eleitoral corresponde a uma urna
+eletrônica. Na ocasião do alistamento, o eleitor é inscrito numa seção eleitoral e somente
+nela ele poderá votar.
+
+
+Sistema de Apuração (SA)
+Aplicativo da urna eletrônica utilizado na junta eleitoral, sob autorização de um juiz
+eleitoral, como meio complementar de apuração dos votos de uma seção eleitoral, nos
+casos em que houve votação por cédula de papel.
+
+
+Software de Votação (Vota)
+Aplicativo da urna eletrônica responsável pela habilitação do eleitor, coleta de votos e
+apuração na seção eleitoral.
+
+
+Totalização
+Contabilização do resultado consolidado de todas as seções eleitorais.
+
+
+UE
+Sigla de urna eletrônica.
+
+
+
+                                            53
+           QR CODE NO BOLETIM DE URNA | MANUAL PARA CRIAÇÃO DE APLICATIVOS DE LEITURA
+
+
+
+Voto de legenda
+Para cargos proporcionais, é o voto destinado a um partido político.
+
+
+Voto em branco
+Voto não destinado a um candidato ou partido, registrado quando o eleitor pressiona a
+tecla Branco da urna.
+
+
+Voto nominal
+Voto destinado a um candidato ou a uma resposta de consulta (no caso de plebiscito ou
+referendo) cadastrados na urna.
+
+
+Voto nulo
+Voto correspondente à digitação de um número que não corresponde a nenhum
+candidato, a nenhum partido ou a nenhuma resposta de consulta popular cadastrados
+na urna.
+
+
+Zerésima
+Documento que indica não haver voto registrado na urna que o emitiu. Este documento é
+emitido após o procedimento de inicialização da urna eletrônica e serve para atestar que
+não há registro de voto para nenhum dos candidatos.
+
+
+Zona eleitoral
+Região geograficamente delimitada dentro de um estado, gerenciada pelo cartório
+eleitoral, que centraliza e coordena os eleitores ali domiciliados. Pode ser composta por
+mais de um município ou por parte dele. Normalmente segue a divisão de comarcas da
+Justiça Estadual.
+
+
+
+
+                                              54
+Esta obra foi composta na fonte Roboto,
+   corpo 9, entrelinhas de 16 pontos.
+QR CODE NO BOLETIM DE URNA | MANUAL PARA CRIAÇÃO DE APLICATIVOS DE LEITURA
+
+
+
+
+                                   56
+

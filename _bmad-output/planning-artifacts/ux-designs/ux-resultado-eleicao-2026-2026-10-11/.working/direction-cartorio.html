@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Direção A · Cartório</title>
+<style>
+/* Direção A — CARTÓRIO (recibo térmico + carimbo)
+   #EDE6D6 fundo da página (mesa de papel)
+   #FBF8F1 papel do recibo
+   #1B1A17 tinta (texto principal)
+   #6B665C tinta desbotada (texto secundário)
+   #CFC6B2 pontilhado/perfuração
+   #1F7A4D carimbo OK (status idêntico — nunca ligado a candidato)
+   #B3261E carimbo divergência (status — nunca ligado a candidato)
+   #FFF1C9 marca-texto da linha divergente */
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#EDE6D6;color:#1B1A17;font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;padding:32px 16px}
+.wrap{max-width:1100px;margin:0 auto;display:flex;flex-wrap:wrap;gap:40px;justify-content:center;align-items:flex-start}
+.why{max-width:300px;font-size:13px;line-height:1.6}
+.why h1{font-size:22px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px}
+.why p{margin-bottom:10px;color:#6B665C}
+.cap{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#6B665C;margin-bottom:8px;text-align:center}
+.phone{width:360px;height:640px;border-radius:36px;background:#1B1A17;padding:10px;box-shadow:0 20px 40px rgba(0,0,0,.18)}
+.screen{width:100%;height:100%;border-radius:28px;background:#EDE6D6;overflow:hidden;position:relative;padding:14px 14px 0}
+.bar{display:flex;justify-content:space-between;font-size:11px;color:#6B665C;padding:0 6px 8px}
+.rcpt{background:#FBF8F1;padding:14px 16px 16px;position:relative;font-size:12px;line-height:1.45;
+  -webkit-mask:radial-gradient(circle 5px at 50% 100%,#0000 98%,#000) 0 0/12px 100%;mask:radial-gradient(circle 5px at 50% 100%,#0000 98%,#000) 0 0/12px 100%;padding-bottom:22px}
+.c{text-align:center}
+.t{font-weight:700;letter-spacing:.1em;font-size:12px}
+.s{color:#6B665C;font-size:11px}
+.hr{border-top:1px dashed #CFC6B2;margin:8px 0}
+table{width:100%;border-collapse:collapse;font-size:12px;font-variant-numeric:tabular-nums}
+th{font-weight:400;color:#6B665C;font-size:10px;letter-spacing:.08em;text-align:right;padding-bottom:3px}
+th:first-child,td:first-child{text-align:left}
+td{text-align:right;padding:1px 0}
+td.k{color:#1F7A4D}
+tr.tot td{font-weight:700;border-top:1px dashed #CFC6B2;padding-top:4px}
+tr.bad td{background:#FFF1C9}
+tr.bad td.k{color:#B3261E;font-weight:700}
+.stamp{position:absolute;right:10px;bottom:8px;width:100px;height:100px;border:3px double #1F7A4D;border-radius:50%;color:#1F7A4D;
+  transform:rotate(-14deg);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;opacity:.9;background:rgba(251,248,241,.55)}
+.stamp b{font-size:18px;letter-spacing:.06em}
+.stamp i{font-style:normal;font-size:9px;letter-spacing:.06em;line-height:1.3}
+.stamp.bad{border-color:#B3261E;color:#B3261E;transform:rotate(9deg)}
+.verdict{margin:10px 0 2px;font-size:15px;font-weight:700;text-align:center}
+.verdict.ok{color:#1F7A4D}.verdict.bad{color:#B3261E}
+.btns{display:flex;gap:8px;padding:12px 2px}
+.btn{flex:1;text-align:center;font:700 12px/1 ui-monospace,Menlo,monospace;padding:12px 6px;border:1.5px solid #1B1A17;background:#FBF8F1;color:#1B1A17;text-transform:uppercase;letter-spacing:.04em}
+.btn.p{background:#1B1A17;color:#FBF8F1}
+</style></head><body>
+<div class="wrap">
+<div class="why">
+<h1>A · Cartório</h1>
+<p>O app se parece com o próprio papel que está sendo conferido: um recibo térmico, monoespaçado, com carimbo de "confere". Quem vê o print reconhece o BU da porta na hora.</p>
+<p>Densidade alta, peso tipográfico único (mono), registro de documento oficial sem ser governo. Movimento implícito: o carimbo "bate" quando a conferência termina; o recibo "sai" da impressora de baixo para cima.</p>
+<p>Print viral: parece um comprovante — dá vontade de guardar e mostrar.</p>
+</div>
+
+<div>
+<div class="cap">Herói · Minha seção — idêntico</div>
+<div class="phone"><div class="screen">
+<div class="bar"><span>18:52</span><span>conferência cidadã</span></div>
+<div class="rcpt">
+<div class="c t">CONFERÊNCIA DE BOLETIM DE URNA</div>
+<div class="c s">Senador Cortes/MG · Zona 170 · Seção 37<br>1º turno · 04/10/2026 · Presidente</div>
+<div class="hr"></div>
+<div class="s">PORTA  enviado 17:06 · assinatura da urna válida</div>
+<div class="s">TSE    recebido 18:47 · arquivo oficial</div>
+<div class="hr"></div>
+<div class="stamp"><i>CONFERE</i><b>IDÊNTICO</b><i>04/10/2026<br>18:47</i></div>
+<table>
+<tr><th>Nº</th><th>PORTA</th><th>TSE</th><th></th></tr>
+<tr><td>13</td><td>109</td><td>109</td><td class="k">=</td></tr>
+<tr><td>14</td><td>1</td><td>1</td><td class="k">=</td></tr>
+<tr><td>22</td><td>63</td><td>63</td><td class="k">=</td></tr>
+<tr><td>30</td><td>1</td><td>1</td><td class="k">=</td></tr>
+<tr><td>55</td><td>8</td><td>8</td><td class="k">=</td></tr>
+<tr><td>70</td><td>6</td><td>6</td><td class="k">=</td></tr>
+<tr><td>80</td><td>1</td><td>1</td><td class="k">=</td></tr>
+<tr><td>Brancos</td><td>2</td><td>2</td><td class="k">=</td></tr>
+<tr><td>Nulos</td><td>4</td><td>4</td><td class="k">=</td></tr>
+<tr class="tot"><td>Total</td><td>195</td><td>195</td><td class="k">=</td></tr>
+</table>
+<div class="verdict ok">✅ Idêntico — nada mudou no caminho</div>
+<div class="hr"></div>
+<div class="s">registro público nº 004.218<br>sha512 9f3a…c21e<br>17:06:41</div>
+</div>
+<div class="btns"><div class="btn p">Compartilhar prova</div><div class="btn">Ver no registro público</div></div>
+</div></div>
+</div>
+
+<div>
+<div class="cap">Estado · Divergência encontrada</div>
+<div class="phone"><div class="screen">
+<div class="bar"><span>18:52</span><span>conferência cidadã</span></div>
+<div class="rcpt">
+<div class="c t">CONFERÊNCIA DE BOLETIM DE URNA</div>
+<div class="c s">Senador Cortes/MG · Zona 170 · Seção 37<br>1º turno · 04/10/2026 · Presidente</div>
+<div class="hr"></div>
+<div class="s">PORTA  enviado 17:06 · assinatura da urna válida</div>
+<div class="s">TSE    recebido 18:47 · arquivo oficial</div>
+<div class="hr"></div>
+<div class="stamp bad"><i>NÃO CONFERE</i><b>DIVERGE</b><i>2 campos<br>diferentes</i></div>
+<table>
+<tr><th>Nº</th><th>PORTA</th><th>TSE</th><th></th></tr>
+<tr><td>13</td><td>109</td><td>109</td><td class="k">=</td></tr>
+<tr><td>14</td><td>1</td><td>1</td><td class="k">=</td></tr>
+<tr class="bad"><td>22</td><td>63</td><td>60</td><td class="k">≠</td></tr>
+<tr><td>30</td><td>1</td><td>1</td><td class="k">=</td></tr>
+<tr><td>55</td><td>8</td><td>8</td><td class="k">=</td></tr>
+<tr><td>70</td><td>6</td><td>6</td><td class="k">=</td></tr>
+<tr><td>80</td><td>1</td><td>1</td><td class="k">=</td></tr>
+<tr><td>Brancos</td><td>2</td><td>2</td><td class="k">=</td></tr>
+<tr><td>Nulos</td><td>4</td><td>4</td><td class="k">=</td></tr>
+<tr class="tot bad"><td>Total</td><td>195</td><td>192</td><td class="k">≠</td></tr>
+</table>
+<div class="verdict bad">🚨 Divergência encontrada</div>
+<div class="hr"></div><div class="s" style="padding-right:96px">O BU da porta tem assinatura válida da urna. Guarde o papel e procure o cartório eleitoral.</div>
+</div>
+<div class="btns"><div class="btn p">Compartilhar prova</div><div class="btn">Ver no registro público</div></div>
+</div></div>
+</div>
+</div>
+</body></html>

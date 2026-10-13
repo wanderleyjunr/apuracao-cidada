@@ -1,0 +1,28 @@
+name = "apuracao-cidada-edge"
+main = "src/index.ts"
+compatibility_date = "2026-10-01"
+
+# Raw ballots (public data: the BU is a public document). Content-addressed, never overwritten.
+[[r2_buckets]]
+binding = "BALLOTS"
+bucket_name = "apuracao-cidada-ballots"
+
+# Per-section JSON + aggregates served to the app through the CDN.
+[[r2_buckets]]
+binding = "PUBLIC"
+bucket_name = "apuracao-cidada-public"
+
+# Submissions go to a pull queue consumed by the Python server in Brazil.
+[[queues.producers]]
+binding = "SUBMISSIONS"
+queue = "apuracao-cidada-submissions"
+
+# Per-IP rate limit (ponytail: 30 submissions/min per IP; tune after the load test).
+[[ratelimits]]
+name = "LIMITER"
+namespace_id = "1001"
+simple = { limit = 30, period = 60 }
+
+[vars]
+ALLOW_TEST_BALLOTS = "0"   # "1" accepts 2022/simulated ballots (staging only)
+# Secrets (wrangler secret put): IP_SALT, PUBLISH_TOKEN, TURNSTILE_SECRET (optional)

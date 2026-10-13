@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Direções v2: familiar (TSE/Google)</title>
+<style>
+/* Paleta PROVISÓRIA e neutra (a escolha de cores é a próxima decisão):
+   tinta #1B1F24 · cinza #5B6470 · linha #E3E6EA · fundo #F4F5F7 · branco #FFFFFF
+   status ok #1F8A4C · divergência #C62828 · pendente #8A6D00
+   Nenhuma cor ligada a candidato ou partido. Não usa a identidade do TSE. */
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:#E9EBEE;color:#1B1F24;padding:24px}
+h1{font-size:20px;margin-bottom:4px}.sub{color:#5B6470;font-size:14px;margin-bottom:20px;max-width:900px}
+.row{display:flex;gap:28px;flex-wrap:wrap;align-items:flex-start}
+.col{width:340px}.col h2{font-size:15px;margin-bottom:4px}.col p{font-size:13px;color:#5B6470;margin-bottom:10px;min-height:52px}
+.phone{width:340px;height:720px;border-radius:36px;background:#F4F5F7;border:10px solid #1B1F24;overflow:hidden;position:relative;display:flex;flex-direction:column}
+.scroll{flex:1;overflow:auto;padding-bottom:70px}
+.top{background:#fff;padding:14px 14px 10px;border-bottom:1px solid #E3E6EA}
+.brand{display:flex;justify-content:space-between;align-items:center;font-weight:800;font-size:15px}
+.brand small{font-weight:500;color:#5B6470;font-size:11px;display:block}
+.turno{display:flex;border:1px solid #1B1F24;border-radius:8px;overflow:hidden;font-size:12px;font-weight:700}
+.turno span{padding:4px 9px}.turno .on{background:#1B1F24;color:#fff}
+.local{margin-top:10px;display:flex;align-items:center;justify-content:space-between;background:#F4F5F7;border-radius:10px;padding:8px 12px;font-size:13px;font-weight:700}
+.local small{display:block;font-weight:500;color:#5B6470}
+.tabs{display:flex;gap:6px;overflow:hidden;padding:10px 14px 0}
+.tabs span{border:1px solid #C9CED4;border-radius:8px;padding:6px 10px;font-size:11px;font-weight:800;white-space:nowrap;background:#fff}
+.tabs .on{background:#1B1F24;color:#fff;border-color:#1B1F24}
+.card{background:#fff;margin:10px 14px;border-radius:14px;padding:12px;border:1px solid #E3E6EA}
+.verdict{display:flex;gap:10px;align-items:center}
+.verdict .ic{width:38px;height:38px;border-radius:50%;background:#1F8A4C;color:#fff;display:grid;place-items:center;font-size:20px;font-weight:900}
+.verdict b{font-size:16px;display:block}.verdict small{font-size:11px;color:#5B6470}
+.meta{display:flex;justify-content:space-between;font-size:11px;color:#5B6470;margin-top:10px;border-top:1px solid #E3E6EA;padding-top:8px}
+.meta b{color:#1B1F24}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:0 14px}
+.cand{background:#fff;border:1px solid #E3E6EA;border-radius:12px;padding:10px}
+.num{width:36px;height:36px;border-radius:50%;border:2px solid #1B1F24;display:grid;place-items:center;font-weight:900;font-size:14px}
+.cand .p{font-size:9px;font-weight:800;color:#5B6470;margin-top:6px}.cand .n{font-size:12px;font-weight:800}
+.cand .v{display:flex;justify-content:space-between;margin-top:6px;font-size:11px;color:#5B6470}
+.cand .v b{color:#1B1F24;font-size:15px}
+.ok{color:#1F8A4C;font-weight:900}.bad{color:#C62828;font-weight:900}
+.cand.big{grid-column:span 1;border:2px solid #1B1F24}
+.nav{position:absolute;bottom:0;left:0;right:0;height:62px;background:#fff;border-top:1px solid #E3E6EA;display:flex;justify-content:space-around;align-items:center;font-size:10px;color:#5B6470;text-align:center}
+.nav .on{color:#1B1F24;font-weight:800}.nav i{display:block;font-style:normal;font-size:18px}
+.fab{position:absolute;bottom:40px;left:50%;transform:translateX(-50%);width:60px;height:60px;border-radius:50%;background:#1B1F24;color:#fff;display:grid;place-items:center;font-size:24px;border:4px solid #F4F5F7}
+/* v2 lista */
+.lrow{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #E3E6EA}
+.lrow:last-child{border:0}.lrow .n{font-weight:700;font-size:14px}.lrow small{color:#5B6470;font-size:11px;display:block}
+.cols{display:flex;gap:14px;text-align:right;font-size:14px;font-weight:800}.cols span small{font-weight:500}
+.head{display:flex;justify-content:flex-end;gap:22px;font-size:10px;color:#5B6470;font-weight:800;padding-right:26px}
+.bar{height:6px;border-radius:3px;background:#E3E6EA;margin-top:8px;overflow:hidden}.bar i{display:block;height:100%;background:#1F8A4C;width:100%}
+/* v3 adesivo */
+.sticker{position:relative;margin:12px 14px 6px;background:#1F8A4C;color:#fff;border-radius:18px;padding:16px;transform:rotate(-2deg);box-shadow:0 6px 0 #146136}
+.sticker b{font-size:34px;letter-spacing:-1px;display:block;line-height:1}
+.sticker small{font-size:12px;opacity:.9}
+.sticker.bad{background:#C62828;box-shadow:0 6px 0 #8E1C1C}
+.share{display:block;margin:10px 14px;background:#1B1F24;color:#fff;text-align:center;border-radius:12px;padding:12px;font-weight:800;font-size:14px}
+.diff{background:#FDECEC}
+</style></head><body>
+<h1>Direções v2: estrutura familiar (TSE/Google), identidade própria</h1>
+<div class="sub">Mesma estrutura que o eleitor já conhece (local, turno, abas de cargo, cards por candidato), mas a pergunta muda de "quem ganhou" para <b>"o boletim da porta bate com o do TSE?"</b>. A paleta é provisória e neutra, e não há fotos nem identidade do TSE. Dados reais: Senador Cortes/MG, zona 170, seção 37, 1º turno.</div>
+<div class="row">
+
+<!-- V1 -->
+<div class="col"><h2>F1 · Familiar (TSE+)</h2><p>Igual ao app de resultados que todo mundo já usou, com um selo de conferência no topo e em cada candidato: "Porta 109 · TSE 109 ✓".</p>
+<div class="phone"><div class="scroll">
+ <div class="top"><div class="brand"><div>Confere BU<small>conferência cidadã · código aberto</small></div><div class="turno"><span class="on">1º</span><span>2º</span></div></div>
+ <div class="local"><div>Senador Cortes, MG<small>Zona 170 · Seção 37</small></div>▾</div></div>
+ <div class="tabs"><span class="on">PRESIDENTE</span><span>GOVERNADOR</span><span>SENADOR</span><span>DEP. FEDERAL</span></div>
+ <div class="card"><div class="verdict"><div class="ic">✓</div><div><b>Idêntico ao TSE</b><small>O boletim da porta bate com o publicado pelo TSE</small></div></div>
+  <div class="meta"><span>Porta <b>17:06</b> · assinatura ✓</span><span>TSE <b>18:47</b></span><span><b>3</b> pessoas enviaram</span></div></div>
+ <div class="grid">
+  <div class="cand big"><div class="num">13</div><div class="p">PT – 13</div><div class="n">LULA</div><div class="v"><span>Porta <b>109</b></span><span>TSE <b>109</b> <span class="ok">✓</span></span></div></div>
+  <div class="cand big"><div class="num">22</div><div class="p">PL – 22</div><div class="n">FLAVIO BOLSONARO</div><div class="v"><span>Porta <b>63</b></span><span>TSE <b>63</b> <span class="ok">✓</span></span></div></div>
+  <div class="cand"><div class="num">55</div><div class="p">PSD – 55</div><div class="n">RONALDO CAIADO</div><div class="v"><span>Porta <b>8</b></span><span>TSE <b>8</b> <span class="ok">✓</span></span></div></div>
+  <div class="cand"><div class="num">70</div><div class="p">AVANTE – 70</div><div class="n">AUGUSTO CURY</div><div class="v"><span>Porta <b>6</b></span><span>TSE <b>6</b> <span class="ok">✓</span></span></div></div>
+  <div class="cand"><div class="num">14</div><div class="p">MISSÃO – 14</div><div class="n">RENAN SANTOS</div><div class="v"><span>Porta <b>1</b></span><span>TSE <b>1</b> <span class="ok">✓</span></span></div></div>
+  <div class="cand"><div class="num">30</div><div class="p">NOVO – 30</div><div class="n">ZEMA</div><div class="v"><span>Porta <b>1</b></span><span>TSE <b>1</b> <span class="ok">✓</span></span></div></div>
+ </div>
+</div><div class="fab">⌗</div><div class="nav"><span class="on"><i>◉</i>Minha seção</span><span><i>▦</i>Cobertura</span><span style="width:60px"></span><span><i>⚠</i>Divergências</span><span><i>ⓘ</i>Como funciona</span></div></div></div>
+
+<!-- V2 -->
+<div class="col"><h2>F2 · Lista limpa (Google)</h2><p>Leitura rápida em lista, com duas colunas (Porta e TSE) e um resumo no topo. É a mais rápida de entender e a mais leve para o servidor.</p>
+<div class="phone"><div class="scroll">
+ <div class="top"><div class="brand"><div>Confere BU<small>Seção 37 · Zona 170 · Senador Cortes, MG</small></div><div class="turno"><span class="on">1º</span><span>2º</span></div></div></div>
+ <div class="tabs"><span class="on">Presidente</span><span>Governador</span><span>Senado</span><span>Câmara</span></div>
+ <div class="card"><b style="font-size:15px">Esta seção foi conferida: nada mudou no caminho.</b>
+  <div style="font-size:12px;color:#5B6470;margin-top:6px">Boletim da porta (17:06, assinado pela urna) = boletim publicado pelo TSE (18:47)</div>
+  <div class="bar"><i></i></div><div style="font-size:11px;color:#5B6470;margin-top:4px">195 de 195 votos conferidos</div></div>
+ <div class="card"><div class="head"><span>PORTA</span><span>TSE</span></div>
+  <div class="lrow"><div><div class="n">Lula</div><small>PT · 13</small></div><div class="cols"><span>109</span><span>109</span><span class="ok">✓</span></div></div>
+  <div class="lrow"><div><div class="n">Flávio Bolsonaro</div><small>PL · 22</small></div><div class="cols"><span>63</span><span>63</span><span class="ok">✓</span></div></div>
+  <div class="lrow"><div><div class="n">Ronaldo Caiado</div><small>PSD · 55</small></div><div class="cols"><span>8</span><span>8</span><span class="ok">✓</span></div></div>
+  <div class="lrow"><div><div class="n">Augusto Cury</div><small>AVANTE · 70</small></div><div class="cols"><span>6</span><span>6</span><span class="ok">✓</span></div></div>
+  <div class="lrow"><div><div class="n">Brancos</div></div><div class="cols"><span>2</span><span>2</span><span class="ok">✓</span></div></div>
+  <div class="lrow"><div><div class="n">Nulos</div></div><div class="cols"><span>4</span><span>4</span><span class="ok">✓</span></div></div>
+ </div>
+ <div style="text-align:center;font-size:13px;font-weight:700;margin:6px">Mais candidatos ▾</div>
+</div><div class="fab">⌗</div><div class="nav"><span class="on"><i>◉</i>Minha seção</span><span><i>▦</i>Cobertura</span><span style="width:60px"></span><span><i>⚠</i>Divergências</span><span><i>ⓘ</i>Como funciona</span></div></div></div>
+
+<!-- V3 -->
+<div class="col"><h2>F3 · Familiar + adesivo (Cartaz)</h2><p>A estrutura do F1 com o adesivo do Cartaz dando o veredito. Mostrado aqui no estado de divergência; o botão gera o story para compartilhar.</p>
+<div class="phone"><div class="scroll">
+ <div class="top"><div class="brand"><div>Confere BU<small>conferência cidadã · código aberto</small></div><div class="turno"><span class="on">1º</span><span>2º</span></div></div>
+ <div class="local"><div>Senador Cortes, MG<small>Zona 170 · Seção 37</small></div>▾</div></div>
+ <div class="sticker bad"><b>DIVERGE.</b><small>O TSE publicou 60 votos para o 22; o boletim da porta tem 63.</small></div>
+ <div class="share">Compartilhar a prova ↗</div>
+ <div class="tabs"><span class="on">PRESIDENTE</span><span>GOVERNADOR</span><span>SENADOR</span></div>
+ <div class="grid" style="margin-top:10px">
+  <div class="cand big"><div class="num">13</div><div class="p">PT – 13</div><div class="n">LULA</div><div class="v"><span>Porta <b>109</b></span><span>TSE <b>109</b> <span class="ok">✓</span></span></div></div>
+  <div class="cand big diff"><div class="num">22</div><div class="p">PL – 22</div><div class="n">FLAVIO BOLSONARO</div><div class="v"><span>Porta <b>63</b></span><span>TSE <b>60</b> <span class="bad">✕</span></span></div></div>
+  <div class="cand"><div class="num">55</div><div class="p">PSD – 55</div><div class="n">RONALDO CAIADO</div><div class="v"><span>Porta <b>8</b></span><span>TSE <b>8</b> <span class="ok">✓</span></span></div></div>
+  <div class="cand"><div class="num">70</div><div class="p">AVANTE – 70</div><div class="n">AUGUSTO CURY</div><div class="v"><span>Porta <b>6</b></span><span>TSE <b>6</b> <span class="ok">✓</span></span></div></div>
+ </div>
+ <div class="card" style="font-size:11px;color:#5B6470">Prova: boletim assinado pela urna 2250280 · registro público nº 18.442 · 17:06. Isto é uma divergência a ser explicada, não uma acusação.</div>
+</div><div class="fab">⌗</div><div class="nav"><span class="on"><i>◉</i>Minha seção</span><span><i>▦</i>Cobertura</span><span style="width:60px"></span><span><i>⚠</i>Divergências</span><span><i>ⓘ</i>Como funciona</span></div></div></div>
+
+</div></body></html>

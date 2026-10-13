@@ -1,0 +1,5 @@
+UF ZZ mun 30198 zona 1 seção 265 urna 1025152 | votos {'12': '21', '13': '30', '15': '16', '22': '315', '27': '2', '30': '6', '44': '5'} brancos 13 nulos 7 total 415 | hash OK=True
+UF ZZ mun 30805 zona 1 seção 1693 urna 1021869 | votos {'12': '1', '13': '36', '22': '13'} brancos 0 nulos 0 total 50 | hash OK=True
+UF ZZ mun 30805 zona 1 seção 1691 urna 1051295 | votos {'12': '8', '13': '48', '14': '1', '15': '3', '22': '17', '30': '3', '80': '1'} brancos 1 nulos 0 total 82 | hash OK=True
+UF ZZ mun 30805 zona 1 seção 1690 urna 1023220 | votos {'12': '5', '13': '117', '14': '1', '15': '4', '22': '22', '30': '8'} brancos 1 nulos 3 total 161 | hash OK=True
+UF ZZ mun 30805 zona 1 seção 1689 urna 1020397 | votos {'12': '9', '13': '128', '14': '1', '15': '1', '21': '1', '22': '19', '30': '3', '80': '1'} brancos 1 nulos 1 total 165 | hash OK=True

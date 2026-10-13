@@ -1,0 +1,13 @@
+[project]
+name = "confere-server"
+version = "0.1.0"
+description = "Confere BU server: ballot validation, TSE mirror, comparison and static publishing"
+license = "AGPL-3.0-or-later"
+requires-python = ">=3.12"
+dependencies = ["cryptography", "asn1crypto", "ecpy", "httpx", "psycopg[binary]"]
+
+[dependency-groups]
+dev = ["pytest"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]

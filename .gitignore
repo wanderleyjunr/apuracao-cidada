@@ -1,0 +1,21 @@
+node_modules/
+.venv/
+__pycache__/
+dist/
+.wrangler/
+.env
+.dev.vars
+mirror/
+.DS_Store
+app/public/results/*/mg/
+app/public/results/*/*/
+app/public/sections/
+app/public/log/
+app/public/aggregates/
+# local tooling and media (not part of the open-source project)
+video/
+_bmad/
+.agents/
+.claude/skills/
+.pytest_cache/
+*.pyc

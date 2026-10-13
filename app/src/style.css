@@ -1,0 +1,121 @@
+/* Tokens de DESIGN.md (Tropical Mata) */
+:root {
+  --primary: #0F5257; --secondary: #3BB3A6; --accent: #F4A261; --ink: #0D2224; --ink-2: #5B6470;
+  --bg: #F2F7F6; --surface: #FFFFFF; --line: #DCE7E5;
+  --ok: #12A150; --bad: #D62828; --pend: #5C6B7A; --bad-bg: #FDEEEE; --off-bg: #FFF3E6; --off-ink: #7A4A12;
+  --cov-hi: #0F5257; --cov-mid: #3BB3A6; --cov-lo: #8FD3CB;
+  --nav-h: 52px; --fab: 54px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  color: var(--ink); background: var(--bg);
+}
+* { box-sizing: border-box; margin: 0; padding: 0 }
+body { min-height: 100dvh; background: var(--bg) }
+button, a, input, select { font: inherit; color: inherit }
+a { text-decoration: none }
+#app { max-width: 480px; margin: 0 auto; min-height: 100dvh; position: relative;
+  /* área segura: nav + saliência do botão central */
+  padding-bottom: calc(var(--nav-h) + 44px + env(safe-area-inset-bottom)) }
+
+.top-bar { background: var(--primary); color: #fff; padding: 14px 14px 18px; border-radius: 0 0 20px 20px }
+.top-bar .row { display: flex; justify-content: space-between; align-items: center; gap: 8px }
+.brand { font-weight: 900; font-size: 17px } .brand small { display: block; font-size: 10px; font-weight: 600; opacity: .85 }
+.turn-toggle { display: flex; background: #fff3; border-radius: 9px; font-weight: 800; font-size: 13px }
+.turn-toggle button { border: 0; background: none; color: #fff; padding: 8px 12px; min-height: 44px; border-radius: 9px; cursor: pointer }
+.turn-toggle button[aria-pressed="true"] { background: #fff; color: var(--primary) }
+.place-button { margin-top: 10px; width: 100%; text-align: left; border: 0; background: #fff2; color: #fff; border-radius: 10px; padding: 9px 12px;
+  font-weight: 800; display: flex; justify-content: space-between; align-items: center; min-height: 44px; cursor: pointer }
+.place-button small { display: block; font-weight: 500; opacity: .85 }
+
+.sticker { margin: -12px 16px 0; border-radius: 14px; padding: 12px 14px; transform: rotate(-1.5deg); box-shadow: 0 4px 0 #0002; position: relative }
+.sticker b { display: block; font-size: 20px; line-height: 1.15; margin-top: 16px } .sticker small { display: block; font-size: 12px; margin-top: 3px }
+.sticker .tag { position: absolute; left: 10px; top: 9px; border-radius: 20px; padding: 2px 9px; font-size: 10px; font-weight: 900 }
+.sticker-voting { background: var(--accent); color: var(--ink) } .sticker-voting .tag { background: var(--ink); color: #fff }
+.sticker-waiting { background: var(--secondary); color: var(--ink) } .sticker-waiting .tag { background: var(--pend); color: #fff }
+.sticker-identical { background: var(--primary); color: #fff } .sticker-identical .tag { background: var(--ok); color: #fff }
+.sticker-divergent { background: var(--bad); color: #fff } .sticker-divergent .tag { background: #fff; color: var(--bad) }
+.sticker-neutral { background: var(--surface); color: var(--ink); border: 1px solid var(--line) } .sticker-neutral .tag { background: var(--pend); color: #fff }
+
+.candidates { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 16px 12px 4px }
+.candidate { background: var(--surface); border: 2px solid var(--secondary); border-radius: 14px; padding: 10px 8px; text-align: center }
+.candidate.divergent { border-color: var(--bad); background: var(--bad-bg) }
+.photo { width: 56px; height: 56px; border-radius: 50%; margin: 0 auto; border: 3px solid var(--secondary); display: grid; place-items: center;
+  background: linear-gradient(160deg, #cfd5dc, #9aa3ad); color: #fff; font-weight: 900; font-size: 18px; overflow: hidden }
+.photo img { width: 100%; height: 100%; object-fit: cover }
+.candidate .party { font-size: 10px; font-weight: 800; opacity: .7; margin-top: 6px } .candidate .name { font-size: 13px; font-weight: 900; text-transform: uppercase }
+.candidate .votes { display: flex; justify-content: space-around; margin-top: 6px; font-size: 9.5px; font-weight: 700; color: var(--ink-2) }
+.candidate .votes b { display: block; font-size: 18px; color: var(--ink); font-variant-numeric: tabular-nums }
+.status { margin-top: 4px; font-size: 11px; font-weight: 900 } .status.ok { color: var(--ok) } .status.bad { color: var(--bad) }
+
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; margin: 10px 12px; padding: 12px; font-size: 13px; line-height: 1.5 }
+.card h3 { font-size: 14px; margin-bottom: 4px }
+.muted { color: var(--ink-2); font-size: 12px }
+.btn { display: block; width: calc(100% - 24px); margin: 8px 12px; height: 44px; border: 0; border-radius: 12px; background: var(--primary); color: #fff;
+  font-weight: 900; font-size: 14px; text-align: center; line-height: 44px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; cursor: pointer }
+.btn.amber { background: var(--accent); color: var(--ink) } .btn.outline { background: transparent; color: var(--primary); border: 2px solid var(--primary); line-height: 40px }
+.pill { display: inline-block; border-radius: 20px; padding: 2px 9px; font-size: 10.5px; font-weight: 900; color: #fff }
+.list-row { display: flex; justify-content: space-between; align-items: center; gap: 8px; padding: 10px 0; border-bottom: 1px solid var(--line) }
+.list-row:last-child { border: 0 } .list-row small { display: block; color: var(--ink-2); font-size: 11px }
+.big { font-size: 30px; font-weight: 900; letter-spacing: -.5px }
+.bar { height: 8px; border-radius: 4px; background: #E2ECEA; overflow: hidden; display: flex; margin-top: 8px } .bar i { display: block; height: 100% }
+.legend { display: flex; flex-wrap: wrap; gap: 10px; font-size: 11px; color: var(--ink-2); margin-top: 8px }
+.legend i { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 4px; vertical-align: -1px }
+.offline { background: var(--off-bg); color: var(--off-ink); border-radius: 10px; padding: 9px 12px; margin: 10px 12px; font-size: 12px; font-weight: 700 }
+.error-box { background: var(--bad-bg); color: var(--bad); border-radius: 10px; padding: 9px 12px; margin: 10px 12px; font-size: 13px; font-weight: 700 }
+.chips { display: flex; gap: 6px; margin: 12px 12px 0; overflow-x: auto }
+.chips button { border: 1px solid var(--line); background: var(--surface); border-radius: 20px; padding: 0 12px; height: 34px; font-weight: 800; font-size: 12px; white-space: nowrap }
+.chips button[aria-pressed="true"] { background: var(--primary); color: #fff; border-color: var(--primary) }
+.map path { stroke: #fff; stroke-width: .8; cursor: pointer }
+
+/* scanner */
+.camera { position: fixed; inset: 0; background: #0b1314; z-index: 10; display: flex; flex-direction: column }
+.camera video { flex: 1; width: 100%; object-fit: cover; min-height: 0 }
+.camera .camera-top { position: absolute; top: 0; left: 0; right: 0; display: flex; justify-content: space-between; align-items: center; padding: 10px; color: #fff; font-weight: 800 }
+.camera .camera-top button { background: #0006; border: 0; color: #fff; width: 44px; height: 44px; border-radius: 50%; font-size: 18px }
+.viewfinder { position: absolute; left: 12%; right: 12%; top: 18%; height: 34%; border: 3px solid var(--secondary); border-radius: 18px; box-shadow: 0 0 0 999px #0006; pointer-events: none }
+.sheet { background: #fff; border-radius: 20px 20px 0 0; padding: 14px 14px calc(14px + env(safe-area-inset-bottom)) }
+.qr-parts { display: flex; gap: 6px; flex-wrap: wrap; margin: 10px 0 6px }
+.qr-parts span { min-width: 36px; height: 36px; border-radius: 9px; display: grid; place-items: center; font-size: 12px; font-weight: 900; border: 2px dashed #b9c6c4; color: #9aa8a6; padding: 0 8px }
+.qr-parts .read { background: var(--secondary); border: 2px solid var(--secondary); color: #fff }
+
+/* navegação */
+.nav { position: fixed; z-index: 5; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 480px;
+  height: calc(var(--nav-h) + env(safe-area-inset-bottom)); padding-bottom: env(safe-area-inset-bottom); background: #fff; border-top: 1px solid var(--line);
+  display: grid; grid-template-columns: 1fr 1fr 64px 1fr 1fr; align-items: center; text-align: center; font-size: 10px; font-weight: 700; color: var(--pend) }
+.nav a { display: grid; gap: 1px; justify-items: center; min-height: 44px; align-content: center }
+.nav a[aria-current="page"] { color: var(--primary); font-weight: 900 }
+.nav svg { width: 18px; height: 18px }
+.fab { position: fixed; z-index: 6; left: 50%; transform: translateX(-50%); bottom: calc(26px + env(safe-area-inset-bottom)); width: var(--fab); height: var(--fab);
+  border-radius: 50%; background: var(--accent); color: var(--ink); display: grid; place-items: center; border: 4px solid var(--bg) }
+.fab svg { width: 24px; height: 24px }
+dialog { margin: auto; border: 0; border-radius: 16px; padding: 16px; width: min(92vw, 380px) }
+dialog label { display: block; font-size: 12px; font-weight: 800; margin-top: 10px } dialog input, dialog select { width: 100%; height: 44px; border: 1px solid var(--line); border-radius: 10px; padding: 0 10px; margin-top: 4px }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0) }
+dialog select { width: 100%; height: 44px; border: 1px solid var(--line); border-radius: 10px; padding: 0 10px; margin-top: 4px; background: #fff }
+dialog select:disabled { background: var(--bg); color: var(--ink-2) }
+.btn:disabled { opacity: .45; cursor: not-allowed }
+.place-button { gap: 10px; justify-content: flex-start } .place-button .place-text { flex: 1 }
+.flag { width: 30px; height: 21px; border-radius: 3px; object-fit: cover; box-shadow: 0 0 0 1px #0002; flex: none; background: #fff }
+.flag-globe { display: grid; place-items: center; font-size: 18px; box-shadow: none; background: none }
+.select-flag { display: flex; align-items: center; gap: 8px; margin-top: 4px } .select-flag select { margin-top: 0 }
+.section-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(64px, 1fr)); gap: 6px; margin-top: 8px }
+.section-chip { min-height: 52px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); display: grid; place-content: center; text-align: center; cursor: pointer; padding: 4px }
+.section-chip b { font-size: 15px } .section-chip small { font-size: 9px; color: var(--ink-2) }
+.section-chip.ok { border-color: var(--ok); background: #E8F6EE } .section-chip.bad { border-color: var(--bad); background: var(--bad-bg) }
+.section-chip.waiting { border-color: var(--secondary); background: #E7F6F4 }
+img.photo { display: block; object-fit: cover; background: #e6ecea }
+.badge { display: inline-block; margin-top: 4px; border-radius: 20px; padding: 1px 8px; font-size: 10px; font-weight: 900 }
+.badge.elected { background: var(--ok); color: #fff } .badge.runoff { background: var(--accent); color: var(--ink) }
+.result-row { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--line) }
+.result-row:last-of-type { border-bottom: 0 }
+.result-row .photo { width: 44px; height: 44px; margin: 0; border-width: 2px; font-size: 13px }
+.result-name { flex: 1; min-width: 0 } .result-name b { display: block; font-size: 13px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap }
+.result-name small { color: var(--ink-2); font-size: 11px }
+.result-num { text-align: right } .result-num b { display: block; font-size: 16px; font-variant-numeric: tabular-nums } .result-num small { color: var(--ink-2); font-size: 11px }
+.cand-link { display: block; color: inherit }
+.back { color: #fff; font-size: 22px; font-weight: 900; padding: 0 10px 0 0; min-width: 44px; min-height: 44px; display: grid; place-items: center }
+.profile { display: flex; align-items: center; gap: 14px }
+.big-photo { width: 96px; height: 96px; border-radius: 50%; border: 3px solid var(--secondary) }
+.profile .big { font-size: 22px; line-height: 1.1 }
+.div-row { width: 100%; background: none; border: 0; border-bottom: 1px solid var(--line); text-align: left; cursor: pointer; font: inherit; color: inherit }
+.code { background: var(--bg); border-radius: 8px; padding: 8px; font-size: 11px; overflow-x: auto; margin: 6px 0 }
+.card a { color: var(--primary); font-weight: 800 }

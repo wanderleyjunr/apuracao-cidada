@@ -1,0 +1,11 @@
+{
+  "name": "Apuração Cidadã",
+  "short_name": "Apuração",
+  "description": "Conferência cidadã do Boletim de Urna",
+  "lang": "pt-BR",
+  "start_url": "./#/section",
+  "display": "standalone",
+  "background_color": "#F2F7F6",
+  "theme_color": "#0F5257",
+  "icons": []
+}
