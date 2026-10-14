@@ -19,3 +19,6 @@ _bmad/
 .claude/skills/
 .pytest_cache/
 *.pyc
+# proprietary mobile app: private repo wanderleyjunr/apuracao-cidada-mobile
+mobile/
+app/public/results/*/national.json

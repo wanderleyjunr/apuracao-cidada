@@ -1,5 +1,5 @@
 import { expect, it } from 'vitest'
-import { order, sectionState } from './state'
+import { order, sectionState } from './model'
 
 const at = (s: string) => new Date(s)
 const tse = { time: '18:47', votes: { '13': 112, '22': 95 } }

@@ -6,7 +6,7 @@ import {
 } from './data'
 import { loadPlaces, titleCase, UFS, type PlaceIndex } from './places'
 import { enqueue, flush, queue } from './queue'
-import { order, sectionState, type SectionState } from './state'
+import { order, sectionState, type SectionState } from '../../shared/model'
 
 const app = document.querySelector<HTMLDivElement>('#app')!
 const esc = (s: unknown) => String(s ?? '').replace(/[&<>"']/g, c => `&#${c.charCodeAt(0)};`) // QR content is untrusted input

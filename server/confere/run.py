@@ -1,7 +1,7 @@
 """Long-running worker for the Brazil VPS:  uv run python -m confere.run [consume|mirror|all]
 
 Env: DATABASE_URL, EDGE_URL, PUBLISH_TOKEN, CF_ACCOUNT_ID, CF_QUEUE_ID, CF_API_TOKEN,
-     PUBLIC_URL (app URL used in alerts), OBSERVER_WEBHOOKS, TURN (1|2, default 2), PLACES_DIR (default ../app/public/places), MIRROR_ROOT (default ./mirror), MIRROR_UFS (default all), MIRROR_INTERVAL_S (default 60).
+     PUBLIC_URL (app URL used in alerts), OBSERVER_WEBHOOKS, TURN (1|2, default 2), PLACES_DIR (default ../app/public/places), MIRROR_ROOT (default ./mirror), MIRROR_UFS (default all), MIRROR_INTERVAL_S (default 60), NATIONAL_INTERVAL_S (default 30).
 """
 import asyncio
 import base64
@@ -18,6 +18,7 @@ import psycopg
 from . import public_log
 from .aggregates import coverage, divergences, place_index
 from .alerts import notify
+from .national import fetch_all as fetch_results
 from .ballot import BallotError
 from .pipeline import ingest_submission, ingest_tse, publish, recompute, section_path
 from .tse_mirror import ELECTION, UFS, Mirror, Section
@@ -100,6 +101,19 @@ async def mirror_forever() -> None:
         await asyncio.sleep(int(os.environ.get("MIRROR_INTERVAL_S", 60)))
 
 
+async def national_forever() -> None:
+    """TSE President + Governor totals (default app screen): copied every NATIONAL_INTERVAL_S, never computed by us."""
+    turn = int(os.environ.get("TURN", 2))
+    with httpx.Client(timeout=30) as http:
+        while True:
+            try:
+                for path, doc in (await asyncio.to_thread(fetch_results, turn, http)).items():
+                    publish(os.environ["EDGE_URL"], os.environ["PUBLISH_TOKEN"], path, doc, http)
+            except Exception:
+                log.exception("national results failed; will retry")
+            await asyncio.sleep(int(os.environ.get("NATIONAL_INTERVAL_S", 30)))
+
+
 def publish_log(conn, turn: int, http: httpx.Client) -> None:
     """Builds the log locally, then pushes every page + checkpoints.json through the edge."""
     root = Path(os.environ.get("MIRROR_ROOT", "mirror")) / "public"
@@ -114,10 +128,12 @@ def main() -> None:
     if mode == "consume":
         consume_forever()
     elif mode == "mirror":
-        asyncio.run(mirror_forever())
+        async def mirrors():
+            await asyncio.gather(mirror_forever(), national_forever())
+        asyncio.run(mirrors())
     else:
         async def both():
-            await asyncio.gather(asyncio.to_thread(consume_forever), mirror_forever())
+            await asyncio.gather(asyncio.to_thread(consume_forever), mirror_forever(), national_forever())
         asyncio.run(both())
 
 

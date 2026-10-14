@@ -1,0 +1,6 @@
+{
+  "_doc": "Sponsor slots (no ad SDK, same for everyone). enabled=false hides all instantly. Spec: docs/patrocinio.md",
+  "enabled": false,
+  "slots": {},
+  "list": []
+}
