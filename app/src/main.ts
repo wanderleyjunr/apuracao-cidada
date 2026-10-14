@@ -1,12 +1,12 @@
 import './style.css'
 import { assemble, BallotError, isOfficial2026, officeVotes, progress, type Ballot, type Votes } from '../../shared/ballot'
 import {
-  CITY_ONLY, OFFICE_LABEL, loadCoverage, loadDivergences, loadCandidatePage, loadCandidates, loadCity, loadDeputies, loadZone, officeKey, officesFor,
+  CITY_ONLY, OFFICE_LABEL, assetUrl, getUf, loadCoverage, loadDivergences, loadGovernor, loadNational, loadSponsors, setUf, loadCandidatePage, loadCandidates, loadCity, loadDeputies, loadZone, officeKey, officesFor,
   loadSectionDoc, loadZoneStatus, photoUrl, recordDoorBallot, savedPlace, savePlace, sectionData, zoneTotals, type Candidate, type CandidateIndex, type Place,
 } from './data'
 import { loadPlaces, titleCase, UFS, type PlaceIndex } from './places'
 import { enqueue, flush, queue } from './queue'
-import { order, sectionState, type SectionState } from '../../shared/model'
+import { ELECTION_DAY, order, sectionState, type NationalResults, type SectionState } from '../../shared/model'
 
 const app = document.querySelector<HTMLDivElement>('#app')!
 const esc = (s: unknown) => String(s ?? '').replace(/[&<>"']/g, c => `&#${c.charCodeAt(0)};`) // QR content is untrusted input
@@ -24,6 +24,7 @@ const office = (idx: CandidateIndex | null, uf: string) => {
 }
 
 const ICON = {
+  brasil: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18"/></svg>',
   section: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3" fill="currentColor"/></svg>',
   coverage: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>',
   divergences: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 3 2 20h20L12 3zM12 10v4M12 17h.01"/></svg>',
@@ -33,8 +34,9 @@ const ICON = {
 
 function nav(route: string): string {
   const item = (r: string, label: string, icon: string) => `<a href="#/${r}" ${route === r ? 'aria-current="page"' : ''}>${icon}<span>${label}</span></a>`
-  return `<nav class="nav" aria-label="Navegação">${item('section', 'Seção', ICON.section)}${item('coverage', 'Cobertura', ICON.coverage)}<span></span>
-    ${item('divergences', 'Divergências', ICON.divergences)}${item('about', 'Sobre', ICON.about)}</nav>
+  // national is the default (Alino, 2026-10-14); Sobre is the ⓘ in the Brasil header
+  return `<nav class="nav" aria-label="Navegação">${item('brasil', 'Brasil', ICON.brasil)}${item('section', 'Seção', ICON.section)}<span></span>
+    ${item('coverage', 'Cobertura', ICON.coverage)}${item('divergences', 'Divergências', ICON.divergences)}</nav>
     <a class="fab" href="#/scan" aria-label="Escanear boletim">${ICON.scan}</a>`
 }
 
@@ -91,7 +93,15 @@ function sticker(s: SectionState, doorTime?: string, tseTime?: string): string {
 
 async function viewSection(): Promise<void> {
   const p = savedPlace()
-  if (!p.section) return viewZone(p)
+  if (!p) {
+    app.innerHTML = `<header class="top-bar"><div class="brand">Minha seção<small>#EuFiscalizo · código aberto</small></div></header>
+      <div class="card"><h3>Onde você vota?</h3><p class="muted">Escolha a sua seção para acompanhar o boletim da porta e o resultado do TSE. Ou escaneie o boletim: a seção é preenchida sozinha.</p></div>
+      <button class="btn" id="pick">${getUf() ? `Escolher a cidade em ${esc(getUf())}` : 'Escolher estado e cidade'}</button><a class="btn amber" href="#/scan">Escanear o boletim</a>` + nav('section')
+    document.querySelector('#pick')!.addEventListener('click', () => placeDialog())
+    return
+  }
+  const sent = sessionStorage.getItem('just-sent') ? (sessionStorage.removeItem('just-sent'), true) : false
+  if (!p.section) return viewZone(p, sent)
   const t = turn()
   const [zone, cands, runoff, doc] = await Promise.all([loadZone(t, p), loadCandidates(1), loadCandidates(2), loadSectionDoc(t, p)])
   const lineup = t === 2 ? runoff : cands
@@ -125,7 +135,7 @@ async function viewSection(): Promise<void> {
     : `<a class="btn amber" href="#/scan">Escanear o boletim</a>`
   const explain = s.kind === 'divergent' ? `<div class="card muted">Divergência é um fato a ser explicado (urna de contingência, recuperação de dados, erro de leitura), não prova de fraude.</div>` : ''
   const back = `<button class="btn outline" id="whole-zone">← Ver todas as seções da zona ${esc(p.zone)}</button>`
-  app.innerHTML = header(p) + sticker(s, d.door?.time, d.tse?.time) + queueNotice() + officeTabs(o, lineup, p.uf, true) + `<div class="candidates">${cards}</div>` + blanks + explain + actions + proofs + back + nav('section')
+  app.innerHTML = header(p) + (sent ? sentCard + await sponsorHtml('sent') : '') + sticker(s, d.door?.time, d.tse?.time) + queueNotice() + officeTabs(o, lineup, p.uf, true) + `<div class="candidates">${cards}</div>` + blanks + explain + actions + proofs + back + nav('section')
   bindCommon()
   document.querySelector('#whole-zone')!.addEventListener('click', () => { savePlace({ ...p, section: '' }); render() })
   document.querySelector('#share')?.addEventListener('click', () => share(p, s))
@@ -164,7 +174,9 @@ function runoffLineup(idx: CandidateIndex | null, o: string, uf: string): string
     <p class="muted" style="margin-top:8px">Candidatos declarados para o 2º turno pelo TSE. Toque para ver o perfil.</p></div>`
 }
 
-async function viewZone(p: Place): Promise<void> {
+const sentCard = '<div class="card" style="border:2px solid var(--ok)"><h3>✓ Boletim enviado. Obrigado!</h3><span class="muted">Ele entrou no registro público. Quando o TSE publicar a sua seção, o resultado da conferência aparece aqui.</span></div>'
+
+async function viewZone(p: Place, sent = false): Promise<void> {
   const t = turn()
   const [index, zone, cands, runoff, published] = await Promise.all([loadPlaces(p.uf.toLowerCase()), loadZone(t, p), loadCandidates(1), loadCandidates(2), loadZoneStatus(t, p)])
   const lineup = t === 2 ? runoff : cands
@@ -172,8 +184,7 @@ async function viewZone(p: Place): Promise<void> {
   const sectionOffice = CITY_ONLY.has(o) ? '1' : o
   const sections = index?.municipalities.find(m => String(m.code) === p.municipalityCode)?.zones[String(+p.zone)] ?? []
   const states = sections.map(n => {
-    const sp = { ...p, section: String(n) }
-    const d = sectionData(t, sp, sectionOffice, zone)
+    const d = sectionData(t, { ...p, section: String(n) }, sectionOffice, zone)
     const hasOwnBu = !zone || zone.sections[String(n)] || d.door
     const server = published?.[String(n)] as keyof typeof STATUS_LABEL | undefined // server verdict (all offices) wins
     return { n, kind: server && server in STATUS_LABEL ? server : (hasOwnBu || t === 2 ? sectionState(t, d, now()).kind : 'aggregated') as keyof typeof STATUS_LABEL }
@@ -181,12 +192,11 @@ async function viewZone(p: Place): Promise<void> {
   const count = (k: string) => states.filter(x => x.kind === k).length
   const checked = count('identical') + count('divergent') + count('waiting')
   const dayState = sectionState(t, {}, now()).kind // before / voting are the same for every section
-  const open = dayState === 'before' || dayState === 'voting'
-  const summary = open
+  const summary = dayState === 'before' || dayState === 'voting'
     ? sticker({ kind: dayState } as SectionState)
     : `<div class="sticker sticker-neutral" role="status"><span class="tag">ZONA ${esc(p.zone)}</span><b>${checked} de ${sections.length - count('aggregated')} seções conferidas</b><small>${count('identical')} idênticas · ${count('divergent')} divergentes · ${count('waiting')} aguardando o TSE · ${count('tse-only')} sem boletim da porta</small></div>`
-  const grid = states.map(({ n, kind }) => `<button class="section-chip ${STATUS_LABEL[kind][1]}" data-section="${n}" aria-label="Seção ${n}: ${STATUS_LABEL[kind][0]}">
-      <b>${n}</b><small>${STATUS_LABEL[kind][0]}</small></button>`).join('')
+  const chip = ({ n, kind }: (typeof states)[number]) => `<button class="section-chip ${STATUS_LABEL[kind][1]}" data-section="${n}" aria-label="Seção ${n}: ${STATUS_LABEL[kind][0]}"><b>${n}</b><small>${STATUS_LABEL[kind][0]}</small></button>`
+  const flagged = states.filter(x => x.kind === 'divergent' || x.kind === 'conflict' || x.kind === 'waiting')
   let results: string
   if (CITY_ONLY.has(o)) {
     const [city, deps] = await Promise.all([loadCity(t, p), loadDeputies(p.uf)])
@@ -198,13 +208,27 @@ async function viewZone(p: Place): Promise<void> {
   } else {
     results = officialTotals(zoneTotals(zone, o), cands, o, p.uf, `zona ${p.zone} de ${p.municipality}`)
   }
-  app.innerHTML = header(p) + summary + queueNotice() + officeTabs(o, lineup, p.uf) + results +
-    `<div class="card"><h3>Seções de ${esc(p.municipality)} na zona ${esc(p.zone)}</h3>
-      <p class="muted">${sections.length} seções. A numeração é da zona, que pode incluir outras cidades; por isso os números pulam.${count('aggregated') ? ` ${count('aggregated')} são agregadas: os votos saem no boletim de outra seção.` : ''}</p>
-      ${grid ? `<div class="section-grid">${grid}</div>` : '<p class="muted">Lista indisponível para esta cidade.</p>'}</div>` + nav('section')
+  // results first; sections are found by number (or the highlighted ones), the full grid only on demand (native <details>)
+  const finder = sections.length ? `<div class="card"><h3>Encontrar a minha seção</h3>
+      <label class="search">${SEARCH_ICON}<input id="sec-q" inputmode="numeric" placeholder="Número da seção (${sections.length} na zona ${esc(p.zone)})" aria-label="Número da seção"></label>
+      <div class="section-grid" id="sec-found"></div>
+      ${flagged.length ? `<p class="muted" id="sec-flag-label">Seções com boletim enviado ou divergência:</p><div class="section-grid" id="sec-flag">${flagged.map(chip).join('')}</div>` : ''}
+      <details><summary>Ver todas as ${sections.length} seções</summary><p class="muted">A numeração é da zona, que pode incluir outras cidades; por isso os números pulam.${count('aggregated') ? ` ${count('aggregated')} são agregadas: os votos saem no boletim de outra seção.` : ''}</p>
+      <div class="section-grid">${states.map(chip).join('')}</div></details></div>`
+    : '<div class="card muted">Lista de seções indisponível para esta cidade.</div>'
+  app.innerHTML = header(p) + (sent ? sentCard + await sponsorHtml('sent') : '') + summary + queueNotice() + officeTabs(o, lineup, p.uf) + results + finder + nav('section')
   bindCommon()
-  document.querySelectorAll<HTMLButtonElement>('[data-section]').forEach(b => b.addEventListener('click', () => { savePlace({ ...p, section: b.dataset.section! }); render() }))
+  const bindChips = () => document.querySelectorAll<HTMLButtonElement>('[data-section]').forEach(b => (b.onclick = () => { savePlace({ ...p, section: b.dataset.section! }); render() }))
+  document.querySelector<HTMLInputElement>('#sec-q')?.addEventListener('input', ev => {
+    const q = (ev.target as HTMLInputElement).value.replace(/\D/g, '')
+    const found = q ? states.filter(x => String(x.n).startsWith(q)) : []
+    document.querySelector('#sec-found')!.innerHTML = q && !found.length ? `<p class="muted">Nenhuma seção ${esc(q)} nesta zona.</p>` : found.slice(0, 24).map(chip).join('')
+    bindChips()
+  })
+  bindChips()
 }
+
+const SEARCH_ICON = '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>'
 
 function reminderIcs(): string {
   const ics = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Apuracao Cidada//PT-BR', 'BEGIN:VEVENT', `UID:apuracao-cidada-${turn()}@confere`,
@@ -226,12 +250,12 @@ async function share(p: Place, s: SectionState): Promise<void> {
 function bindCommon(): void {
   document.querySelectorAll<HTMLButtonElement>('[data-turn]').forEach(b => b.addEventListener('click', () => { localStorage.setItem('turn', b.dataset.turn!); render() }))
   document.querySelectorAll<HTMLButtonElement>('[data-office]').forEach(b => b.addEventListener('click', () => { localStorage.setItem('office', b.dataset.office!); render() }))
-  document.querySelector('#change-place')?.addEventListener('click', placeDialog)
+  document.querySelector('#change-place')?.addEventListener('click', () => placeDialog())
 }
 
 /** Cascading native selects: UF → municipality → zone → section (optional: '' = whole zone). */
-function placeDialog(): void {
-  const p = savedPlace()
+function placeDialog(presetUf?: string): void {
+  const p = savedPlace() ?? { uf: presetUf ?? getUf(), municipality: '', municipalityCode: '', zone: '', section: '' }
   const dlg = document.createElement('dialog')
   const opt = (value: string | number, label: string, selected = false) => `<option value="${esc(value)}"${selected ? ' selected' : ''}>${esc(label)}</option>`
   dlg.innerHTML = `<form method="dialog"><h3>Minha seção</h3><p class="muted">Ao escanear o boletim, a seção é preenchida sozinha.</p>
@@ -279,7 +303,7 @@ function placeDialog(): void {
   form.addEventListener('submit', () => {
     const m = municipality()!
     savePlace({ uf: uf.value.toUpperCase(), municipality: titleCase(m.name), municipalityCode: String(m.code), zone: zone.value, section: sec.value })
-    dlg.remove(); render()
+    dlg.remove(); location.hash = '#/section'; render()
   })
   dlg.addEventListener('close', () => dlg.remove())
   dlg.showModal()
@@ -350,7 +374,7 @@ async function viewReview(): Promise<void> {
     ${other ? `<div class="error-box">${otherMsg}</div>` : '<button class="btn" id="send">Enviar e registrar</button>'}<a class="btn outline" href="#/scan">Ler de novo</a>`
   document.querySelector('#send')?.addEventListener('click', async () => {
     const saved = savedPlace()
-    const p: Place = { uf: f.UNFE, municipality: saved.municipalityCode === f.MUNI ? saved.municipality : `Município ${f.MUNI}`, municipalityCode: f.MUNI, zone: f.ZONA, section: f.SECA }
+    const p: Place = { uf: f.UNFE, municipality: saved?.municipalityCode === f.MUNI ? saved.municipality : `Município ${f.MUNI}`, municipalityCode: f.MUNI, zone: f.ZONA, section: f.SECA }
     savePlace(p)
     localStorage.setItem('turn', f.TURN ?? String(turn()))
     const votes = Object.fromEntries(ballot.offices.map(o => [o.CARG, officeVotes(o)]))
@@ -358,6 +382,7 @@ async function viewReview(): Promise<void> {
     enqueue(ballot.texts)
     await flush()
     sessionStorage.removeItem('ballot-read')
+    sessionStorage.setItem('just-sent', '1')
     location.hash = '#/section'
   })
 }
@@ -373,15 +398,25 @@ async function viewCoverage(): Promise<void> {
   const total = C?.totalSections ?? 517179, st = C?.byStatus ?? {}
   const share = (n = 0) => n / total
   const color = (x: number) => (x > .7 ? 'var(--cov-hi)' : x >= .4 ? 'var(--cov-mid)' : x > 0 ? 'var(--cov-lo)' : '#E2ECEA')
-  const map = Object.entries(ufPaths!).map(([uf, d]) => `<path d="${d}" fill="${color(C?.byUF[uf] ?? 0)}"><title>${uf}: ${pct(C?.byUF[uf] ?? 0)}</title></path>`).join('')
+  const map = Object.entries(ufPaths!).map(([uf, d]) => `<path d="${d}" data-uf="${uf}" tabindex="0" role="button" aria-label="${uf}: ${pct(C?.byUF[uf] ?? 0)}" fill="${color(C?.byUF[uf] ?? 0)}"><title>${uf}: ${pct(C?.byUF[uf] ?? 0)}</title></path>`).join('')
   app.innerHTML = `<header class="top-bar"><div class="brand">Cobertura<small>${fmt(total)} seções · ${t}º turno · ${updated(C?.updatedAt)}</small></div></header>
     <div class="card"><div class="big">${pct(share(C?.checked))}</div><div class="muted">${fmt(C?.checked ?? 0)} seções já têm o boletim da porta enviado</div>
       <div class="bar"><i style="width:${share(st.identical) * 100}%;background:var(--ok)"></i><i style="width:${share(st.waiting) * 100}%;background:var(--secondary)"></i><i style="width:${share((st.divergent ?? 0) + (st.conflict ?? 0)) * 100}%;background:var(--bad)"></i></div>
       <div class="legend"><span><i style="background:var(--ok)"></i>idênticas ${fmt(st.identical ?? 0)}</span><span><i style="background:var(--secondary)"></i>aguardando TSE ${fmt(st.waiting ?? 0)}</span><span><i style="background:var(--bad)"></i>divergentes ${fmt((st.divergent ?? 0) + (st.conflict ?? 0))}</span><span><i style="background:#E2ECEA"></i>sem envio</span></div></div>
     <div class="card"><h3>Por estado</h3><svg class="map" viewBox="0 0 300 300" role="img" aria-label="Mapa do Brasil: cobertura por estado">${map}</svg>
-      <div class="muted">Exterior (ZZ): <b>${pct(C?.byUF.ZZ ?? 0)}</b></div>
+      <div class="muted">Toque num estado. Exterior (ZZ): <b>${pct(C?.byUF.ZZ ?? 0)}</b></div><div id="uf-panel"></div>
       <div class="legend"><span><i style="background:var(--cov-hi)"></i>&gt;70%</span><span><i style="background:var(--cov-mid)"></i>40–70%</span><span><i style="background:var(--cov-lo)"></i>até 40%</span><span><i style="background:#E2ECEA"></i>nenhum envio</span></div></div>
     <a class="btn outline" href="#/section">Ver a minha cidade →</a>` + nav('coverage')
+  const divs = (await loadDivergences(t))?.items ?? []
+  document.querySelectorAll<SVGPathElement>('.map path').forEach(el => el.addEventListener('click', () => {
+    const uf = el.dataset.uf!
+    document.querySelectorAll('.map path').forEach(x => x.classList.toggle('picked', x === el))
+    const open = divs.filter(d => d.uf === uf && d.status !== 'explained').length
+    document.querySelector('#uf-panel')!.innerHTML = `<div class="list-row"><b>${flag(uf)} ${esc(UFS.find(([c]) => c === uf.toLowerCase())?.[1] ?? uf)}</b><span>${pct(C?.byUF[uf] ?? 0)} conferidas · ${open} divergência(s)</span></div>
+      <button class="btn" id="uf-pick">Escolher uma seção em ${esc(uf)}</button>${open ? `<button class="btn outline" id="uf-div">Ver divergências de ${esc(uf)}</button>` : ''}`
+    document.querySelector('#uf-pick')!.addEventListener('click', () => placeDialog(uf))
+    document.querySelector('#uf-div')?.addEventListener('click', () => { divFilter = uf; location.hash = '#/divergences' })
+  }))
 }
 
 // ---------- Divergences ----------
@@ -484,8 +519,10 @@ async function viewReplay(): Promise<void> {
 }
 
 // ---------- About ----------
-function viewAbout(): void {
-  app.innerHTML = `<header class="top-bar"><div class="brand">Como funciona<small>conferência cidadã · código aberto</small></div></header>
+async function viewAbout(): Promise<void> {
+  const sp = await loadSponsors()
+  app.innerHTML = `<header class="top-bar"><div class="row"><a href="#/brasil" class="back" aria-label="Voltar">←</a><div class="brand">Como funciona<small>conferência cidadã · código aberto</small></div></div></header>
+    <a class="btn amber" href="#/welcome">Ver a animação de como funciona</a>
     <div class="card"><h3>1. Às 17h, o boletim vai para a porta</h3>Por lei, cada urna imprime o boletim com todos os votos da seção, assinado digitalmente, e ele fica afixado na porta.</div>
     <div class="card"><h3>2. Você escaneia o QR Code</h3>O app confere no celular se o boletim está íntegro. Sem internet? Fica salvo e é enviado depois.</div>
     <div class="card"><h3>3. Comparamos com o TSE</h3>Quando o TSE publica a sua seção, mostramos se é idêntico ou se há divergência, sempre com as provas.</div>
@@ -493,18 +530,120 @@ function viewAbout(): void {
       <pre class="code">uv run python -m confere.public_log verify log/2</pre>
       <a href="${import.meta.env.BASE_URL}log/${turn()}/checkpoints.json" target="_blank" rel="noopener">Ver checkpoints do ${turn()}º turno</a></div>
     <div class="card"><h3>Refaça a apuração do 1º turno</h3>Somamos as seções publicadas pelo TSE e mostramos, minuto a minuto, como a contagem andou.<br><a href="#/replay">Ver a soma e a curva →</a></div>
-    <div class="card muted">Resultados e situação dos candidatos ("Eleito", "2º turno") vêm do TSE. Não fazemos projeção. Não pedimos conta nem localização. Código aberto (AGPL-3.0): qualquer pessoa refaz a conta.</div>` + nav('about')
+    ${sp?.list.length ? `<div class="card"><h3>Quem apoia</h3><span class="muted">Patrocínio não compra conteúdo: resultados vêm do TSE e a conferência é aberta.</span>${sp.list.map(x => `<div class="list-row"><a href="${esc(x.url ?? '#')}" target="_blank" rel="noopener sponsored">${esc(x.name)}</a></div>`).join('')}</div>` : ''}
+    <div class="card muted">Resultados e situação dos candidatos ("Eleito", "2º turno") vêm do TSE. Não fazemos projeção. Não pedimos conta nem localização. Código aberto (AGPL-3.0): qualquer pessoa refaz a conta.</div>` + nav('')
+}
+
+// ---------- Sponsors (docs/patrocinio.md) ----------
+async function sponsorHtml(slot: string): Promise<string> {
+  const ad = (await loadSponsors())?.slots[slot]
+  if (!ad) return '' // unsold slot: nothing, never "anuncie aqui"
+  return `<a class="card sponsor" href="${esc(ad.url ?? '#')}" target="_blank" rel="noopener sponsored"><span class="pill" style="background:var(--pend)">PATROCÍNIO</span>
+    ${ad.image ? `<img src="${esc(assetUrl(ad.image))}" alt="" width="1200" height="400" loading="lazy">` : ''}<b>${esc(ad.name)}</b>${ad.text ? `<span class="muted">${esc(ad.text)}</span>` : ''}</a>`
+}
+
+// ---------- Brasil (default): national President + the voter's Governor, as the TSE publishes them ----------
+let liveTimer: ReturnType<typeof setInterval> | undefined
+const ufName = (uf: string) => UFS.find(([c]) => c === uf.toLowerCase())?.[1] ?? uf
+
+function race(title: string, d: NationalResults, t: number, uf = ''): string {
+  const counting = d.pct > 0
+  const list = (counting ? d.candidates : [...d.candidates].sort((a, b) => +a.n - +b.n)).slice(0, t === 2 ? 2 : 6) // no ranking before votes exist
+  const pctTxt = (x: number) => x.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+  return `<div class="card"><h3>${uf ? flag(uf) + ' ' : ''}${esc(title)} · ${counting ? `${pctTxt(d.pct)}% apurado` : `${t}º turno`}</h3>
+    ${list.map(c => `<a class="race-row" href="#/candidate/${esc(c.sq)}"><span class="photo"><img src="${photoUrl(c.sq)}" alt="" width="56" height="56" loading="lazy"></span>
+      <span class="race-name"><b>${esc(c.name)}</b><small>${esc(c.party)} · ${esc(c.n)}</small>${c.status === 'Eleito' || c.status === '2º turno' ? `<span class="badge ${c.status === 'Eleito' ? 'elected' : 'runoff'}">${esc(c.status)} · TSE</span>` : ''}</span>
+      ${counting ? `<span class="race-num"><b>${pctTxt(c.pct)}%</b><small>${fmt(c.votes)} votos</small></span><span class="race-bar"><i style="width:${c.pct}%"></i></span>` : ''}</a>`).join('')}
+    ${counting ? `<p class="muted">Brancos ${fmt(d.votes.blank)} · Nulos ${fmt(d.votes.null)} · ${fmt(d.votes.valid)} votos válidos</p>` : ''}
+    <p class="muted">Fonte: TSE (resultados.tse.jus.br), atualizado ${esc(d.updatedAt)}. Não fazemos projeção.</p></div>`
+}
+
+async function viewBrasil(): Promise<void> {
+  const t = turn(), uf = getUf()
+  const [d, gov] = await Promise.all([loadNational(t), uf ? loadGovernor(t, uf) : null])
+  const head = `<header class="top-bar"><div class="row"><div class="brand">Apuração Cidadã<small>Presidente · Brasil · ${t}º turno</small></div>
+    <div style="display:flex;gap:6px;align-items:center"><div class="turn-toggle" role="group" aria-label="Turno">${[1, 2].map(n => `<button data-turn="${n}" aria-pressed="${t === n}">${n}º</button>`).join('')}</div>
+    <a href="#/about" class="info" aria-label="Como funciona">ⓘ</a></div></div></header>`
+  if (!d) { app.innerHTML = head + '<div class="card muted">Resultado nacional indisponível agora. Tentamos de novo a cada 30 segundos.</div>' + nav('brasil'); bindCommon(); return }
+  const counting = d.pct > 0
+  const closes = new Date(`${ELECTION_DAY[t]}T17:00:00-03:00`).getTime()
+  const top = counting
+    ? `<div class="card"><div class="race-progress"><b>${d.pct.toLocaleString('pt-BR', { maximumFractionDigits: 2 })}%</b><span class="muted">${fmt(d.sections.counted)} de ${fmt(d.sections.total)} seções</span></div><div class="bar"><i style="width:${d.pct}%;background:var(--accent)"></i></div><span class="muted">das seções apuradas pelo TSE</span></div>`
+    : `<div class="countdown"><span class="tag" id="cd-tag">A APURAÇÃO COMEÇA ÀS 17H</span><b id="cd">…</b><small>Votação em ${ELECTION_DAY[t].split('-').reverse().join('/')}, das 8h às 17h (Brasília)</small></div>`
+  const govCard = gov ? race(`Governador · ${ufName(uf)}`, gov, t, uf)
+    : uf && t === 2 ? `<div class="card muted">${esc(ufName(uf))} elegeu o governador no 1º turno; no dia 25 só há votação para Presidente.</div>`
+    : !uf ? '<div class="card"><h3>Onde você vota?</h3><span class="muted">Escolha o seu estado para ver também a disputa de governador.</span><a class="btn outline" href="#/estado">Escolher meu estado</a></div>' : ''
+  app.innerHTML = head + top + race('Presidente · Brasil', d, t) + govCard + await sponsorHtml('brasil') +
+    `<div class="card"><h3>O TSE soma. Você confere.</h3><span class="muted">Às 17h cada urna imprime o boletim e ele fica colado na porta da seção. Escaneie o QR Code: comparamos com o que o TSE publicou da sua seção.</span></div>
+    <a class="btn amber" href="#/scan">Escanear o boletim da minha seção</a><a class="btn outline" href="#/section">Ver a minha seção</a>` + nav('brasil')
+  bindCommon()
+  const tick = () => {
+    const el = document.querySelector('#cd'); if (!el) return
+    const left = Math.max(0, closes - Date.now())
+    if (!left) { el.textContent = 'Urnas fechadas'; document.querySelector('#cd-tag')!.textContent = 'AGUARDANDO O TSE'; return }
+    el.textContent = left > 864e5 ? `${Math.ceil(left / 864e5)} dias` : [left / 3.6e6, (left / 6e4) % 60, (left / 1e3) % 60].map(x => String(Math.floor(x)).padStart(2, '0')).join(':')
+  }
+  tick()
+  let ticks = 0
+  liveTimer = setInterval(() => { tick(); if (++ticks % 30 === 0) viewBrasil() }, 1000) // TSE numbers every 30 s
+  const seen = `count-start-shown:${t}`
+  if (counting && d.pct < 100 && !localStorage.getItem(seen)) countStart(t, d.pct, () => localStorage.setItem(seen, '1'))
+}
+
+/** Full-screen moment when the TSE count starts (0% → first number); once per turn per device. */
+function countStart(t: number, p: number, done: () => void): void {
+  const el = document.createElement('div')
+  el.className = 'count-start'
+  el.setAttribute('role', 'alert')
+  el.innerHTML = `<i class="ring"></i><span class="tag">${t}º TURNO · AO VIVO</span><b>A APURAÇÃO<br>COMEÇOU</b><small>Números oficiais do TSE, seção por seção.<br>E você confere o boletim da porta.</small>
+    <span class="track"><i style="--w:${Math.max(p, 2)}%"></i></span><small>${p.toLocaleString('pt-BR', { maximumFractionDigits: 2 })}% das seções apuradas</small>`
+  const close = () => { el.remove(); done() }
+  el.addEventListener('click', close)
+  setTimeout(close, 4200)
+  document.body.append(el)
+}
+
+// ---------- Welcome: how it works (4 animated steps) → state → city/zone/section ----------
+const STEPS: [string, string, string][] = [
+  ['Às 17h, a urna imprime o boletim', 'Cada urna imprime o resultado da seção, com QR Code e assinatura digital. Antes de qualquer transmissão.', '<div class="w-urna"><span class="w-clock">17:00</span><i class="w-slot"></i></div><div class="w-paper drop">BOLETIM DE URNA<i></i><i></i><i></i><u></u></div>'],
+  ['Ele fica colado na porta', 'O boletim é afixado na porta da seção. Qualquer pessoa pode ver. É a prova em papel.', '<div class="w-door"><div class="w-paper sway">SEÇÃO 0037<i></i><i></i><i></i><u></u></div></div>'],
+  ['Você escaneia o QR Code', 'Leva 30 segundos. Sem conta, sem localização. O app confere se o boletim está íntegro.', '<div class="w-phone"><div class="w-paper">BOLETIM<i></i><i></i><i></i><u></u></div><i class="w-scan"></i><b>QR LIDO ✓</b></div>'],
+  ['Comparamos com o TSE', 'Quando o TSE publica a sua seção: igual, está provado. Diferente, a divergência aparece com a prova, para todo mundo ver.', '<div class="w-cmp"><div class="w-paper in-l">PORTA<i></i><i></i><i></i><u></u></div><span class="w-eq">=</span><div class="w-paper in-r">TSE<i></i><i></i><i></i><u></u></div></div><span class="w-ok">IDÊNTICO ✓</span>'],
+]
+let welcomeStep = 0
+async function viewWelcome(): Promise<void> {
+  const asking = welcomeStep >= STEPS.length
+  const finish = () => { localStorage.setItem('onboarded', '1'); welcomeStep = 0 }
+  const top = `<div class="w-top"><b>Apuração Cidadã</b><button id="w-skip">Pular</button></div>`
+  if (asking) {
+    app.innerHTML = `<div class="welcome">${top}<h1>Em qual estado você vota?</h1><p>Depois escolha a cidade, a zona e a sua seção. Assim você vê o resultado de onde vota.</p>
+      <div class="uf-grid">${UFS.map(([c]) => `<button data-uf="${c}">${flag(c)}<span>${c === 'zz' ? 'Exterior' : c.toUpperCase()}</span></button>`).join('')}</div></div>`
+    document.querySelector('#w-skip')!.addEventListener('click', () => { finish(); location.hash = '#/brasil' })
+    document.querySelectorAll<HTMLButtonElement>('[data-uf]').forEach(b => b.addEventListener('click', () => {
+      finish(); setUf(b.dataset.uf!); location.hash = '#/brasil'; placeDialog(b.dataset.uf!) // continue straight to city → zone → section
+    }))
+    return
+  }
+  const [title, text, scene] = STEPS[welcomeStep]
+  const last = welcomeStep === STEPS.length - 1
+  app.innerHTML = `<div class="welcome">${top}<div class="w-scene" aria-hidden="true">${scene}</div>${last ? await sponsorHtml('welcome') : ''}
+    <h1>${title}</h1><p>${text}</p><div class="w-foot"><span class="w-dots">${STEPS.map((_, i) => `<i class="${i === welcomeStep ? 'on' : ''}"></i>`).join('')}</span>
+    <button class="btn amber" id="w-next" style="width:auto;margin:0;padding:0 28px">${last ? 'Começar' : 'Próximo'}</button></div></div>`
+  document.querySelector('#w-skip')!.addEventListener('click', () => { welcomeStep = STEPS.length; viewWelcome() })
+  document.querySelector('#w-next')!.addEventListener('click', () => { welcomeStep++; viewWelcome() })
 }
 
 // ---------- router ----------
 let renderSeq = 0
 function render(): void {
   if (location.hash !== '#/scan') { stopCamera?.(); stopCamera = null }
-  const route = location.hash.replace('#/', '') || 'section'
+  clearInterval(liveTimer)
+  if (!localStorage.getItem('onboarded') && !['#/welcome', '#/estado'].includes(location.hash) && !location.hash.startsWith('#/candidate/')) { location.hash = '#/welcome'; return }
+  const route = location.hash.replace('#/', '') || 'brasil'
   if (route.startsWith('candidate/')) { viewCandidate(route.slice('candidate/'.length)); window.scrollTo(0, 0); return }
-  const views: Record<string, () => void | Promise<void>> = { section: viewSection, scan: viewScan, review: viewReview, coverage: viewCoverage, divergences: viewDivergences, about: viewAbout, replay: viewReplay }
+  const views: Record<string, () => void | Promise<void>> = { brasil: viewBrasil, welcome: viewWelcome, estado: () => { welcomeStep = STEPS.length; return viewWelcome() }, section: viewSection, scan: viewScan, review: viewReview, coverage: viewCoverage, divergences: viewDivergences, about: viewAbout, replay: viewReplay }
   const seq = ++renderSeq
-  Promise.resolve((views[route] ?? viewSection)()).then(() => { if (seq === renderSeq) window.scrollTo(0, 0) })
+  Promise.resolve((views[route] ?? viewBrasil)()).then(() => { if (seq === renderSeq) window.scrollTo(0, 0) })
 }
 
 addEventListener('hashchange', render)

@@ -1,8 +1,8 @@
 // App data: official TSE results per zone (static JSON built by server/confere/bweb.py) + door ballots sent from this device.
 // Performance: one small file per zone (median ~9 KB, ~2 KB gzipped), fetched once and memoized; the service worker caches it.
 import type { Votes } from '../../shared/ballot'
-import { DEFAULT_PLACE, PATHS, placeKey, sectionData as merge, type CandidateIndex, type CandidatePage, type Coverage, type Divergence, type DoorBallot, type Place, type SectionData, type SectionDoc, type ZoneResults } from '../../shared/model'
-export { CITY_ONLY, DEFAULT_PLACE, OFFICE_LABEL, officeKey, officesFor, zoneTotals } from '../../shared/model'
+import { PATHS, placeKey, sectionData as merge, type CandidateIndex, type NationalResults, type CandidatePage, type Coverage, type Divergence, type DoorBallot, type Place, type SectionData, type SectionDoc, type ZoneResults } from '../../shared/model'
+export { CITY_ONLY, OFFICE_LABEL, officeKey, officesFor, zoneTotals } from '../../shared/model'
 export type { Candidate, CandidateIndex, CandidatePage, Coverage, Divergence, DoorBallot, Place, SectionData, SectionDoc, TseSection, ZoneResults } from '../../shared/model'
 
 const BASE = import.meta.env.VITE_DATA_URL ?? import.meta.env.BASE_URL
@@ -37,8 +37,24 @@ export function recordDoorBallot(turn: number, p: Place, door: DoorBallot): void
   localStorage.setItem('sent', JSON.stringify({ ...read('sent', {}), [placeKey(turn, p)]: door }))
 }
 
-export const savedPlace = (): Place => ({ ...DEFAULT_PLACE, ...read<Partial<Place>>('place', {}) })
-export const savePlace = (p: Place) => localStorage.setItem('place', JSON.stringify(p))
+/** null until the voter picks a place or scans a ballot: no default city, we ask the state first. */
+export const savedPlace = (): Place | null => read<Place | null>('place', null)
+export const getUf = () => localStorage.getItem('uf') ?? savedPlace()?.uf ?? ''
+export const setUf = (uf: string) => localStorage.setItem('uf', uf.toUpperCase())
+export const savePlace = (p: Place) => { localStorage.setItem('place', JSON.stringify(p)); setUf(p.uf) }
+
+export const loadNational = (turn: number) => fresh<NationalResults>(PATHS.national(turn))
+export const loadGovernor = (turn: number, uf: string) => fresh<NationalResults>(PATHS.governor(turn, uf))
+
+export interface SponsorSlot { name: string; image?: string; url?: string; text?: string }
+export interface Sponsors { enabled?: boolean; slots: Record<string, SponsorSlot>; list: { name: string; url?: string }[] }
+/** Two switches (docs/patrocinio.md): build VITE_SPONSORS=off, and "enabled" in sponsors.json (instant, no deploy). */
+export const loadSponsors = async () => {
+  if (import.meta.env.VITE_SPONSORS === 'off') return null
+  const s = await fresh<Sponsors>('sponsors.json')
+  return s?.enabled ? s : null
+}
+export const assetUrl = (path: string) => (path.startsWith('http') ? path : `${BASE}${path}`)
 
 export const loadCoverage = (turn: number) => fresh<Coverage>(PATHS.coverage(turn))
 export const loadDivergences = (turn: number) => fresh<{ items: Divergence[]; updatedAt: string }>(PATHS.divergences(turn))
