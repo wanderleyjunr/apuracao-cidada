@@ -6,7 +6,7 @@ import {
 } from './data'
 import { loadPlaces, titleCase, UFS, type PlaceIndex } from './places'
 import { enqueue, flush, queue } from './queue'
-import { ELECTION_DAY, order, sectionState, type NationalResults, type SectionState } from '../../shared/model'
+import { ELECTION_DAY, electedFirstRound, order, sectionState, type Elected, type NationalResults, type SectionState } from '../../shared/model'
 
 const app = document.querySelector<HTMLDivElement>('#app')!
 const esc = (s: unknown) => String(s ?? '').replace(/[&<>"']/g, c => `&#${c.charCodeAt(0)};`) // QR content is untrusted input
@@ -40,9 +40,9 @@ function nav(route: string): string {
     <a class="fab" href="#/scan" aria-label="Escanear boletim">${ICON.scan}</a>`
 }
 
-const flag = (uf: string) => uf.toLowerCase() === 'zz'
-  ? '<span class="flag flag-globe" aria-hidden="true">🌎</span>'
-  : `<img class="flag" src="${import.meta.env.BASE_URL}flags/${esc(uf.toLowerCase())}.png" alt="" width="30" height="21">`
+const flag = (uf: string, h = 21) => uf.toLowerCase() === 'zz'
+  ? `<span class="flag flag-globe" aria-hidden="true" style="font-size:${h}px">🌎</span>`
+  : `<img class="flag" src="${import.meta.env.BASE_URL}flags/${esc(uf.toLowerCase())}.png" alt="" width="${Math.round(h * 1.43)}" height="${h}" style="width:${Math.round(h * 1.43)}px;height:${h}px">`
 
 function header(p: Place): string {
   const t = turn()
@@ -550,7 +550,7 @@ function race(title: string, d: NationalResults, t: number, uf = ''): string {
   const counting = d.pct > 0
   const list = (counting ? d.candidates : [...d.candidates].sort((a, b) => +a.n - +b.n)).slice(0, t === 2 ? 2 : 6) // no ranking before votes exist
   const pctTxt = (x: number) => x.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
-  return `<div class="card"><h3>${uf ? flag(uf) + ' ' : ''}${esc(title)} · ${counting ? `${pctTxt(d.pct)}% apurado` : `${t}º turno`}</h3>
+  return `<div class="card"><h3 class="race-head">${uf ? flag(uf, 36) : ''}<span>${esc(title)} · ${counting ? `${pctTxt(d.pct)}% apurado` : `${t}º turno`}</span></h3>
     ${list.map(c => `<a class="race-row" href="#/candidate/${esc(c.sq)}"><span class="photo"><img src="${photoUrl(c.sq)}" alt="" width="56" height="56" loading="lazy"></span>
       <span class="race-name"><b>${esc(c.name)}</b><small>${esc(c.party)} · ${esc(c.n)}</small>${c.status === 'Eleito' || c.status === '2º turno' ? `<span class="badge ${c.status === 'Eleito' ? 'elected' : 'runoff'}">${esc(c.status)} · TSE</span>` : ''}</span>
       ${counting ? `<span class="race-num"><b>${pctTxt(c.pct)}%</b><small>${fmt(c.votes)} votos</small></span><span class="race-bar"><i style="width:${c.pct}%"></i></span>` : ''}</a>`).join('')}
@@ -570,8 +570,9 @@ async function viewBrasil(): Promise<void> {
   const top = counting
     ? `<div class="card"><div class="race-progress"><b>${d.pct.toLocaleString('pt-BR', { maximumFractionDigits: 2 })}%</b><span class="muted">${fmt(d.sections.counted)} de ${fmt(d.sections.total)} seções</span></div><div class="bar"><i style="width:${d.pct}%;background:var(--accent)"></i></div><span class="muted">das seções apuradas pelo TSE</span></div>`
     : `<div class="countdown"><span class="tag" id="cd-tag">A APURAÇÃO COMEÇA ÀS 17H</span><b id="cd">…</b><small>Votação em ${ELECTION_DAY[t].split('-').reverse().join('/')}, das 8h às 17h (Brasília)</small></div>`
-  const govCard = gov ? race(`Governador · ${ufName(uf)}`, gov, t, uf)
-    : uf && t === 2 ? `<div class="card muted">${esc(ufName(uf))} elegeu o governador no 1º turno; no dia 25 só há votação para Presidente.</div>`
+  const elected = uf ? electedFirstRound(uf, await loadGovernor(1, uf), await loadCandidates(1), await loadDeputies(uf)) : null
+  const govCard = gov ? race(`Governador · ${ufName(uf)}`, gov, t, uf) + (elected && t === 2 ? electedCard(uf, elected, false) : '')
+    : elected ? electedCard(uf, elected, t === 2)
     : !uf ? '<div class="card"><h3>Onde você vota?</h3><span class="muted">Escolha o seu estado para ver também a disputa de governador.</span><a class="btn outline" href="#/estado">Escolher meu estado</a></div>' : ''
   app.innerHTML = head + top + race('Presidente · Brasil', d, t) + govCard + await sponsorHtml('brasil') +
     `<div class="card"><h3>O TSE soma. Você confere.</h3><span class="muted">Às 17h cada urna imprime o boletim e ele fica colado na porta da seção. Escaneie o QR Code: comparamos com o que o TSE publicou da sua seção.</span></div>
@@ -601,6 +602,20 @@ function countStart(t: number, p: number, done: () => void): void {
   el.addEventListener('click', close)
   setTimeout(close, 4200)
   document.body.append(el)
+}
+
+/** "Eleitos no 1º turno" for the voter's UF: governor highlighted when there is no runoff, senators, deputies (as the TSE declared). */
+function electedCard(uf: string, e: Elected, showGovernor: boolean): string {
+  const person = (p: Elected['senators'][number], big = false) => `<a class="won${big ? ' big' : ''}" href="#/candidate/${esc(p.sq)}">
+    <span class="ring"><img src="${photoUrl(p.sq)}" alt="" width="${big ? 96 : 52}" height="${big ? 96 : 52}" loading="lazy"></span>
+    <span><b>${esc(p.name)}</b><small>${esc(p.party)} · ${esc(p.n)}${p.pct ? ` · ${p.pct.toLocaleString('pt-BR', { maximumFractionDigits: 2 })}% dos válidos` : ''}</small><span class="badge elected">Eleito · TSE</span></span></a>`
+  const names = (list: Elected['federal']) => `<div class="dep-list">${list.map(p => `<a href="#/candidate/${esc(p.sq)}">${esc(p.name)} <small>${esc(p.party)}</small></a>`).join('')}</div>`
+  return `<div class="card"><h3 class="race-head">${flag(uf, 36)}<span>${esc(ufName(uf))} · eleitos no 1º turno</span></h3>
+    ${showGovernor && e.governor ? `<p class="muted">Governador eleito no 1º turno. No dia 25, ${esc(ufName(uf))} vota só para Presidente.</p>${person(e.governor, true)}` : ''}
+    ${e.senators.length ? `<p class="muted" style="margin-top:8px">Senado</p>${e.senators.map(p => person(p)).join('')}` : ''}
+    ${e.federal.length ? `<details><summary>Deputados federais eleitos (${e.federal.length})</summary>${names(e.federal)}</details>` : ''}
+    ${e.state.length ? `<details><summary>Deputados estaduais eleitos (${e.state.length})</summary>${names(e.state)}</details>` : ''}
+    <p class="muted">"Eleito" é declaração do TSE.</p></div>`
 }
 
 // ---------- Welcome: how it works (4 animated steps) → state → city/zone/section ----------

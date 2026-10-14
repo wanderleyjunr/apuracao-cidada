@@ -1,5 +1,6 @@
+// SPDX-License-Identifier: MIT (shared/LICENSE). The rest of this repository is AGPL-3.0.
 import { expect, it } from 'vitest'
-import { order, sectionState } from './model'
+import { electedFirstRound, order, sectionState } from './model'
 
 const at = (s: string) => new Date(s)
 const tse = { time: '18:47', votes: { '13': 112, '22': 95 } }
@@ -18,4 +19,15 @@ it('states along election day', () => {
 it('orders by votes, otherwise by number', () => {
   expect(order(['22', '13'])).toEqual(['13', '22'])
   expect(order(['13', '22'], { '13': 5, '22': 9 })).toEqual(['22', '13'])
+})
+
+it('elected in the 1st round: only what the TSE declared', () => {
+  const gov = { candidates: [{ n: '10', sq: 'g1', name: 'A', party: 'X', votes: 9, pct: 55, status: 'Eleito' }, { n: '13', sq: 'g2', name: 'B', party: 'Y', votes: 7, pct: 45, status: 'Não eleito' }] } as never
+  const cands = { declaredAt: '', names: {}, offices: { '5:sp': [{ n: '111', sq: 's1', name: 'S', party: 'Z', status: 'Eleito', votes: 1, pct: '' }, { n: '222', sq: 's2', name: 'T', party: 'Z', status: 'Não eleito', votes: 1, pct: '' }] } }
+  const deps = { '6': { '1001': ['d1', 'ZÉ', 'P', 'ELEITO POR QP'], '1002': ['d2', 'ANA', 'P', 'ELEITO POR MÉDIA'], '1003': ['d3', 'BIA', 'P', 'SUPLENTE'] }, '7': {} } as never
+  const e = electedFirstRound('SP', gov, cands, deps)
+  expect(e.governor?.sq).toBe('g1')
+  expect(e.senators.map(x => x.sq)).toEqual(['s1'])
+  expect(e.federal.map(x => x.name)).toEqual(['ANA', 'ZÉ'])
+  expect(e.state).toEqual([])
 })

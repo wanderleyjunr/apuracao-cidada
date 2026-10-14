@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT (shared/LICENSE). The rest of this repository is AGPL-3.0.
 // Platform-free model shared by the PWA (app/) and the mobile app (mobile/): public JSON shapes, office rules,
 // section state during election day and place names. No fetch, no storage, no env here (AD-2 / AD-4).
 import { compare, type Difference, type Votes } from './ballot'
@@ -26,6 +27,26 @@ export interface NationalResults {
   candidates: { n: string; sq: string; name: string; party: string; votes: number; pct: number; status: string }[]
   source: string
 }
+/** results/1/<uf>/deputies.json: office ("6" federal, "7" state) → number → [sqcand, name, party, TSE result]. */
+export type Deputies = Record<string, Record<string, [sq: string, name: string, party: string, result: string]>>
+export interface ElectedPerson { n: string; sq: string; name: string; party: string; pct?: number }
+export interface Elected { governor?: ElectedPerson; senators: ElectedPerson[]; federal: ElectedPerson[]; state: ElectedPerson[] }
+
+/** Who the TSE declared elected in the 1st round for one UF (status copied, never inferred). */
+export function electedFirstRound(uf: string, gov1: NationalResults | null, cands1: CandidateIndex | null, deps: Deputies | null): Elected {
+  const g = gov1?.candidates.find(c => c.status === 'Eleito')
+  const deputies = (office: string) => Object.entries(deps?.[office] ?? {})
+    .filter(([, [, , , r]]) => r.startsWith('ELEITO'))
+    .map(([n, [sq, name, party]]) => ({ n, sq, name, party }))
+    .sort((a, b) => a.name.localeCompare(b.name, 'pt-BR'))
+  return {
+    governor: g && { n: g.n, sq: g.sq, name: g.name, party: g.party, pct: g.pct },
+    senators: (cands1?.offices[`5:${uf.toLowerCase()}`] ?? []).filter(c => c.status === 'Eleito').map(({ n, sq, name, party }) => ({ n, sq, name, party })),
+    federal: deputies('6'),
+    state: deputies('7'),
+  }
+}
+
 export interface Municipality { code: number; name: string; zones: Record<string, number[]> }
 export interface PlaceIndex { uf: string; municipalities: Municipality[] }
 

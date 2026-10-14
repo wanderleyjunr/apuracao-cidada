@@ -14,4 +14,4 @@ Anonymous by default (no account, no GPS, EXIF stripped). Neutral: we never proj
 
 Run and architecture notes: see [CLAUDE.md](CLAUDE.md).
 
-License: [AGPL-3.0](LICENSE).
+License: [AGPL-3.0](LICENSE), except `shared/` (QR parsing, hash chain, public data model), which is [MIT](shared/LICENSE) so anyone can reuse the ballot check in any app.

@@ -174,3 +174,13 @@ details summary { cursor: pointer; color: var(--primary); font-weight: 900; padd
 .uf-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px } .uf-grid button { display: flex; align-items: center; gap: 8px; background: #ffffff1f; border: 0; border-radius: 12px; padding: 12px 10px; color: #fff; font-weight: 800; font-size: 16px; cursor: pointer }
 .uf-grid button:last-child { grid-column: 1 / -1 }
 @media (prefers-reduced-motion: reduce) { .welcome *, .count-start * { animation: none !important } }
+
+/* elected in the 1st round */
+.race-head { display: flex; align-items: center; gap: 10px } .race-head .flag { border-radius: 4px; flex: none; box-shadow: 0 0 0 1px var(--line) }
+.won { display: flex; align-items: center; gap: 12px; padding: 8px 0; color: inherit; text-decoration: none }
+.won b { display: block; text-transform: uppercase } .won small { display: block; color: var(--ink-2); font-size: 11px }
+.won .ring { flex: none; width: 58px; height: 58px; border-radius: 50%; border: 3px solid var(--ok); padding: 2px; display: grid; place-items: center; overflow: hidden }
+.won .ring img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover }
+.won.big { flex-direction: column; align-items: center; text-align: center; padding: 12px 0 }
+.won.big .ring { width: 112px; height: 112px; border-width: 5px; box-shadow: 0 0 0 6px #12A15022 } .won.big b { font-size: 18px }
+.dep-list { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 12px; padding: 6px 0 } .dep-list a { font-size: 12px; color: var(--ink); text-decoration: none } .dep-list small { color: var(--ink-2) }

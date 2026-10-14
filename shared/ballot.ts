@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT (shared/LICENSE). The rest of this repository is AGPL-3.0.
 // Ballot (Boletim de Urna) QR Code parsing and validation — formats 1.5 and 6.0.
 // Mirror of server/confere/ballot.py: both must pass the same fixtures. Used by app/ and edge/.
 // Signature verification happens on the server. User-facing messages stay in Portuguese.

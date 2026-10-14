@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT (shared/LICENSE). The rest of this repository is AGPL-3.0.
 import { readFileSync } from 'node:fs'
 import { describe, expect, it } from 'vitest'
 import { assemble, BallotError, compare, progress, sectionKey } from './ballot'
