@@ -1,0 +1,37 @@
+{
+  "brand": "Apuração Cidadã",
+  "tagline": "O boletim da porta bate com o do TSE?",
+  "brief": "App aberto e anônimo: o eleitor escaneia o QR Code do boletim de urna colado na porta da seção às 17h e o app compara, seção por seção, com o boletim que o TSE publica. Precisa transmitir confiança, segurança e neutralidade, sem imitar o TSE e sem cor de partido.",
+  "adjectives": ["confiável", "neutro", "verificável", "cidadão"],
+  "criteria": "Sucesso: ligado ao gesto de escanear e conferir, sem vermelho, verde-amarelo ou azul, reconhecível em 16 px, funciona em uma cor e no escuro.",
+  "industry": "consumer-app",
+  "mockups": ["app-icon", "website", "social", "favicon-tab", "sticker", "badge"],
+  "nav": ["Brasil", "Seção", "Cobertura", "Divergências"],
+  "brand_color": "#0F5257",
+  "greyscale": false,
+  "final": true,
+  "round": 3,
+  "designer": "Apuração Cidadã",
+  "concepts": [
+    {
+      "name": "QR conferido",
+      "symbol": "../svg/symbol.svg",
+      "lockup": "../svg/horizontal.svg",
+      "stacked": "../svg/stacked.svg",
+      "avatar": "../web/icon-tile.svg",
+      "symbol_on_tile": "../svg/symbol-reverse.svg",
+      "symbol_on_dark": "../svg/symbol-reverse.svg",
+      "lockup_on_dark": "../svg/horizontal-reverse.svg",
+      "stacked_on_tile": "../svg/stacked-reverse.svg",
+      "stacked_on_dark": "../svg/stacked-reverse.svg",
+      "idea": "Um QR Code mínimo: três cantos de leitura e o quarto é o visto de quem conferiu.",
+      "rationale": [
+        "Nasce do gesto do app: escanear o QR do boletim da porta",
+        "Verde-mata (confiança) + turquesa (o ato de conferir); nenhuma cor de partido nem do TSE",
+        "Grade do QR Code (módulo 14 px) rende padrões, ícones e animação de leitura"
+      ]
+    }
+  ],
+  "recommendation": "QR conferido — liga a marca ao ato de conferir, é neutra e funciona de 16 px a uma fachada.",
+  "next_steps": ["Trocar ícones do PWA e do app Expo", "Atualizar og:image e favicon", "Pesquisa de marca no INPI antes do lançamento"]
+}

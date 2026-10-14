@@ -55,3 +55,5 @@ Exemplo de `sponsors.json`:
 - O patrocinador não tem nenhuma influência sobre conteúdo, resultados ou divergências.
 - Nunca no leitor de QR, no veredito da seção, nas divergências, na página do candidato nem na animação "A apuração começou".
 - Revisão jurídica antes da primeira venda (Lei 9.504, art. 57-C).
+
+Logo do projeto para materiais de patrocínio (mídia kit, propostas): `brand/logo/` (veja o README de lá). O patrocinador nunca altera nem se funde ao nosso logo; a marca dele aparece sempre separada, no espaço do slot.

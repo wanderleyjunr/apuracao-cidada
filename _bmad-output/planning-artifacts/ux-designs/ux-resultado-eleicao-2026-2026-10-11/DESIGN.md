@@ -82,6 +82,10 @@ O tom é tropical profissional: verde-mata e petróleo com âmbar quente. O app 
 
 Neutralidade é regra visual. Os dois candidatos recebem exatamente o mesmo tratamento, e nenhuma cor de marca remete a partido.
 
+## Logo
+
+Approved 2026-10-14: "QR conferido" (three QR finder corners, the fourth corner is the check). Kit, colours and usage rules in `brand/logo/README.md`; never redraw it. Top-level screens show the reverse mark (28 px) in the top bar; About and onboarding show the lockup.
+
 ## Colors
 
 - **Verde-mata `{colors.primary}`:** cabeçalho, botão principal, aba ativa e o veredito "idêntico".

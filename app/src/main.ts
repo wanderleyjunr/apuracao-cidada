@@ -44,9 +44,11 @@ const flag = (uf: string, h = 21) => uf.toLowerCase() === 'zz'
   ? `<span class="flag flag-globe" aria-hidden="true" style="font-size:${h}px">🌎</span>`
   : `<img class="flag" src="${import.meta.env.BASE_URL}flags/${esc(uf.toLowerCase())}.png" alt="" width="${Math.round(h * 1.43)}" height="${h}" style="width:${Math.round(h * 1.43)}px;height:${h}px">`
 
+const MARK = `<img class="mark" src="${import.meta.env.BASE_URL}logo-mark.svg" alt="" width="28" height="28">`
+
 function header(p: Place): string {
   const t = turn()
-  return `<header class="top-bar"><div class="row"><div class="brand">Apuração Cidadã<small>#EuFiscalizo · código aberto</small></div>
+  return `<header class="top-bar"><div class="row"><div class="brand">${MARK}<span>Apuração Cidadã<small>#EuFiscalizo · código aberto</small></span></div>
     <div class="turn-toggle" role="group" aria-label="Turno">${[1, 2].map(n => `<button data-turn="${n}" aria-pressed="${t === n}">${n}º</button>`).join('')}</div></div>
     <button class="place-button" id="change-place">${flag(p.uf)}<span class="place-text">${esc(p.municipality)}, ${esc(p.uf)}<small>Zona ${esc(p.zone)} · ${p.section ? `Seção ${esc(p.section)}` : 'todas as seções'}</small></span><span aria-hidden="true">▾</span></button></header>`
 }
@@ -94,7 +96,7 @@ function sticker(s: SectionState, doorTime?: string, tseTime?: string): string {
 async function viewSection(): Promise<void> {
   const p = savedPlace()
   if (!p) {
-    app.innerHTML = `<header class="top-bar"><div class="brand">Minha seção<small>#EuFiscalizo · código aberto</small></div></header>
+    app.innerHTML = `<header class="top-bar"><div class="brand">${MARK}<span>Minha seção<small>#EuFiscalizo · código aberto</small></span></div></header>
       <div class="card"><h3>Onde você vota?</h3><p class="muted">Escolha a sua seção para acompanhar o boletim da porta e o resultado do TSE. Ou escaneie o boletim: a seção é preenchida sozinha.</p></div>
       <button class="btn" id="pick">${getUf() ? `Escolher a cidade em ${esc(getUf())}` : 'Escolher estado e cidade'}</button><a class="btn amber" href="#/scan">Escanear o boletim</a>` + nav('section')
     document.querySelector('#pick')!.addEventListener('click', () => placeDialog())
@@ -399,7 +401,7 @@ async function viewCoverage(): Promise<void> {
   const share = (n = 0) => n / total
   const color = (x: number) => (x > .7 ? 'var(--cov-hi)' : x >= .4 ? 'var(--cov-mid)' : x > 0 ? 'var(--cov-lo)' : '#E2ECEA')
   const map = Object.entries(ufPaths!).map(([uf, d]) => `<path d="${d}" data-uf="${uf}" tabindex="0" role="button" aria-label="${uf}: ${pct(C?.byUF[uf] ?? 0)}" fill="${color(C?.byUF[uf] ?? 0)}"><title>${uf}: ${pct(C?.byUF[uf] ?? 0)}</title></path>`).join('')
-  app.innerHTML = `<header class="top-bar"><div class="brand">Cobertura<small>${fmt(total)} seções · ${t}º turno · ${updated(C?.updatedAt)}</small></div></header>
+  app.innerHTML = `<header class="top-bar"><div class="brand">${MARK}<span>Cobertura<small>${fmt(total)} seções · ${t}º turno · ${updated(C?.updatedAt)}</small></span></div></header>
     <div class="card"><div class="big">${pct(share(C?.checked))}</div><div class="muted">${fmt(C?.checked ?? 0)} seções já têm o boletim da porta enviado</div>
       <div class="bar"><i style="width:${share(st.identical) * 100}%;background:var(--ok)"></i><i style="width:${share(st.waiting) * 100}%;background:var(--secondary)"></i><i style="width:${share((st.divergent ?? 0) + (st.conflict ?? 0)) * 100}%;background:var(--bad)"></i></div>
       <div class="legend"><span><i style="background:var(--ok)"></i>idênticas ${fmt(st.identical ?? 0)}</span><span><i style="background:var(--secondary)"></i>aguardando TSE ${fmt(st.waiting ?? 0)}</span><span><i style="background:var(--bad)"></i>divergentes ${fmt((st.divergent ?? 0) + (st.conflict ?? 0))}</span><span><i style="background:#E2ECEA"></i>sem envio</span></div></div>
@@ -431,7 +433,7 @@ async function viewDivergences(): Promise<void> {
   const rows = shown.map((d, i) => `<button class="list-row div-row" data-i="${items.indexOf(d)}"><div><b>${esc(titleCase(d.municipality))}, ${esc(d.uf)}</b>
       <small>Zona ${d.zone} · Seção ${d.section} · ${d.status === 'conflict' ? 'boletins da porta diferentes entre si' : d.differences.slice(0, 2).map(x => `${esc(label(x.key))}: ${x.door} × ${x.tse}`).join(' · ')}</small></div>
       <span class="pill" style="background:${d.status === 'explained' ? 'var(--pend)' : 'var(--bad)'}">${d.status === 'explained' ? 'explicada' : d.status === 'conflict' ? 'conflito' : `${d.differences.length} campo(s)`}</span></button>`).join('')
-  app.innerHTML = `<header class="top-bar"><div class="brand">Divergências encontradas<small>${t}º turno · ${updated(data?.updatedAt)}</small></div></header>
+  app.innerHTML = `<header class="top-bar"><div class="brand">${MARK}<span>Divergências encontradas<small>${t}º turno · ${updated(data?.updatedAt)}</small></span></div></header>
     ${ufs.length > 1 ? `<div class="chips" role="group" aria-label="Filtrar por estado"><button data-uf="" aria-pressed="${!divFilter}">Brasil</button>${ufs.map(u => `<button data-uf="${u}" aria-pressed="${divFilter === u}">${u}</button>`).join('')}</div>` : ''}
     <div class="card"><div class="big" style="color:var(--bad)">${shown.filter(d => d.status !== 'explained').length}</div><div class="muted">seções com diferença entre a porta e o TSE</div></div>
     <div class="card">${rows || '<p class="muted">Nenhuma divergência até agora.</p>'}</div>
@@ -522,6 +524,7 @@ async function viewReplay(): Promise<void> {
 async function viewAbout(): Promise<void> {
   const sp = await loadSponsors()
   app.innerHTML = `<header class="top-bar"><div class="row"><a href="#/brasil" class="back" aria-label="Voltar">←</a><div class="brand">Como funciona<small>conferência cidadã · código aberto</small></div></div></header>
+    <img class="about-logo" src="${import.meta.env.BASE_URL}logo-light.svg" alt="Apuração Cidadã" width="220" height="59">
     <a class="btn amber" href="#/welcome">Ver a animação de como funciona</a>
     <div class="card"><h3>1. Às 17h, o boletim vai para a porta</h3>Por lei, cada urna imprime o boletim com todos os votos da seção, assinado digitalmente, e ele fica afixado na porta.</div>
     <div class="card"><h3>2. Você escaneia o QR Code</h3>O app confere no celular se o boletim está íntegro. Sem internet? Fica salvo e é enviado depois.</div>
@@ -561,7 +564,7 @@ function race(title: string, d: NationalResults, t: number, uf = ''): string {
 async function viewBrasil(): Promise<void> {
   const t = turn(), uf = getUf()
   const [d, gov] = await Promise.all([loadNational(t), uf ? loadGovernor(t, uf) : null])
-  const head = `<header class="top-bar"><div class="row"><div class="brand">Apuração Cidadã<small>Presidente · Brasil · ${t}º turno</small></div>
+  const head = `<header class="top-bar"><div class="row"><div class="brand">${MARK}<span>Apuração Cidadã<small>Presidente · Brasil · ${t}º turno</small></span></div>
     <div style="display:flex;gap:6px;align-items:center"><div class="turn-toggle" role="group" aria-label="Turno">${[1, 2].map(n => `<button data-turn="${n}" aria-pressed="${t === n}">${n}º</button>`).join('')}</div>
     <a href="#/about" class="info" aria-label="Como funciona">ⓘ</a></div></div></header>`
   if (!d) { app.innerHTML = head + '<div class="card muted">Resultado nacional indisponível agora. Tentamos de novo a cada 30 segundos.</div>' + nav('brasil'); bindCommon(); return }
@@ -629,7 +632,7 @@ let welcomeStep = 0
 async function viewWelcome(): Promise<void> {
   const asking = welcomeStep >= STEPS.length
   const finish = () => { localStorage.setItem('onboarded', '1'); welcomeStep = 0 }
-  const top = `<div class="w-top"><b>Apuração Cidadã</b><button id="w-skip">Pular</button></div>`
+  const top = `<div class="w-top"><img class="w-logo" src="${import.meta.env.BASE_URL}logo.svg" alt="Apuração Cidadã" width="150" height="40"><button id="w-skip">Pular</button></div>`
   if (asking) {
     app.innerHTML = `<div class="welcome">${top}<h1>Em qual estado você vota?</h1><p>Depois escolha a cidade, a zona e a sua seção. Assim você vê o resultado de onde vota.</p>
       <div class="uf-grid">${UFS.map(([c]) => `<button data-uf="${c}">${flag(c)}<span>${c === 'zz' ? 'Exterior' : c.toUpperCase()}</span></button>`).join('')}</div></div>`

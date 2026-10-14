@@ -1,3 +1,10 @@
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="brand/logo/svg/horizontal-white.svg">
+    <img src="brand/logo/svg/horizontal.svg" alt="Apuração Cidadã" width="360">
+  </picture>
+</p>
+
 # Apuração Cidadã
 
 **#EuFiscalizo** · Citizen check of Brazil's election ballot reports (Boletins de Urna).
@@ -8,6 +15,7 @@ At 17h every voting machine prints a signed ballot report (BU) with a QR Code an
 - `edge/` Cloudflare Worker: ingestion, rate limit, raw storage, queue
 - `server/` Python: TSE mirror, `bu.dat` decoder, signature checks, comparison, public hash-chain log (OpenTimestamps)
 - `shared/` QR parsing and hash chain (TypeScript)
+- `brand/logo/` logo kit: SVG masters, web/PWA and app icons, colours and usage rules ([README](brand/logo/README.md))
 - `_bmad-output/` research, spec and UX planning
 
 Anonymous by default (no account, no GPS, EXIF stripped). Neutral: we never project results; official results only as declared by the TSE.
@@ -15,3 +23,5 @@ Anonymous by default (no account, no GPS, EXIF stripped). Neutral: we never proj
 Run and architecture notes: see [CLAUDE.md](CLAUDE.md).
 
 License: [AGPL-3.0](LICENSE), except `shared/` (QR parsing, hash chain, public data model), which is [MIT](shared/LICENSE) so anyone can reuse the ballot check in any app.
+
+The Apuração Cidadã name and logo (`brand/logo/`) identify this project and are not licensed for use by forks or other projects; please use your own name and mark.

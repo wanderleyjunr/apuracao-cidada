@@ -20,6 +20,7 @@ Open-source (AGPL-3.0) app: voters scan the signed QR Code of the **ballot repor
 | `app/` | PWA (Vite + plain TS, no framework). Views: section, scan, review, coverage (Brazil map), divergences, about | v0 working with **demo data** (`app/src/data.ts`) |
 | `edge/` | Cloudflare Worker: POST /api/ballots (rate limit, optional Turnstile, assemble+hash check, 2026-only, raw to R2 once, every submission to Queue) + PUT /internal/publish (token) | done, 4 tests; **not deployed** |
 | `server/` | Python: `ballot.py`, `bu_dat.py` (TSE bu.dat decoder), `tse_mirror.py`, `compare.py`, `pipeline.py` (ingest→recompute→publish), `run.py` (consume/mirror loops), `schema.sql` (append-only, triggers) | done, 19 tests incl. Postgres integration; **not deployed**; alerts to observers TODO |
+| `brand/logo/` | Logo kit (approved 2026-10-14, "QR conferido"): SVG masters, web/PWA + Expo icons, colours, usage. **Read its README before using the logo; never redraw it** | done; placed in PWA, Expo app and README |
 | `fixtures/` | Real 2022 QR texts, 2026 manual example, real TSE files for MG/53112/zone 170/section 37 (1st round) | — |
 | `_bmad-output/` | Planning: brainstorm + research, SPEC, UX (DESIGN.md/EXPERIENCE.md + mockups), video scripts | reference |
 

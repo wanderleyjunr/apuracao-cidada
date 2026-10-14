@@ -184,3 +184,5 @@ details summary { cursor: pointer; color: var(--primary); font-weight: 900; padd
 .won.big { flex-direction: column; align-items: center; text-align: center; padding: 12px 0 }
 .won.big .ring { width: 112px; height: 112px; border-width: 5px; box-shadow: 0 0 0 6px #12A15022 } .won.big b { font-size: 18px }
 .dep-list { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 12px; padding: 6px 0 } .dep-list a { font-size: 12px; color: var(--ink); text-decoration: none } .dep-list small { color: var(--ink-2) }
+.brand:has(.mark) { display: flex; align-items: center; gap: 9px } .mark { width: 28px; height: 28px; flex: none }
+.w-logo { height: 40px; width: auto } .about-logo { display: block; margin: 18px auto 16px; height: 59px; width: auto }
